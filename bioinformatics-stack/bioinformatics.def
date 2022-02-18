@@ -1,0 +1,6 @@
+Bootstrap: docker
+From: frolvlad/alpine-miniconda3
+
+%post
+	conda install -n base -c conda-forge mamba
+
