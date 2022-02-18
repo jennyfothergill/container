@@ -1,6 +1,9 @@
 Bootstrap: docker
 From: frolvlad/alpine-miniconda3
 
+%environment
+	OSTYPE=linux-gnu
 %post
 	conda install -n base -c conda-forge mamba
+	mamba install -c conda-forge -c bioconda -c smirarab getorganelle treeshrink biopython
 
