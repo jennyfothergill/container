@@ -1,0 +1,22 @@
+# Bioinformatics stack
+
+Build container
+```
+singularity build --fakeroot bioinformatics.sif bioinformatics.def
+```
+
+Biopython
+```
+singularity exec bioinformatics.sif python -c "import Bio"
+```
+
+TreeShrink
+```
+singularity exec bioinformatics.sif python -c "import treeshrink"
+```
+
+GetOrganelle
+```
+singularity exec bioinformatics.sif get_organelle_from_reads.py -h
+```
+
