@@ -1,64 +1,33 @@
 Bootstrap: docker
 From: ubuntu:focal
 
-%setup
 
 %files
-	#src/BBMap_38.95.tar.gz /usr/local
-	#src/bcftools-1.14.tar.bz2 /usr/local
-	#src/bwa-0.7.17.tar.bz2 /usr/local
-	#src/fastqc_v0.11.9.zip /usr/local
-	#src/popoolation2_1201.zip /usr/local
-	#src/samtools-1.14.tar.bz2 /usr/local
-	#src/samblaster /usr/local
-	#src/poolparty /usr/local
-	#src/picard.jar /usr/local/bin
-	src /usr/local
 
 %environment
 
 %post
-	apt -y update && DEBIAN_FRONTEND="noninteractive" apt -y dist-upgrade
-	DEBIAN_FRONTEND="noninteractive" apt -y install wget bzip2 unzip zip git
+	export DEBIAN_FRONTEND="noninteractive"
+	apt -y update && apt -y dist-upgrade
+	apt -y install wget bzip2 unzip zip git
         echo "deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/" >> /etc/apt/sources.list
 	wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 	apt -y update && apt -y dist-upgrade
-	DEBIAN_FRONTEND="noninteractive" apt -y install r-base-dev default-jdk default-jre perl
+	apt -y install r-base-dev default-jdk default-jre perl
+	apt -y install libfontconfig1-dev libcurl4-openssl-dev libssl-dev
 
-	# Bio-BWA
-	cd /usr/local/src/bwa-0.7.17 
+        R --slave -e 'install.packages("matrixStats", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+        R --slave -e 'install.packages("tidyr", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+        R --slave -e 'install.packages("stringr", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+        R --slave -e 'install.packages("data.table", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+        R --slave -e 'install.packages("reshape", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+        R --slave -e 'install.packages("fBasics", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+        R --slave -e 'install.packages("ggplot2", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+        R --slave -e 'install.packages("RColorBrewer", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+        R --slave -e 'install.packages("plyr", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+        R --slave -e 'install.packages("ape", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+        R --slave -e 'install.packages("metap", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
 
-	# FastQC
-	cd /usr/local/src/FastQC
-
-	# samblaster
-	cd /usr/local/src/samblaster
-	make
-	cp samblaster /usr/local/bin/.
-	
-	# samtools
-	cd /usr/local/src/samtools-1.14    
-	./configure --prefix=/usr/local
-	make
-	make install
-	
-	# bcftools
-	cd /usr/local/src/bcftools-1.14    
-	./configure --prefix=/usr/local
-	make
-	make install
-	
-	# PicardTools
-	# copy picard tools into /usr/local/PicardTools and create an envir var
-	cp /usr/local/src/picard.jar /usr/local/bin
-
-	# Popoolation
-	# copy Poppolation into /usr/local/Popoolation and create env variable
-	
-	# BBMap
-	# copy BBMap into /usr/local/BBMap and create link/add to path
-	cd /usr/local/src/bbmap
-	#do something here
 %runscript
 
 %startscript
