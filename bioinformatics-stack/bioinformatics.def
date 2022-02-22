@@ -1,9 +1,32 @@
 Bootstrap: docker
-From: frolvlad/alpine-miniconda3
+From: ubuntu:focal
 
-%environment
-	OSTYPE=linux-gnu
+
+%files
+
 %post
+	export DEBIAN_FRONTEND="noninteractive"
+	apt -y update && apt -y dist-upgrade
+	apt -y install wget bzip2 unzip zip git
+
+	# Install conda
+	wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+	chmod +x Miniconda3-latest-Linux-x86_64.sh
+	bash ./Miniconda3-latest-Linux-x86_64.sh -b -p /opt/conda
+     	. /opt/conda/etc/profile.d/conda.sh
+    	conda activate base
+    	conda update --yes --all
+    	conda clean --yes --all
+	rm ./Miniconda3-latest-Linux-x86_64.sh
+
+	# Install mamba and getorganelle, treeshrink, biopython	
 	conda install -n base -c conda-forge mamba
 	mamba install -c conda-forge -c bioconda -c smirarab getorganelle treeshrink biopython
 
+%environment
+ 	export LC_ALL=C.UTF-8
+    	export PATH=/opt/conda/bin:$PATH
+
+%runscript
+
+%startscript
