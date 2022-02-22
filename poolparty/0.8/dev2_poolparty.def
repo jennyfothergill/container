@@ -1,0 +1,43 @@
+Bootstrap: localimage
+From: dev_poolparty.sif
+
+
+%files
+
+%environment
+
+%post
+	# Bio-BWA
+	
+	# FastQC
+
+	# samblaster
+	
+	# samtools
+	
+	# bcftools
+	
+	# PicardTools
+
+	# Popoolation
+	
+	# BBMap
+	
+	# PoolParty
+	DEBIAN_FRONTEND=noninteractive apt -y install libfontconfig1-dev libcurl4-openssl-dev libssl-dev
+
+	R --slave -e 'install.packages("matrixStats", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+	R --slave -e 'install.packages("tidyr", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+	R --slave -e 'install.packages("stringr", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+	R --slave -e 'install.packages("data.table", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+	R --slave -e 'install.packages("reshape", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+	R --slave -e 'install.packages("fBasics", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+	R --slave -e 'install.packages("ggplot2", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+	R --slave -e 'install.packages("RColorBrewer", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+	R --slave -e 'install.packages("plyr", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+	R --slave -e 'install.packages("ape", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+	R --slave -e 'install.packages("metap", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+
+%runscript
+
+%startscript
