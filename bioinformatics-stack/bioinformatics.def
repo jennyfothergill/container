@@ -24,6 +24,11 @@ From: ubuntu:focal
 	conda install -n base -c conda-forge mamba
 	mamba install -c conda-forge -c bioconda -c smirarab getorganelle treeshrink biopython
 
+	# Extract ASTRAL
+	wget https://github.com/smirarab/ASTRAL/raw/master/Astral.5.7.8.zip
+	unzip Astral.5.7.8.zip -d /opt
+	chmod -R 777 /opt/Astral
+
 %environment
  	export LC_ALL=C.UTF-8
     	export PATH=/opt/conda/bin:$PATH
