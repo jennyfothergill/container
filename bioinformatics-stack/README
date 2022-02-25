@@ -26,6 +26,11 @@ BPP
 singularity exec bioinformatics.sif bpp --help
 ```
 
+exonerate
+```
+singularity exec bioinformatics.sif exonerate -h
+```
+
 GetOrganelle
 ```
 singularity exec bioinformatics.sif get_organelle_from_reads.py -h
