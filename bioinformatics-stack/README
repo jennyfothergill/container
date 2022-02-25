@@ -16,6 +16,11 @@ Biopython
 singularity exec bioinformatics.sif python -c "import Bio"
 ```
 
+BMGE
+```
+singularity exec bioinformatics.sif bmge -?
+```
+
 GetOrganelle
 ```
 singularity exec bioinformatics.sif get_organelle_from_reads.py -h
