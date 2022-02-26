@@ -26,9 +26,19 @@ BPP
 singularity exec bioinformatics.sif bpp --help
 ```
 
+bwa
+```
+singularity exec bioinformatics.sif bwa
+```
+
 exonerate
 ```
 singularity exec bioinformatics.sif exonerate -h
+```
+
+FastTree
+```
+singularity exec bioinformatics.sif FastTree
 ```
 
 GetOrganelle

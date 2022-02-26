@@ -35,10 +35,15 @@ From: ubuntu:focal
 	# Download and Extract exonerate
 	wget http://ftp.ebi.ac.uk/pub/software/vertebrategenomics/exonerate/exonerate-2.2.0-x86_64.tar.gz
 	tar zxvf exonerate-2.2.0-x86_64.tar.gz -C /opt
+	# Download FastTree
+	wget http://www.microbesonline.org/fasttree/FastTree
+	mkdir /opt/fasttree
+	mv FastTree /opt/fasttree
+	chmod -R +x /opt/fasttree
 
 %environment
  	export LC_ALL=C.UTF-8
-    	export PATH=/opt/conda/bin:/opt/bpp-4.4.1-linux-x86_64/bin:/opt/exonerate-2.2.0-x86_64/bin:$PATH
+    	export PATH=/opt/conda/bin:/opt/bpp-4.4.1-linux-x86_64/bin:/opt/exonerate-2.2.0-x86_64/bin:/opt/fasttree:$PATH
 
 %runscript
 
