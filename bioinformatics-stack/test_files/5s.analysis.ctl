@@ -3,11 +3,11 @@
 
           seed = -1     * change this to positive integer to fix the seed
 
-       seqfile = 5s.sequences.txt
-      Imapfile = 5s.Imap.txt
-     traitfile = 5s.morph.txt
-       outfile = out.txt
-      mcmcfile = mcmc.txt
+       seqfile = test_files/5s.sequences.txt
+      Imapfile = test_files/5s.Imap.txt
+     traitfile = test_files/5s.morph.txt
+       outfile = test_files/out.txt
+      mcmcfile = test_files/mcmc.txt
 
 * speciesdelimitation = 0 * fixed species tree
 * speciesdelimitation = 1 0 5    * speciesdelimitation algorithm0 and finetune(e)

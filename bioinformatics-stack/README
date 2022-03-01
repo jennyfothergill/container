@@ -56,6 +56,11 @@ HybPiper
 singularity exec bioinformatics.sif reads_first.py --check-depend
 ```
 
+iBPP
+```
+singularity exec bioinformatics.sif ibpp test_files/5s.analysis.ctl 
+```
+
 samtools
 ```
 singularity exec bioinformatics.sif samtools
