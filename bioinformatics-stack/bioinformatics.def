@@ -10,7 +10,8 @@ From: ubuntu:focal
 	apt -y install wget bzip2 unzip zip git
 	apt -y install default-jre default-jdk
 	apt -y install samtools
-	apt install -y iqtree
+	apt -y install iqtree
+	apt -y install pal2nal
         echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial main" >> /etc/apt/sources.list
         echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial universe" >> /etc/apt/sources.list
 	apt update
@@ -28,7 +29,7 @@ From: ubuntu:focal
 
 	# Install mamba and getorganelle, treeshrink, biopython	
 	conda install -n base -c conda-forge mamba
-	mamba install -c conda-forge -c bioconda -c smirarab biopython bmge bwa getorganelle treeshrink parallel
+	mamba install -c conda-forge -c bioconda -c smirarab biopython bmge bwa getorganelle parallel treeshrink trimal
 	
 	# Configure GetOrganelle
 	mkdir /opt/get_organelle_db

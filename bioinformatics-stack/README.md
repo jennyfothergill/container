@@ -71,6 +71,11 @@ mafft
 singularity exec bioinformatics.sif mafft
 ```
 
+pal2nal
+```
+singularity exec bioinformatics.sif pal2nal.pl -h
+```
+
 samtools
 ```
 singularity exec bioinformatics.sif samtools
@@ -81,4 +86,7 @@ TreeShrink
 singularity exec bioinformatics.sif python -c "import treeshrink"
 ```
 
-
+TrimAl
+```
+singularity exec bioinformatics.sif trimal -h
+```
