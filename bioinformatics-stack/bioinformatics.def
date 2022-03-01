@@ -29,34 +29,36 @@ From: ubuntu:focal
 
 	# Install mamba and getorganelle, treeshrink, biopython	
 	conda install -n base -c conda-forge mamba
-	mamba install -c conda-forge -c bioconda -c smirarab biopython bmge bwa getorganelle parallel raxml treeshrink trimal
+	mamba install -c conda-forge -c bioconda -c smirarab ‘biopython=1.7.9’ ‘bmge=1.12’ ‘bwa=0.7.17-r1188’ ‘getorganelle=1.7.5.3’ ‘parallel=20211222’ ‘raxml=8.2.12’ ‘treeshrink=1.3.9’ ‘trimal=1.4.1’
 	
 	# Configure GetOrganelle
 	mkdir /opt/get_organelle_db
 	get_organelle_config.py --add embplant_pt,embplant_mt,embplant_nr --config-dir /opt/get_organelle_db
 
-	# Download and Extract ASTRAL
+	# Download and Extract ASTRAL 5.7.8
 	wget https://github.com/smirarab/ASTRAL/raw/master/Astral.5.7.8.zip
 	unzip Astral.5.7.8.zip -d /opt
 	chmod -R 777 /opt/Astral
 
-	# Download and Extract bpp
+	# Download and Extract bpp 4.4.1
 	wget https://github.com/bpp/bpp/releases/download/v4.4.1/bpp-4.4.1-linux-x86_64.tar.gz
 	tar zxvf bpp-4.4.1-linux-x86_64.tar.gz -C /opt
-	# Download and Extract exonerate
+
+	# Download and Extract exonerate 2.2.0
 	wget http://ftp.ebi.ac.uk/pub/software/vertebrategenomics/exonerate/exonerate-2.2.0-x86_64.tar.gz
 	tar zxvf exonerate-2.2.0-x86_64.tar.gz -C /opt
+
 	# Download FastTree
 	wget http://www.microbesonline.org/fasttree/FastTree
 	mkdir /opt/fasttree
 	mv FastTree /opt/fasttree
 	chmod -R +x /opt/fasttree
 
-	# Download HybPiper
+	# Download HybPiper 1.3.1
 	cd /opt
 	git clone -b v1.3.1 --depth 1 https://github.com/mossmatters/HybPiper.git
 
-	# Install iBPP
+	# Install iBPP 2.1.3
 	cd /opt
 	git clone --branch v2.1.3 --depth 1 https://github.com/cecileane/iBPP.git
 	chmod -R 777 iBPP
@@ -65,7 +67,7 @@ From: ubuntu:focal
 	# Are the simulation tools needed? If so add
 	gcc-5 -o ibpp-simul -DSIMULATION -O3 -std=c89 bpp.c tools.c -lm
 
-	# Install mafft
+	# Install mafft 7.490-1
 	wget https://mafft.cbrc.jp/alignment/software/mafft_7.490-1_amd64.deb
 	dpkg -i mafft_7.490-1_amd64.deb
 
