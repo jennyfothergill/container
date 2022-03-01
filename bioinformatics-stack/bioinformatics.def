@@ -10,6 +10,10 @@ From: ubuntu:focal
 	apt -y install wget bzip2 unzip zip git
 	apt -y install default-jre default-jdk
 	apt -y install samtools
+        echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial main" >> /etc/apt/sources.list
+        echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial universe" >> /etc/apt/sources.list
+	apt update
+	apt install -y gcc-5 g++-5
 
 	# Install conda
 	wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -46,9 +50,18 @@ From: ubuntu:focal
 	cd /opt
 	git clone -b v1.3.1 --depth 1 https://github.com/mossmatters/HybPiper.git
 
+	# Install iBPP
+	cd /opt
+	git clone --branch v2.1.3 --depth 1 https://github.com/cecileane/iBPP.git
+	chmod -R 777 iBPP
+	cd iBPP/src
+	gcc-5 -o ibpp -O3 -std=c89 bpp.c tools.c -lm
+	# Are the simulation tools needed? If so add
+	# gcc -o ibpp-simul -DSIMULATION -O3 -std=c89 bpp.c tools.c -lm
+
 %environment
  	export LC_ALL=C.UTF-8
-    	export PATH=/opt/conda/bin:/opt/bpp-4.4.1-linux-x86_64/bin:/opt/exonerate-2.2.0-x86_64/bin:/opt/fasttree:/opt/HybPiper:$PATH
+    	export PATH=/opt/conda/bin:/opt/bpp-4.4.1-linux-x86_64/bin:/opt/exonerate-2.2.0-x86_64/bin:/opt/fasttree:/opt/HybPiper:/opt/iBPP/src:$PATH
 
 %runscript
 
