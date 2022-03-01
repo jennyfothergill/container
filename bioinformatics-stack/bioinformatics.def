@@ -28,6 +28,10 @@ From: ubuntu:focal
 	# Install mamba and getorganelle, treeshrink, biopython	
 	conda install -n base -c conda-forge mamba
 	mamba install -c conda-forge -c bioconda -c smirarab biopython bmge bwa getorganelle treeshrink parallel
+	
+	# Configure GetOrganelle
+	mkdir /opt/get_organelle_db
+	get_organelle_config.py --add embplant_pt,embplant_mt,embplant_nr --config-dir /opt/get_organelle_db
 
 	# Download and Extract ASTRAL
 	wget https://github.com/smirarab/ASTRAL/raw/master/Astral.5.7.8.zip
@@ -57,7 +61,7 @@ From: ubuntu:focal
 	cd iBPP/src
 	gcc-5 -o ibpp -O3 -std=c89 bpp.c tools.c -lm
 	# Are the simulation tools needed? If so add
-	# gcc -o ibpp-simul -DSIMULATION -O3 -std=c89 bpp.c tools.c -lm
+	gcc-5 -o ibpp-simul -DSIMULATION -O3 -std=c89 bpp.c tools.c -lm
 
 %environment
  	export LC_ALL=C.UTF-8
