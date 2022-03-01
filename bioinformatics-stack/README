@@ -46,6 +46,16 @@ GetOrganelle
 singularity exec bioinformatics.sif get_organelle_from_reads.py -h
 ```
 
+GNU parallel
+```
+singularity exec bioinformatics.sif parallel -h
+```
+
+samtools
+```
+singularity exec bioinformatics.sif samtools
+```
+
 TreeShrink
 ```
 singularity exec bioinformatics.sif python -c "import treeshrink"
