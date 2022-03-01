@@ -10,6 +10,7 @@ From: ubuntu:focal
 	apt -y install wget bzip2 unzip zip git
 	apt -y install default-jre default-jdk
 	apt -y install samtools
+	apt install -y iqtree
         echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial main" >> /etc/apt/sources.list
         echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial universe" >> /etc/apt/sources.list
 	apt update
@@ -62,6 +63,11 @@ From: ubuntu:focal
 	gcc-5 -o ibpp -O3 -std=c89 bpp.c tools.c -lm
 	# Are the simulation tools needed? If so add
 	gcc-5 -o ibpp-simul -DSIMULATION -O3 -std=c89 bpp.c tools.c -lm
+
+	# Install mafft
+	wget https://mafft.cbrc.jp/alignment/software/mafft_7.490-1_amd64.deb
+	dpkg -i mafft_7.490-1_amd64.deb
+
 
 %environment
  	export LC_ALL=C.UTF-8

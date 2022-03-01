@@ -61,6 +61,16 @@ iBPP
 singularity exec bioinformatics.sif ibpp test_files/5s.analysis.ctl 
 ```
 
+iqtree
+```
+singularity exec bioinformatics.sif iqtree -h
+```
+
+mafft
+```
+singularity exec bioinformatics.sif mafft
+```
+
 samtools
 ```
 singularity exec bioinformatics.sif samtools
