@@ -51,6 +51,11 @@ GNU parallel
 singularity exec bioinformatics.sif parallel -h
 ```
 
+HybPiper
+```
+singularity exec bioinformatics.sif reads_first.py --check-depend
+```
+
 samtools
 ```
 singularity exec bioinformatics.sif samtools
