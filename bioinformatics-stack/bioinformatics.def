@@ -9,6 +9,7 @@ From: ubuntu:focal
 	apt -y update && apt -y dist-upgrade
 	apt -y install wget bzip2 unzip zip git
 	apt -y install default-jre default-jdk
+	apt -y install samtools
 
 	# Install conda
 	wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
