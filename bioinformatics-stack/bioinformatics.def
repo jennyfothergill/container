@@ -22,7 +22,7 @@ From: ubuntu:focal
 
 	# Install mamba and getorganelle, treeshrink, biopython	
 	conda install -n base -c conda-forge mamba
-	mamba install -c conda-forge -c bioconda -c smirarab biopython bmge bwa getorganelle treeshrink
+	mamba install -c conda-forge -c bioconda -c smirarab biopython bmge bwa getorganelle treeshrink parallel
 
 	# Download and Extract ASTRAL
 	wget https://github.com/smirarab/ASTRAL/raw/master/Astral.5.7.8.zip
