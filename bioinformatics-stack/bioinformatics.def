@@ -38,7 +38,7 @@ From: ubuntu:focal
 	# Download and Extract ASTRAL 5.7.8
 	wget https://github.com/smirarab/ASTRAL/raw/master/Astral.5.7.8.zip
 	unzip Astral.5.7.8.zip -d /opt
-	chmod -R 777 /opt/Astral
+	chmod -R +x /opt/Astral
 
 	# Download and Extract bpp 4.4.1
 	wget https://github.com/bpp/bpp/releases/download/v4.4.1/bpp-4.4.1-linux-x86_64.tar.gz
