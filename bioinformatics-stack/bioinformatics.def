@@ -76,8 +76,6 @@ From: ubuntu:focal
 	tar xzvf BEAST.v2.6.6.Linux.tgz -C /opt
 	/opt/beast/bin/packagemanager -update
 	/opt/beast/bin/packagemanager -dir /opt/beast -add STACEY
-	# DISSECT is included in BEAST>1.8?
-	#/opt/beast/bin/packagemanager -useAppDir -add DISSECT
 
 %environment
  	export LC_ALL=C.UTF-8
