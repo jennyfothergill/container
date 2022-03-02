@@ -6,9 +6,13 @@ singularity build --fakeroot bioinformatics.sif bioinformatics.def
 ```
 
 ASTRAL 5.7.8
-(within container) how should this be mapped to be used outside the container?
 ```
-java -jar /opt/Astral/astral.5.7.8.jar -i /opt/Astral/test_data/song_primates.424.gene.tre
+singularity run bioinformatics.sif astral -i test_files/song_primates.424.gene.tre 
+```
+
+BEAST
+```
+singularity exec bioinformatics.sif beast test_files/testCalibration.xml
 ```
 
 Biopython
