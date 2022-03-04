@@ -1,96 +1,102 @@
 # Bioinformatics stack
+Quick notes on how to access each of the programs in this container along with what version is installed
 
 Build container
 ```
-singularity build --fakeroot bioinformatics.sif bioinformatics.def
+apptainer build --fakeroot bioinformatics.sif bioinformatics.def
 ```
 
 ASTRAL 5.7.8
 ```
-singularity run bioinformatics.sif astral -i test_files/song_primates.424.gene.tre 
+apptainer run bioinformatics.sif astral -i test_files/song_primates.424.gene.tre 
 ```
 
-BEAST
+BEAST 2.6.6
 ```
-singularity exec bioinformatics.sif beast test_files/testCalibration.xml
-```
-
-Biopython
-```
-singularity exec bioinformatics.sif python -c "import Bio"
+apptainer exec bioinformatics.sif beast test_files/testCalibration.xml
 ```
 
-BMGE
+Biopython 1.79
 ```
-singularity exec bioinformatics.sif bmge -?
-```
-
-BPP
-```
-singularity exec bioinformatics.sif bpp --help
+apptainer exec bioinformatics.sif python -c "import Bio"
 ```
 
-bwa
+BMGE 1.12
 ```
-singularity exec bioinformatics.sif bwa
-```
-
-exonerate
-```
-singularity exec bioinformatics.sif exonerate -h
+apptainer exec bioinformatics.sif bmge -?
 ```
 
-FastTree
+BPP 4.4.1
 ```
-singularity exec bioinformatics.sif FastTree
-```
-
-GetOrganelle
-```
-singularity exec bioinformatics.sif get_organelle_from_reads.py -h
+apptainer exec bioinformatics.sif bpp --help
 ```
 
-GNU parallel
+bwa 0.7.17
 ```
-singularity exec bioinformatics.sif parallel -h
-```
-
-HybPiper
-```
-singularity exec bioinformatics.sif reads_first.py --check-depend
+apptainer exec bioinformatics.sif bwa
 ```
 
-iBPP
+exonerate 2.2.0
 ```
-singularity exec bioinformatics.sif ibpp test_files/5s.analysis.ctl 
-```
-
-iqtree
-```
-singularity exec bioinformatics.sif iqtree -h
+apptainer exec bioinformatics.sif exonerate -h
 ```
 
-mafft
+FastTree 2.1.11 SSE3
 ```
-singularity exec bioinformatics.sif mafft
-```
-
-pal2nal
-```
-singularity exec bioinformatics.sif pal2nal.pl -h
+apptainer exec bioinformatics.sif FastTree
 ```
 
-samtools
+GetOrganelle 1.7.5.3
 ```
-singularity exec bioinformatics.sif samtools
-```
-
-TreeShrink
-```
-singularity exec bioinformatics.sif python -c "import treeshrink"
+apptainer exec bioinformatics.sif get_organelle_from_reads.py -h
 ```
 
-TrimAl
+GNU parallel 20211222
 ```
-singularity exec bioinformatics.sif trimal -h
+apptainer exec bioinformatics.sif parallel -h
+```
+
+HybPiper 1.3.1
+```
+apptainer exec bioinformatics.sif reads_first.py --check-depend
+```
+
+iBPP 2.1.3
+```
+apptainer exec bioinformatics.sif ibpp test_files/5s.analysis.ctl 
+```
+
+iqtree 1.6.12
+```
+apptainer exec bioinformatics.sif iqtree -h
+```
+
+mafft 7.490-1
+```
+apptainer exec bioinformatics.sif mafft
+```
+
+pal2nal v14
+```
+apptainer exec bioinformatics.sif pal2nal.pl -h
+```
+
+raxml 8.2.12
+```
+apptainer exec bioinformatics.sif raxmlHPC -h
+```
+
+samtools 1.10
+```
+apptainer exec bioinformatics.sif samtools
+```
+
+TreeShrink 1.3.9
+```
+apptainer exec bioinformatics.sif run_treeshrink -h
+```
+
+TrimAl 1.4.1
+```
+apptainer exec bioinformatics.sif trimal -h
 ```
