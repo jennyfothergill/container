@@ -23,8 +23,14 @@ singularity run $SIMG astral -i test_files/song_primates.424.gene.tre
 # BEAST 2.6.6
 singularity exec $SIMG beast test_files/testCalibration.xml
 
+# mafft 7.490-1
+singularity exec $SIMG mafft --localpair --maxiterate 1000 test_files/HSP90.fas > HSP90_mafft.fas
+
+# TrimAl 1.4.1
+singularity exec $SIMG trimal -in HSP90_mafft.fas -out HSP90_trimal.fas -fasta -automated1
+
 # BMGE 1.12
-singularity exec $SIMG bmge -?
+singularity exec $SIMG bmge -i HSP90_mafft.fas -of HSP90_bmge.fas -t AA
 
 # BPP 4.4.1
 singularity exec $SIMG bpp --help
@@ -50,9 +56,6 @@ singularity exec $SIMG ibpp test_files/5s.analysis.ctl
 # iqtree 1.6.12
 singularity exec $SIMG iqtree -h
 
-# mafft 7.490-1
-singularity exec $SIMG mafft
-
 # pal2nal v14
 singularity exec $SIMG pal2nal.pl -h
 
@@ -65,6 +68,4 @@ singularity exec $SIMG samtools
 # TreeShrink 1.3.9
 singularity exec $SIMG run_treeshrink -h
 
-# TrimAl 1.4.1
-singularity exec $SIMG trimal -h
 
