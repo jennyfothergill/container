@@ -17,6 +17,13 @@ From: ubuntu:focal
 	apt update
 	apt install -y gcc-5 g++-5
 
+	# Install gawk 4.1.4
+	cd /opt
+	wget http://mirrors.kernel.org/ubuntu/pool/main/r/readline/libreadline7_7.0-3_amd64.deb
+	apt -y install /opt/libreadline7_7.0-3_amd64.deb	 
+	wget http://mirrors.kernel.org/ubuntu/pool/main/g/gawk/gawk_4.1.4+dfsg-1build1_amd64.deb	 
+	apt -y install /opt/gawk_4.1.4+dfsg-1build1_amd64.deb	 
+
 	# Install conda
 	wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 	chmod +x Miniconda3-latest-Linux-x86_64.sh
