@@ -33,7 +33,7 @@ singularity exec $SIMG trimal -in HSP90_mafft.fas -out HSP90_trimal.fas -fasta -
 singularity exec $SIMG bmge -i HSP90_mafft.fas -of HSP90_bmge.fas -t AA
 
 # BPP 4.4.1
-singularity exec $SIMG bpp --help
+singularity exec $SIMG bpp --cfile test_files/bpp.ctl
 
 # bwa 0.7.17
 singularity exec $SIMG bwa
