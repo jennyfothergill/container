@@ -18,6 +18,10 @@ PPrunls -> poolparty.sh
 PPstats -> poolparty.sh
 PPsubset -> poolparty.sh
 ```
+This can be done with a command similar to this one:
+```
+singularity exec poolparty.sif ls /usr/local/bin | xargs -I % sh -c 'ln -s poolparty.sh %'
+```
 
 ## sample modulefile
 
