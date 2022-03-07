@@ -45,4 +45,5 @@ module	load	singularity
 set              root              /cm/shared/apps/poolparty/0.8
 prepend-path     PATH              $root/bin
 setenv		poolparty	   /cm/shared/apps/singularity/containers/poolparty.sif
+setenv    SINGULARITY_BINDPATH /cm/shared,/scratch
 ```
