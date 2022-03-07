@@ -22,7 +22,12 @@ This can be done with a command similar to this one:
 ```
 singularity exec poolparty.sif ls /usr/local/bin | xargs -I % sh -c 'ln -s poolparty.sh %'
 ```
+This will also make links for all of the dependent tools. Create a link for java as well:
+```
+(cd /cm/shared/apps/poolparty/0.8/bin; ln -s poolparty.sh java)
+```
 
+The modulefile loads Singularity prereq, sets the PATH and sets the sif file as ${poolparty} for easier launching of container.
 ## sample modulefile
 
 ```
