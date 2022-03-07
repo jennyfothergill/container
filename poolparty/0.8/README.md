@@ -1,6 +1,6 @@
 # PoolParty 0.8 Container
 Singularity Container for Boise State University Research Computing
-PoolParty 0.8
+
 
 Make these symbolic links to the wrapper script in /cm/shared/apps/poolparty/0.8/bin
 ```
