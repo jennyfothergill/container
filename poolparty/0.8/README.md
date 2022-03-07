@@ -1,7 +1,7 @@
 # PoolParty 0.8 Container
 Singularity Container for Boise State University Research Computing
 
-https://github.com/jsnelsonbsu/poolparty.git forked from:
+https://github.com/jsnelsonbsu/poolparty forked from:
 
 https://github.com/StevenMicheletti/poolparty.git
 
