@@ -45,7 +45,7 @@ singularity exec $SIMG exonerate test_files/query.fasta test_files/target.fasta
 singularity exec $SIMG FastTree -gtr -nt test_files/16S.1.p > test
 
 # GetOrganelle 1.7.5.3
-singularity exec $SIMG get_organelle_from_reads.py -h
+singularity exec $SIMG get_organelle_from_reads.py -1 test_files/Arabidopsis_simulated.1.fq.gz -2 test_files/Arabidopsis_simulated.2.fq.gz -t 1 -o Arabidopsis_simulated.plastome -F embplant_pt -R 10
 
 # HybPiper 1.3.1
 singularity exec $SIMG reads_first.py --check-depend
