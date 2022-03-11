@@ -39,7 +39,7 @@ singularity exec $SIMG bpp --cfile test_files/bpp.ctl
 singularity exec $SIMG bwa index test_files/HSP90.fas
 
 # exonerate 2.2.0
-singularity exec $SIMG exonerate -h
+singularity exec $SIMG exonerate test_files/query.fasta test_files/target.fasta 
 
 # FastTree 2.1.11 SSE3
 singularity exec $SIMG FastTree
