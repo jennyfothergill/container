@@ -4,3 +4,7 @@
 [HSP90.fas](https://web.natur.cuni.cz/~vlada/moltax/part2.html)
 [song_primates.424.gene.tre](https://github.com/smirarab/ASTRAL/blob/master/main/test_data/song_primates.424.gene.tre)
 [bwa example](https://informatics.fas.harvard.edu/short-introduction-to-bwa.html)
+[Arabidopsis_simulated...](https://github.com/Kinggerm/GetOrganelle/wiki/Example-1)
+[16S.100.p](http://www.microbesonline.org/fasttree/16S_500.tar.gz)
+[calm.human.dna.fasta](https://github.com/nathanweeks/exonerate/blob/master/test/data/cdna/calm.human.dna.fasta)
+
