@@ -42,7 +42,7 @@ singularity exec $SIMG bwa index test_files/HSP90.fas
 singularity exec $SIMG exonerate test_files/query.fasta test_files/target.fasta 
 
 # FastTree 2.1.11 SSE3
-singularity exec $SIMG FastTree
+singularity exec $SIMG FastTree -gtr -nt test_files/16S.1.p > test
 
 # GetOrganelle 1.7.5.3
 singularity exec $SIMG get_organelle_from_reads.py -h
