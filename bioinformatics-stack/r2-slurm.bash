@@ -36,7 +36,7 @@ singularity exec $SIMG bmge -i HSP90_mafft.fas -of HSP90_bmge.fas -t AA
 singularity exec $SIMG bpp --cfile test_files/bpp.ctl
 
 # bwa 0.7.17
-singularity exec $SIMG bwa
+singularity exec $SIMG bwa index test_files/HSP90.fas
 
 # exonerate 2.2.0
 singularity exec $SIMG exonerate -h
