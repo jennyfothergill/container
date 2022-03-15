@@ -1,20 +1,34 @@
 Bootstrap: docker
-From: ubuntu:focal
+From: ubuntu:bionic
 
 
 %files
 
 %environment
+	export LC_ALL=C
+	export PATH=/usr/local/bin/poolparty:/usr/local/bin:/usr/local/bin/bbmap:/usr/local/bin/popoolation2_1201:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
 
 %post
 	export DEBIAN_FRONTEND="noninteractive"
-	apt -y update && apt -y dist-upgrade
-	apt -y install wget bzip2 unzip zip git
-        echo "deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/" >> /etc/apt/sources.list
-	wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
-	apt -y update && apt -y dist-upgrade
+	apt-get  update && apt-get install -y --no-install-recommends apt-transport-https curl ca-certificates
+	apt-get -y install wget vim git unzip zip bzip2 libssl-dev libcurl4-openssl-dev zlib1g-dev libv8-dev
+	apt-get -y install libgsl-dev libxml2-dev gnupg gnupg1 gnupg2
+        
+	apt-get install -y tzdata
+	# set your timezone
+	ln -fs /usr/share/zoneinfo/America/Denver /etc/localtime
+	dpkg-reconfigure --frontend noninteractive tzdata
+	
+	apt -y install software-properties-common
+	apt-get update
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9 
+	add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/'
+	apt -o Acquire::AllowInsecureRepositories=true update
+	apt --allow-unauthenticated -y install r-base r-cran-littler
+
+
 	apt -y install r-base-dev default-jdk default-jre perl
-	apt -y install libfontconfig1-dev libcurl4-openssl-dev libssl-dev
+	apt -y install libfontconfig1-dev libcurl4-openssl-dev libssl-dev gawk libfftw3-dev
 
         R --slave -e 'install.packages("matrixStats", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
         R --slave -e 'install.packages("tidyr", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
@@ -29,6 +43,101 @@ From: ubuntu:focal
 	R --slave -e 'install.packages("BiocManager", repos= "http://cloud.r-project.org/", dependencies = TRUE)'
 	R --slave -e 'BiocManager::install("multtest")'
         R --slave -e 'install.packages("metap", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+	
+	# install hidden prereqs
+	R --slave -e 'install.packages("quadprog", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+	R --slave -e 'install.packages("fastmatch", repos = "http://cloud.r-project.org/", dependencies = TRUE)'
+	wget https://cran.r-project.org/src/contrib/Archive/phangorn/phangorn_2.5.5.tar.gz
+	R --slave -e 'install.packages("phangorn_2.5.5.tar.gz", repos = NULL, type="source")'	
+	R --slave -e 'BiocManager::install("qvalue")'
+
+
+	# Bio-BWA
+	cd /usr/local/src
+	wget https://sourceforge.net/projects/bio-bwa/files/bwa-0.7.17.tar.bz2 --no-check-certificate
+	tar xvf bwa-0.7.17.tar.bz2
+	rm -f bwa-0.7.17.tar.bz2
+	cd bwa-0.7.17
+	make
+	ln -s /usr/local/src/bwa-0.7.17/bwa /usr/local/bin
+	
+	# FastQC
+	cd /usr/local/src
+	wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.9.zip
+	cd ..
+	unzip src/fastqc_v0.11.9.zip
+	rm -f src/fastqc_v0.11.9.zip
+	chmod 755 FastQC/fastqc
+	ln -s /usr/local/FastQC/fastqc /usr/local/bin
+
+	# samblaster
+	cd /usr/local/src/
+	git clone https://github.com/GregoryFaust/samblaster.git
+	cd samblaster
+	make
+	cp samblaster /usr/local/bin/.
+	
+	# samtools
+	cd /usr/local/src
+	wget https://github.com/samtools/samtools/releases/download/1.14/samtools-1.14.tar.bz2
+	tar xf samtools-1.14.tar.bz2
+	rm -f samtools-1.14.tar.bz2
+	cd /usr/local/src/samtools-1.14
+	./configure --prefix=/usr/local
+	make
+	make install
+	
+	# bcftools
+	cd /usr/local/src
+        wget https://github.com/samtools/bcftools/releases/download/1.14/bcftools-1.14.tar.bz2
+        tar xf bcftools-1.14.tar.bz2
+	rm -f bcftools-1.14.tar.bz2
+	cd /usr/local/src/bcftools-1.14    
+	./configure --prefix=/usr/local
+	make
+	make install
+	
+	# PicardTools
+	# download picard tools into /usr/local/bin 
+	cd /usr/local/bin
+	wget https://github.com/broadinstitute/picard/releases/download/2.26.10/picard.jar
+
+	# Popoolation
+	# download Popoolation into /usr/local/bin
+	cd /usr/local/bin
+	wget https://sourceforge.net/projects/popoolation2/files/popoolation2_1201.zip --no-check-certificate
+	unzip popoolation2_1201.zip
+	rm -f popoolation2_1201.zip
+	
+	# BBMap
+	# download BBMap into /usr/local/bin 
+	cd /usr/local/bin
+	wget https://sourceforge.net/projects/bbmap/files/BBMap_38.95.tar.gz
+	tar xvf BBMap_38.95.tar.gz
+	rm BBMap_38.95.tar.gz
+	
+	# PoolParty
+	cd /usr/local/bin
+	#git clone https://github.com/StevenMicheletti/poolparty.git
+	git clone --depth 1 --branch patch-1 https://github.com/jsnelsonbsu/poolparty.git
+	chmod 755 poolparty/*.sh
+	
+	ln -s /usr/local/bin/poolparty/PPalign.sh /usr/local/bin/PPalign
+	ln -s /usr/local/bin/poolparty/PPanalyze.sh /usr/local/bin/PPanalyze
+	ln -s /usr/local/bin/poolparty/PPstats.sh /usr/local/bin/PPstats
+	ln -s /usr/local/bin/poolparty/PPalign_update.sh /usr/local/bin/PPalign_update
+	ln -s /usr/local/bin/poolparty/PPmanhat.sh /usr/local/bin/PPmanhat
+	ln -s /usr/local/bin/poolparty/PPruncmh.sh /usr/local/bin/PPruncmh
+	ln -s /usr/local/bin/poolparty/PPrunflk.sh /usr/local/bin/PPrunflk
+	ln -s /usr/local/bin/poolparty/PPrunls.sh /usr/local/bin/PPrunls
+	ln -s /usr/local/bin/poolparty/PPsubset.sh /usr/local/bin/PPsubset
+
+	cpan App::cpanminus
+	cpan Text::NSP::Measures::2D
+
+	# fix typo in PPruncmh.sh
+	#sed -i 's/\#bin\/bash\!/\#\!\/bin\/bash/' /usr/local/bin/poolparty/PPruncmh.sh
+
 
 %runscript
 
