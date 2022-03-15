@@ -12,6 +12,7 @@ From: ubuntu:focal
 	apt -y install samtools
 	apt -y install iqtree
 	apt -y install pal2nal
+	apt -y install time
         echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial main" >> /etc/apt/sources.list
         echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial universe" >> /etc/apt/sources.list
 	apt update
@@ -39,8 +40,9 @@ From: ubuntu:focal
 	mamba install -c conda-forge -c bioconda -c smirarab biopython=1.79 bmge=1.12 bwa=0.7.17 getorganelle=1.7.5.3 parallel=20211222 raxml=8.2.12 treeshrink=1.3.9 trimal=1.4.1
 	
 	# Configure GetOrganelle
-	mkdir /opt/get_organelle_db
-	get_organelle_config.py --add embplant_pt,embplant_mt,embplant_nr --config-dir /opt/get_organelle_db
+	#mkdir /opt/get_organelle_db
+	#get_organelle_config.py --add embplant_pt,embplant_mt,embplant_nr --config-dir /opt/get_organelle_db
+	get_organelle_config.py -a all
 
 	# Download and Extract ASTRAL 5.7.8
 	wget https://github.com/smirarab/ASTRAL/raw/master/Astral.5.7.8.zip
