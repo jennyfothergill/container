@@ -1,6 +1,5 @@
-#TODO: switch to appropriate library link
-Bootstrap: localimage
-From: /home/kyle/src/simages/alpine/v3.15.0
+Bootstrap: oras
+From: ghcr.io/bsurc/alpine:v3.15.1
 
 %environment
 export LC_ALL=en_US.UTF-8
