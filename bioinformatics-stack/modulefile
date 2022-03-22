@@ -1,0 +1,15 @@
+#%Module -*- tcl -*-
+##
+## dot modulefile
+##
+proc ModulesHelp { } {
+  puts stderr "\tAdds bioinformatics stack built with singularity to your environment."
+}
+
+module-whatis "Adds bioinformatics stack to your environment"
+
+module	load	singularity
+set              root              /cm/shared/apps/bioinformatics-stack
+prepend-path     PATH              $root/bin
+setenv		bioinformatics	   /cm/shared/apps/singularity/containers/bioinformatics.sif
+setenv    SINGULARITY_BINDPATH     /cm/shared,/scratch
