@@ -8,4 +8,4 @@
 [16S.100.p](http://www.microbesonline.org/fasttree/16S_500.tar.gz)
 [calm.human.dna.fasta](https://github.com/nathanweeks/exonerate/blob/master/test/data/cdna/calm.human.dna.fasta)
 [example.phy](https://github.com/Cibiv/IQ-TREE/releases/download/v1.6.12/iqtree-1.6.12-Linux.tar.gz)
-
+[test.aln, test.nuc](http://www.bork.embl.de/pal2nal/#Download)
