@@ -54,7 +54,7 @@ singularity exec $SIMG reads_first.py -r test_files/EG30_R1_test.fastq -b test_f
 singularity exec $SIMG ibpp test_files/5s.analysis.ctl 
 
 # iqtree 1.6.12
-singularity exec $SIMG iqtree -h
+singularity exec $SIMG iqtree -s test_files/example.phy
 
 # pal2nal v14
 singularity exec $SIMG pal2nal.pl -h
