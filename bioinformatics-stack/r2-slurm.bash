@@ -57,10 +57,10 @@ singularity exec $SIMG ibpp test_files/5s.analysis.ctl
 singularity exec $SIMG iqtree -s test_files/example.phy
 
 # pal2nal v14
-singularity exec $SIMG pal2nal.pl -h
+singularity exec $SIMG pal2nal.pl test_files/test.aln test_files/test.nuc
 
 # RAxML 8.2.12
-singularity exec $SIMG raxmlHPC -h
+singularity exec $SIMG raxmlHPC -m GTRGAMMA -p 12345 -s test_files/example.phy -# 20 -n T6
 
 # samtools 1.10
 singularity exec $SIMG samtools
