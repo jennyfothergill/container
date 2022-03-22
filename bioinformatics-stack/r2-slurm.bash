@@ -66,6 +66,6 @@ singularity exec $SIMG raxmlHPC -m GTRGAMMA -p 12345 -s test_files/example.phy -
 #singularity exec $SIMG samtools view -S -b test_files/sample.sam > sample.bam
 
 # TreeShrink 1.3.9
-singularity exec $SIMG run_treeshrink -h
+singularity exec $SIMG run_treeshrink.py -t test_files/mm10.trees
 
 

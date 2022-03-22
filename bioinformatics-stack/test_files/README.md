@@ -10,3 +10,4 @@
 [example.phy](https://github.com/Cibiv/IQ-TREE/releases/download/v1.6.12/iqtree-1.6.12-Linux.tar.gz)
 [test.aln, test.nuc](http://www.bork.embl.de/pal2nal/#Download)
 [sample.sam](http://quinlanlab.org/tutorials/samtools/samtools.html)
+[mm10.trees](https://github.com/uym2/TreeShrink/blob/master/test_data.zip)
