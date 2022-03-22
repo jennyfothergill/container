@@ -1,0 +1,47 @@
+Bootstrap: oras
+From: ghcr.io/bsurc/alpine:v3.15.1
+
+%environment
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US
+
+%post
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US
+
+apk update
+apk upgrade
+
+apk add \
+  build-base \
+  gdal \
+  gdal-dev \
+  gdal-tools \
+  geos-dev \
+  proj-dev \
+  proj-util \
+  sqlite \
+  sqlite-dev \
+  R \
+  R-dev
+
+R -e "install.packages('codetools', repo='http://cran.r-project.org', Ncpus=24)"
+R -e "install.packages('raster', repo='http://cran.r-project.org', Ncpus=24)"
+R -e "install.packages('rgdal', repo='http://cran.r-project.org', Ncpus=24)"
+R -e "install.packages('rgeos', repo='http://cran.r-project.org', Ncpus=24)"
+
+%test
+
+# make sure we can load all the packages we downloaded/installed
+
+R -e "library(raster)"
+R -e "library(rgdal)"
+R -e "library(rgeos)"
+
+%help
+
+%labels
+
+author "Kyle Shannon <kyle@pobox.com>
