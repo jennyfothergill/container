@@ -63,7 +63,7 @@ singularity exec $SIMG pal2nal.pl test_files/test.aln test_files/test.nuc
 singularity exec $SIMG raxmlHPC -m GTRGAMMA -p 12345 -s test_files/example.phy -# 20 -n T6
 
 # samtools 1.10
-singularity exec $SIMG samtools
+#singularity exec $SIMG samtools view -S -b test_files/sample.sam > sample.bam
 
 # TreeShrink 1.3.9
 singularity exec $SIMG run_treeshrink -h
