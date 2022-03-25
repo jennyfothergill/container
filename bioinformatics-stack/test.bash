@@ -47,7 +47,7 @@ printf "Finished\n\n"
 
 # FastTree 2.1.11 SSE3
 printf "Running FastTree\n"
-singularity exec $SIMG FastTree -gtr -nt test_files/16S.1.p > test
+singularity exec $SIMG FastTree -gtr -nt test_files/16S.1.p > test.out
 printf "Finished\n\n"
 
 # GetOrganelle 1.7.5.3
