@@ -92,9 +92,6 @@ printf "Running RAxML\n"
 raxmlHPC -m GTRGAMMA -p 12345 -s test_files/example.phy -# 20 -n T6
 printf "\nFinished\n\n\n"
 
-# samtools 1.10
-#samtools view -S -b test_files/sample.sam > sample.bam
-
 # TreeShrink 1.3.9
 printf "Running TreeShrink\n"
 run_treeshrink.py -t test_files/mm10.trees
