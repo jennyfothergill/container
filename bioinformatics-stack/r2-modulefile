@@ -9,7 +9,7 @@ proc ModulesHelp { } {
 module-whatis "Adds bioinformatics stack to your environment"
 
 module	load	singularity
-set              root              /cm/shared/apps/bioinformatics-stack
+set              root              /cm/shared/apps/bioinformatics
 prepend-path     PATH              $root/bin
 setenv		bioinformatics	   /cm/shared/apps/singularity/containers/bioinformatics.sif
 setenv    SINGULARITY_BINDPATH     /cm/shared,/scratch
