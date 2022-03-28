@@ -1,0 +1,29 @@
+Bootstrap: docker
+From: centos:7
+Stage: build
+
+
+%files
+
+%environment
+    export LC_ALL=C
+
+%post
+        yum -y update
+        yum -y install epel-release wget
+        yum -y install git armadillo armadillo-devel boost-serialization boost-devel boost gcc-c++ make
+
+        cd /usr/local/src
+        git clone https://bitbucket.org/maneta/ech2o.git
+	cd ech2o/Release
+	make
+        ln -s /usr/local/src/ech2o/Release/ech2o /usr/local/bin
+
+
+        cd /usr/local/src
+        wget https://bitbucket.org/maneta/asc2c/get/master.tar.gz
+        tar xvf master.tar.gz
+        rm master.tar.gz
+        ln -s /usr/local/src/maneta-asc2c-ca18346f5805/asc2c/asc2c /usr/local/bin
+
+
