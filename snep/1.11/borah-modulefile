@@ -8,8 +8,8 @@ proc ModulesHelp { } {
 
 module-whatis "Adds SNeP v1.11 to your environment"
 
-module	load	singularity
-set              root              /cm/shared/apps/snep
-prepend-path     PATH              $root/bin
-setenv		 snep	           /cm/shared/apps/singularity/containers/snep.sif
-setenv    SINGULARITY_BINDPATH     /cm/shared,/scratch
+module	load	 singularity
+set              root                     /cm/shared/apps/snep
+prepend-path     PATH              	  $root/bin
+setenv	         snepcontainer	          /cm/shared/apps/singularity/containers/snep.sif
+setenv           SINGULARITY_BINDPATH     /cm/shared,/scratch

@@ -1,4 +1,4 @@
 #!/bin/bash
 cmd=$(basename "$0")
 args="$@"
-singularity exec ${snep} $cmd $args
+singularity exec ${snepcontainer} $cmd $args
