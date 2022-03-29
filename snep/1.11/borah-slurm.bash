@@ -19,6 +19,3 @@ printf "Running SNeP\n"
 SNeP -h
 printf "\nFinished\n\n\n"
 
-# NeEstimator
-printf "Running NeEstimator\n"
-printf "\nFinished\n\n\n"
