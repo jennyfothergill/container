@@ -1,0 +1,13 @@
+# Example file sources
+[5s... files](https://github.com/cecileane/iBPP/tree/master/examples)
+[bpp.ctl](https://github.com/bpp/bpp/blob/master/examples/anopheles/bpp.ctl)
+[HSP90.fas](https://web.natur.cuni.cz/~vlada/moltax/part2.html)
+[song_primates.424.gene.tre](https://github.com/smirarab/ASTRAL/blob/master/main/test_data/song_primates.424.gene.tre)
+[bwa example](https://informatics.fas.harvard.edu/short-introduction-to-bwa.html)
+[Arabidopsis_simulated...](https://github.com/Kinggerm/GetOrganelle/wiki/Example-1)
+[16S.100.p](http://www.microbesonline.org/fasttree/16S_500.tar.gz)
+[calm.human.dna.fasta](https://github.com/nathanweeks/exonerate/blob/master/test/data/cdna/calm.human.dna.fasta)
+[example.phy](https://github.com/Cibiv/IQ-TREE/releases/download/v1.6.12/iqtree-1.6.12-Linux.tar.gz)
+[test.aln, test.nuc](http://www.bork.embl.de/pal2nal/#Download)
+[sample.sam](http://quinlanlab.org/tutorials/samtools/samtools.html)
+[mm10.trees](https://github.com/uym2/TreeShrink/blob/master/test_data.zip)

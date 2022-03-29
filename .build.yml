@@ -1,0 +1,19 @@
+image: alpine/edge
+packages:
+  - singularity
+
+secrets:
+  - 41190ea5-935b-495c-95b9-9708e03565e8
+
+sources:
+  - https://github.com/bsurc/container
+
+tasks:
+  - build: |
+      set +x
+      GH_PAT=$(cat ~/.ghpat)
+      set -x
+      cd container
+      DEFS=$(git log --name-status -1 | grep -E '^[AM]\s+.*\.def' | sed -e 's/^[AM]\t//g')
+      for x in $DEFS; do singularity build $(basename $x .def).sif $x; done
+      for x in *.sif; do singularity test $x; done;

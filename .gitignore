@@ -2,7 +2,7 @@
 *.sif
 
 # dev containers 
-dev*_*.def
+*dev*_*.def
 
 # history file for R
 .Rhistory
