@@ -1,0 +1,15 @@
+#%Module -*- tcl -*-
+##
+## dot modulefile
+##
+proc ModulesHelp { } {
+  puts stderr "\tAdds SNeP v1.11 built with singularity to your environment."
+}
+
+module-whatis "Adds SNeP v1.11 to your environment"
+
+module	load	singularity
+set              root              /cm/shared/apps/snep
+prepend-path     PATH              $root/bin
+setenv		 snep	           /cm/shared/apps/singularity/containers/snep.sif
+setenv    SINGULARITY_BINDPATH     /cm/shared,/scratch
