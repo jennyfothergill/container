@@ -16,7 +16,7 @@ module load slurm snep
 
 # SNeP v1.11
 printf "Running SNeP\n"
-snep -h
+SNeP -h
 printf "\nFinished\n\n\n"
 
 # NeEstimator
