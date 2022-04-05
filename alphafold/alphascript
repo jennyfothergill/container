@@ -1,0 +1,4 @@
+source /opt/miniconda3/etc/profile.d/conda.sh 
+conda activate alphafold 
+cd /opt/alphafold/ 
+bash run.sh -d /bsuscratch/alphafold_data -o /bsuhome/lwarner/alphafold_output -m model_1 -f /bsuscratch/alphafold_data/mgnify/mgy_clusters_2018_12.fa -t 2020-05-14
