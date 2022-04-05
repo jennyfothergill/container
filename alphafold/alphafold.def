@@ -33,3 +33,6 @@ From: base.sif
     cd /opt/miniconda3/envs/alphafold/lib/python3.8/site-packages/ && patch -p0 < $alphafold_path/docker/openmm.patch
     mv /opt/run.sh /opt/alphafold/run.sh
 
+%environment
+ 	export LC_ALL=C.UTF-8
+    	export PATH=/opt/miniconda3/envs/alphafold/bin:$PATH
