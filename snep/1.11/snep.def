@@ -1,0 +1,29 @@
+Bootstrap: docker
+From: ubuntu:focal
+
+%files
+
+%post
+	export DEBIAN_FRONTEND="noninteractive"
+	apt -y update && apt -y dist-upgrade
+	apt -y install wget bzip2 unzip zip git
+        #echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial main" >> /etc/apt/sources.list
+        #echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial universe" >> /etc/apt/sources.list
+	#apt update
+	#apt install -y gcc-5 g++-5
+
+	# Install SNeP v1.11
+	cd /opt
+	wget -c --no-check-certificate https://sourceforge.net/projects/snepnetrends/files/binaries/SNeP_111/download -O SNeP
+	chmod +x SNeP
+	
+
+	# Clean up
+
+%environment
+ 	export LC_ALL=C.UTF-8
+    	export PATH=/opt:$PATH
+
+%runscript
+
+%startscript
