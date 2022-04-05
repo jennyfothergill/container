@@ -12,9 +12,11 @@ module load slurm
 module load singularity
 
 export SIMG=/cm/shared/apps/singularity/containers/alphafold.sif
+export OUTPUT_DIR=$HOME/scratch/alphafold_output
+export DATA_DIR=/bsuscratch/alphafold_data
 
 # Execute the program:
-singularity exec --nv -B /bsuscratch/alphafold_data,$HOME/scratch/alphafold_output $SIMG bash run.sh -d /bsuscratch/alphafold_data -o $HOME/scratch/alphafold_output -m model_1 -f /bsuscratch/alphafold_data/mgnify/mgy_clusters_2018_12.fa -t 2020-05-14
+singularity exec --nv -B $DATA_DIR,$OUTPUT_DIR $SIMG bash run.sh -d $DATA_DIR -o $OUTPUT_DIR -m model_1 -f $DATA_DIR/mgnify/mgy_clusters_2018_12.fa -t 2020-05-14
 
 # Exit if mpirun errored:
 status=$?
