@@ -38,3 +38,6 @@ setenv          alphafold          /cm/shared/apps/singularity/containers/alphaf
 setenv          SINGULARITY_BINDPATH /cm/shared,/bsuscratch
 
 ```
+Things to check in the future:
+https://hprc.tamu.edu/wiki/SW:AlphaFold
+
