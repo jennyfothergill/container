@@ -1,33 +1,33 @@
-R -e "library(codetools)"
-R -e "library(devtools)"
-R -e "library(raster)"
-R -e "library(dplyr)"
-R -e "library(rgeos)"
-R -e "library(rgdal)"
-R -e "library(sp)"
-R -e "library(sf)"
-R -e "library(maptools)"
-R -e "library(ggplot2)"
-R -e "library(wesanderson)"
-R -e "library(units)"
-R -e "library(ggnewscale)"
-R -e "library(terra)"
-R -e "library(scales)"
-R -e "library(remotes)"
-R -e "library(igraph)"
-R -e "library(spdep)"
-R -e "library(spatialreg)"
-R -e "library(RColorBrewer)"
-R -e "library(tmap)"
-R -e "library(brms)"
-R -e "library(tidyr)"
-R -e "library(purrr)"
-R -e "library(tibble)"
-R -e "library(stringr)"
-R -e "library(forcats)"
-R -e "library(readr)"
-R -e "library(ggdist)"
-R -e "library(tidybayes)"
-R -e "library(ape)"
-R -e "library(coda)"
-R -e "library(yardstick)"
+library(codetools)
+library(devtools)
+library(raster)
+library(dplyr)
+library(rgeos)
+library(rgdal)
+library(sp)
+library(sf)
+library(maptools)
+library(ggplot2)
+library(wesanderson)
+library(units)
+library(ggnewscale)
+library(terra)
+library(scales)
+library(remotes)
+library(igraph)
+library(spdep)
+library(spatialreg)
+library(RColorBrewer)
+library(tmap)
+library(brms)
+library(tidyr)
+library(purrr)
+library(tibble)
+library(stringr)
+library(forcats)
+library(readr)
+library(ggdist)
+library(tidybayes)
+library(ape)
+library(coda)
+library(yardstick)
