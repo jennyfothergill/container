@@ -1,0 +1,23 @@
+Bootstrap: localimage
+From: /home/kyle/src/simages/alpine/v3.15.0
+
+%post
+
+apk add \
+  build-base \
+  bash \
+  coreutils \
+  curl \
+  dos2unix \
+  gdal \
+  gdal-dev \
+  gdb \
+  go \
+  htop \
+  libc6-compat \
+  linux-headers \
+  rclone \
+  sqlite \
+  sqlite-dev \
+  tree \
+  vim

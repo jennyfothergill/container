@@ -1,0 +1,2 @@
+The alpine container(s) unexpectedly fail with an abort, for the short term, we
+switched to ubuntu and ubuntugis stable for some dependencies.

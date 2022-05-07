@@ -1,55 +1,40 @@
-Bootstrap: oras
-From: ghcr.io/bsurc/alpine:v3.15.1
+Bootstrap: docker
+From: ubuntu:20.04
 
 %environment
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US
+
+export LC_ALL=C
 
 %post
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US
 
-apk update
-apk upgrade
+export LC_ALL=C
 
-apk add \
-  autoconf \
-  automake \
+apt update
+apt upgrade -y
+
+apt install -y software-properties-common
+add-apt-repository ppa:ubuntugis/ppa
+
+DEBIAN_FRONTEND=NONINTERACTIVE apt install -y \
   bison \
-  build-base \
+  build-essential \
   cmake \
-  expat-dev \
   flex \
-  fontconfig \
-  font-noto \
-  font-noto-extra \
-  gdal-dev \
-  geos-dev \
+  gdb \
   git \
+  libexpat-dev \
+  libgdal-dev \
+  libgeos-dev \
   libgit2-dev \
-  libtbb \
   libtool \
-  libuv-dev \
+  libproj-dev \
+  libsqlite3-dev \
+  libudunits2-dev \
   libxml2-dev \
-  linux-headers \
-  m4 \
-  proj-dev \
-  R \
-  R-dev \
-  sqlite-dev \
+  r-base \
   texinfo \
-  tzdata
-
-mkdir /opt/src
-cd /opt/src
-git clone https://github.com/Unidata/UDUNITS-2
-mkdir UDUNITS-2/build
-cd /opt/src/UDUNITS-2/build
-cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
-make -j 4
-make install
+  tzdata \
+  valgrind
 
 cd /opt
 
@@ -86,7 +71,10 @@ pkgs <- c(
   'readr',
   'ggdist',
   'tidybayes',
-  'ape'
+  'ape',
+  'CARBayes',
+  'coda',
+  'yardstick'
   )
 
 install.packages(pkgs, repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)
@@ -130,6 +118,8 @@ R -e "library(readr)"
 R -e "library(ggdist)"
 R -e "library(tidybayes)"
 R -e "library(ape)"
+R -e "library(coda)"
+R -e "library(yardstick)"
 
 %help
 
