@@ -6,7 +6,7 @@ From: centos:7
 	yum -y groupinstall "Development Tools"
 	yum -y install wget curl infinitpath-psm mlocate which kernel-devel epel-release vim glibc-devel.i686 blas lapack libgcc libgcc.i686 readline-devel
 	yum -y install zlib-devel bzip2-devel xz-devel pcre-devel libcurl-devel pkgconfig udunits2-devel java-1.8.0-openjdk-devel openssl-devel centos-release-scl scl-utils
-	yum -y install devtoolset-7
+	yum -y install devtoolset-7 libpng-devel
 	g++ --version
 	scl enable devtoolset-7 bash
         g++ --version
@@ -104,40 +104,49 @@ From: centos:7
         export LD_LIBRARY_PATH=/usr/local/include/:$LD_LIBRARY_PATH
 		
 	cd ..
-	echo "install.packages('units', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
-        echo "install.packages('lme4', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
-        echo "install.packages('MuMIn', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
-	echo "install.packages('jagsUI', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
-    	echo "install.packages('R2OpenBUGS', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
-    	echo "install.packages('nimble', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
-    	echo "install.packages('rjags', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
-    	echo "install.packages('R2jags', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
-    	echo "install.packages('reshape2', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
-    	echo "install.packages('tidyr', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
-    	echo "install.packages('dplyr', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
-	echo "install.packages('sf', repos='https://cran.cnr.berkeley.edu/', configure.args=('--with-proj-lib=/usr/local/share/proj --with-proj-include=/usr/local/include/'))" >> packages.R
+	echo "install.packages('units', repos='https://mirrors.nics.utk.edu/cran/')" >> packages.R
+        echo "install.packages('lme4', repos='https://mirrors.nics.utk.edu/cran/')" >> packages.R
+        echo "install.packages('MuMIn', repos='https://mirrors.nics.utk.edu/cran/')" >> packages.R
+	echo "install.packages('jagsUI', repos='https://mirrors.nics.utk.edu/cran/')" >> packages.R
+    	echo "install.packages('R2OpenBUGS', repos='https://mirrors.nics.utk.edu/cran/')" >> packages.R
+    	echo "install.packages('nimble', repos='https://mirrors.nics.utk.edu/cran/')" >> packages.R
+    	echo "install.packages('rjags', repos='https://mirrors.nics.utk.edu/cran/')" >> packages.R
+    	echo "install.packages('R2jags', repos='https://mirrors.nics.utk.edu/cran/')" >> packages.R
+    	echo "install.packages('reshape2', repos='https://mirrors.nics.utk.edu/cran/')" >> packages.R
+    	echo "install.packages('tidyr', repos='https://mirrors.nics.utk.edu/cran/')" >> packages.R
+    	echo "install.packages('dplyr', repos='https://mirrors.nics.utk.edu/cran/')" >> packages.R
+	echo "install.packages('sf', repos='https://mirrors.nics.utk.edu/cran/', configure.args=('--with-proj-lib=/usr/local/share/proj --with-proj-include=/usr/local/include/'))" >> packages.R
 	
-	echo "install.packages('raster', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('lme4', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('rstanarm', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('sp', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('rgdal', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('rgeos', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('unmarked', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('maxnet', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('ENMeval', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('dplyr', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-	echo "install.packages('spThin', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('lubridate', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('landscapemetrics', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('data.table', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('RPyGeo', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-	echo "install.packages('brms', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-        echo "install.packages('mgcv', repos='https://cran.cnr.berkeley.edu/')" >> other.R
+	echo "install.packages('raster', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('lme4', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('rstanarm', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('sp', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('rgdal', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('rgeos', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('unmarked', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('maxnet', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('ENMeval', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('dplyr', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+	echo "install.packages('spThin', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('lubridate', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('landscapemetrics', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('data.table', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('RPyGeo', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+	echo "install.packages('brms', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('mgcv', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
 	echo "install.packages('INLA', repos='https://inla.r-inla-download.org/R/stable')" >> other.R
+	echo "install.packages('ggplot2', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('viridis', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('cowplot', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('gratia', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('grid', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('gridExtra', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('infotheo', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('arules', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
+        echo "install.packages('cartography', repos='https://mirrors.nics.utk.edu/cran/')" >> other.R
 
 	Rscript packages.R	
 	Rscript other.R
 
 %labels
-forrest_version peregrine2.def
+forrest_version peregrine3.def
