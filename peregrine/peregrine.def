@@ -26,9 +26,11 @@ From: centos:7
 	yum -y install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
 	yum -y install geos-devel-3.5.0-1.rhel7
 	
-	wget --user-agent="Mozilla" "http://www.openbugs.net/w/OpenBUGS_3_2_3?action=AttachFile&do=get&target=OpenBUGS-3.2.3.tar.gz"
+	#wget --user-agent="Mozilla" "http://www.openbugs.net/w/OpenBUGS_3_2_3?action=AttachFile&do=get&target=OpenBUGS-3.2.3.tar.gz"
+	wget https://www.mrc-bsu.cam.ac.uk/wp-content/uploads/2018/04/OpenBUGS-3.2.3.tar.gz
 	pwd
-	tar -xf "OpenBUGS_3_2_3?action=AttachFile&do=get&target=OpenBUGS-3.2.3.tar.gz"
+	#tar -xf "OpenBUGS_3_2_3?action=AttachFile&do=get&target=OpenBUGS-3.2.3.tar.gz"
+	tar -xf OpenBUGS-3.2.3.tar.gz
 	cd OpenBUGS-3.2.3
 	./configure
 	make -j4
@@ -121,7 +123,8 @@ From: centos:7
     	echo "install.packages('tidyr', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
     	echo "install.packages('dplyr', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
 	echo "install.packages('sf', repos='https://ftp.osuosl.org/pub/cran/', configure.args=('--with-proj-lib=/usr/local/share/proj --with-proj-include=/usr/local/include/'))" >> packages.R
-	
+	echo "install.packages('fields', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R	
+
 	echo "require(devtools)" >> other.R
 	echo "install.packages('raster', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
         echo "install.packages('rstanarm', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
@@ -169,4 +172,4 @@ From: centos:7
 	Rscript 7.R
 
 %labels
-forrest_version peregrine7.def
+forrest_version peregrine8.def
