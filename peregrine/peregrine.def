@@ -5,7 +5,7 @@ From: centos:7
 	echo $LD_LIBRARY_PATH
 	yum -y groupinstall "Development Tools"
 	yum -y install centos-release-scl
-	yum -y install wget curl infinitpath-psm mlocate which kernel-devel epel-release vim glibc-devel.i686 blas libgcc libgcc.i686 readline-devel lapack
+	yum -y install wget curl infinipath-psm mlocate which kernel-devel epel-release vim glibc-devel.i686 blas libgcc libgcc.i686 readline-devel lapack
 	yum -y install zlib-devel bzip2-devel xz-devel pcre-devel libcurl-devel pkgconfig udunits2-devel java-1.8.0-openjdk-devel openssl-devel centos-release-scl scl-utils
 	yum -y install devtoolset-7 libpng-devel libjpeg-devel tk-devel tcl-devel libxml2-devel libssl-devel libtool libtool-devel v8-devel
 	ionice -c3 updatedb
@@ -160,11 +160,11 @@ From: centos:7
 	echo "require(devtools)" >> 7.R
 	echo "install.packages('exactextractr', repos='https://ftp.osuosl.org/pub/cran/')" >> 7.R
         echo "install.packages('nlme', repos='https://ftp.osuosl.org/pub/cran/')" >> 7.R
-	
+	echo "install.packages('censusapi', repos='https://ftp.osuosl.org/pub/cran/')" >> 7.R
 	Rscript packages.R	
 	Rscript other.R
 	scl enable devtoolset-7 bash
 	Rscript 7.R
 
 %labels
-forrest_version peregrive5.def
+forrest_version peregrine6.def
