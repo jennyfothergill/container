@@ -1,16 +1,30 @@
-Bootstrap: yum
-OSVersion: 7.5.1804
-MirrorURL: http://mirrors.syringanetworks.net/centos/7/os/x86_64/
-Include: yum
+Bootstrap: library
+From: centos:7
 
 %post
-
+	echo $LD_LIBRARY_PATH
 	yum -y groupinstall "Development Tools"
 	yum -y install wget curl infinitpath-psm mlocate which kernel-devel epel-release vim glibc-devel.i686 blas lapack libgcc libgcc.i686 readline-devel
-	yum -y install zlib-devel bzip2-devel xz-devel pcre-devel libcurl-devel libsqlite3x-devel.x86_64 pkgconfig udunits2-devel
+	yum -y install zlib-devel bzip2-devel xz-devel pcre-devel libcurl-devel pkgconfig udunits2-devel java-1.8.0-openjdk-devel openssl-devel centos-release-scl scl-utils
+	yum -y install devtoolset-7
+	g++ --version
+	scl enable devtoolset-7 bash
+        g++ --version
+	which g++
 	ionice -c3 updatedb
 	mkdir peregrine
 	cd peregrine
+	wget https://sqlite.org/2019/sqlite-autoconf-3300100.tar.gz
+        tar -xf sqlite-autoconf-3300100.tar.gz
+	cd sqlite-autoconf-3300100
+	./configure
+	make -j4
+        make install
+        ls
+	cd ..
+        ionice -c3 updatedb
+        locate *.pc
+	export PKG_CONFIG_PATH=/peregrine/sqlite-autoconf-3300100/
 	
 	yum -y install https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm
 	yum -y install geos-devel
@@ -20,14 +34,14 @@ Include: yum
 	tar -xf "OpenBUGS_3_2_3?action=AttachFile&do=get&target=OpenBUGS-3.2.3.tar.gz"
 	cd OpenBUGS-3.2.3
 	./configure
-	make
+	make -j4
 	make install
 	cd ..
 	
 	wget http://www.netlib.org/blas/blas-3.8.0.tgz
 	tar -xf blas-3.8.0.tgz
 	cd BLAS-3.8.0
-	make
+	make -j4
 	gfortran -c -fPIC *.f
 	ar rv libblas.a *.o
 	cp libblas.a /usr/lib64
@@ -42,15 +56,14 @@ Include: yum
 	tar -xf download.tar.gz
 	cd JAGS-4.3.0
 	LDFLAGS="-L/usr/lib64" ./configure --with-blas="-L/usr/lib64/libblas.so" --with-lapack="-L/usr/lib64/liblapack.so.3.4.2 --prefix=/peregrine/JAGS-4.3.0"
-	make
+	make -j4
 	make install
 	ionice -c3 updatedb
 	locate jags.pc
 		
-	yum install -y python36-pip-8.1.2-8.el7.noarch
-	curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-	python get-pip.py
-
+	yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+	yum install -y python36u python36u-libs python36u-devel python36u-pip
+	
 	python --version
 	python3 --version
 
@@ -59,15 +72,18 @@ Include: yum
 	tar -xf R-3.6.0.tar.gz
 	cd R-3.6.0
 	./configure --with-x=no --enable-R-shlib=yes
-	make
+	make -j4
 	make install
-	
+	echo "CXX14FLAGS=-O3 -march=native -mtune=native -fPIC" >> ~/.R/Makevars
+	echo "CXX14=/opt/rh/devtoolset-7/root/usr/bin/g++" >> ~/.R/Makevars
+        echo "MAKEFLAGS = -j4" >> ~/.R/Makevars
+
 	cd ..
-        git clone https://github.com/OSGeo/PROJ.git
-        cd PROJ
-	./autogen.sh
+        wget https://github.com/OSGeo/PROJ/releases/download/6.1.1/proj-6.1.1.tar.gz
+        tar -xf proj-6.1.1.tar.gz
+        cd proj-6.1.1
         ./configure
-        make
+        make -j4
         make install
 
 	cd ..
@@ -75,16 +91,22 @@ Include: yum
 	tar -xf gdal-3.0.1.tar.gz
 	cd gdal-3.0.1
 	./configure
-	make
+	make -j4
 	make install
 	
-	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/
+	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/:$PKG_CONFIG_PATH
 	export LD_RUN_PATH=/usr/local/lib:$LD_RUN_PATH
 	ionice -c3 updatedb
 	locate proj.pc
+	locate proj_api.h
+	export PROJ_LIB=/usr/local/share/proj
+	locate proj.db
+        export LD_LIBRARY_PATH=/usr/local/include/:$LD_LIBRARY_PATH
 		
 	cd ..
 	echo "install.packages('units', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
+        echo "install.packages('lme4', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
+        echo "install.packages('MuMIn', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
 	echo "install.packages('jagsUI', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
     	echo "install.packages('R2OpenBUGS', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
     	echo "install.packages('nimble', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
@@ -93,9 +115,11 @@ Include: yum
     	echo "install.packages('reshape2', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
     	echo "install.packages('tidyr', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
     	echo "install.packages('dplyr', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
-	echo "install.packages('sf', repos='https://cran.cnr.berkeley.edu/')" >> packages.R
-		
+	echo "install.packages('sf', repos='https://cran.cnr.berkeley.edu/', configure.args=('--with-proj-lib=/usr/local/share/proj --with-proj-include=/usr/local/include/'))" >> packages.R
+	
 	echo "install.packages('raster', repos='https://cran.cnr.berkeley.edu/')" >> other.R
+        echo "install.packages('lme4', repos='https://cran.cnr.berkeley.edu/')" >> other.R
+        echo "install.packages('rstanarm', repos='https://cran.cnr.berkeley.edu/')" >> other.R
         echo "install.packages('sp', repos='https://cran.cnr.berkeley.edu/')" >> other.R
         echo "install.packages('rgdal', repos='https://cran.cnr.berkeley.edu/')" >> other.R
         echo "install.packages('rgeos', repos='https://cran.cnr.berkeley.edu/')" >> other.R
@@ -108,10 +132,12 @@ Include: yum
         echo "install.packages('landscapemetrics', repos='https://cran.cnr.berkeley.edu/')" >> other.R
         echo "install.packages('data.table', repos='https://cran.cnr.berkeley.edu/')" >> other.R
         echo "install.packages('RPyGeo', repos='https://cran.cnr.berkeley.edu/')" >> other.R
-	echo "install.packages('INLA', repos=c(getOption('repos'), INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE)" >> other.R
+	echo "install.packages('brms', repos='https://cran.cnr.berkeley.edu/')" >> other.R
+        echo "install.packages('mgcv', repos='https://cran.cnr.berkeley.edu/')" >> other.R
+	echo "install.packages('INLA', repos='https://inla.r-inla-download.org/R/stable')" >> other.R
 
 	Rscript packages.R	
 	Rscript other.R
 
 %labels
-forrest_version peregrine.def
+forrest_version peregrine2.def
