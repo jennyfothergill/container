@@ -7,7 +7,7 @@ From: centos:7
 	yum -y install centos-release-scl
 	yum -y install wget curl infinitpath-psm mlocate which kernel-devel epel-release vim glibc-devel.i686 blas libgcc libgcc.i686 readline-devel lapack
 	yum -y install zlib-devel bzip2-devel xz-devel pcre-devel libcurl-devel pkgconfig udunits2-devel java-1.8.0-openjdk-devel openssl-devel centos-release-scl scl-utils
-	yum -y install devtoolset-7 libpng-devel libjpeg-devel tk-devel tcl-devel
+	yum -y install devtoolset-7 libpng-devel libjpeg-devel tk-devel tcl-devel libxml2-devel libssl-devel libtool libtool-devel v8-devel
 	ionice -c3 updatedb
 	mkdir peregrine
 	cd peregrine
@@ -105,6 +105,9 @@ From: centos:7
         export LD_LIBRARY_PATH=/usr/local/include/:$LD_LIBRARY_PATH
 		
 	cd ..
+	echo "install.packages('devtools', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
+	echo "require(devtools)" >> packages.R
+	echo "install_version('nloptr', version='1.2.2.1', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
 	echo "install.packages('jpeg', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
 	echo "install.packages('units', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
         echo "install.packages('lme4', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
@@ -119,6 +122,7 @@ From: centos:7
     	echo "install.packages('dplyr', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
 	echo "install.packages('sf', repos='https://ftp.osuosl.org/pub/cran/', configure.args=('--with-proj-lib=/usr/local/share/proj --with-proj-include=/usr/local/include/'))" >> packages.R
 	
+	echo "require(devtools)" >> other.R
 	echo "install.packages('raster', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
         echo "install.packages('rstanarm', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
         echo "install.packages('sp', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
@@ -153,6 +157,7 @@ From: centos:7
 	echo "install.packages('spatialEco', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
 	echo "install.packages('glmmTMB', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
 	echo "install.packages('groupdata2', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
+	echo "require(devtools)" >> 7.R
 	echo "install.packages('exactextractr', repos='https://ftp.osuosl.org/pub/cran/')" >> 7.R
         echo "install.packages('nlme', repos='https://ftp.osuosl.org/pub/cran/')" >> 7.R
 	
@@ -162,4 +167,4 @@ From: centos:7
 	Rscript 7.R
 
 %labels
-forrest_version peregrine4.def
+forrest_version peregrive5.def
