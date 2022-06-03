@@ -141,11 +141,13 @@ From: centos:7
         echo "install.packages('RPyGeo', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
 	echo "install.packages('brms', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
         echo "install.packages('mgcv', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
+	echo "install.packages('inlabru', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
 	echo "install.packages('INLA', repos='https://inla.r-inla-download.org/R/stable')" >> other.R
 	echo "install.packages('ggplot2', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
         echo "install.packages('viridis', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
         echo "install.packages('cowplot', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-        echo "install.packages('gratia', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
+        echo "install_version('RcppArmadillo', version='0.9.900.3.0', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
+	echo "install_version('gratia', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
         echo "install.packages('grid', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
         echo "install.packages('gridExtra', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
         echo "install.packages('infotheo', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
@@ -161,10 +163,10 @@ From: centos:7
 	echo "install.packages('exactextractr', repos='https://ftp.osuosl.org/pub/cran/')" >> 7.R
         echo "install.packages('nlme', repos='https://ftp.osuosl.org/pub/cran/')" >> 7.R
 	echo "install.packages('censusapi', repos='https://ftp.osuosl.org/pub/cran/')" >> 7.R
+	scl enable devtoolset-7 bash
 	Rscript packages.R	
 	Rscript other.R
-	scl enable devtoolset-7 bash
 	Rscript 7.R
 
 %labels
-forrest_version peregrine6.def
+forrest_version peregrine7.def
