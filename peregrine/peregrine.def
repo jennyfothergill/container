@@ -6,7 +6,6 @@ From: centos:7
 	yum -y groupinstall "Development Tools"
 	yum -y install centos-release-scl
 	yum -y install \
-		wget \
 		curl \
 		infinipath-psm \
 		mlocate \
@@ -45,11 +44,11 @@ From: centos:7
 		libtool \
 		libtool-devel \
 		v8-devel
-exit
+
 	ionice -c3 updatedb
 	mkdir peregrine
 	cd peregrine
-	wget https://sqlite.org/2019/sqlite-autoconf-3300100.tar.gz
+	curl -LO https://sqlite.org/2019/sqlite-autoconf-3300100.tar.gz
 	tar -xf sqlite-autoconf-3300100.tar.gz
 	cd sqlite-autoconf-3300100
 	./configure
@@ -64,10 +63,8 @@ exit
 	yum -y install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
 	yum -y install geos-devel-3.5.0-1.rhel7
 
-	#wget --user-agent="Mozilla" "http://www.openbugs.net/w/OpenBUGS_3_2_3?action=AttachFile&do=get&target=OpenBUGS-3.2.3.tar.gz"
-	wget https://www.mrc-bsu.cam.ac.uk/wp-content/uploads/2018/04/OpenBUGS-3.2.3.tar.gz
+	curl -LO https://www.mrc-bsu.cam.ac.uk/wp-content/uploads/2018/04/OpenBUGS-3.2.3.tar.gz
 	pwd
-	#tar -xf "OpenBUGS_3_2_3?action=AttachFile&do=get&target=OpenBUGS-3.2.3.tar.gz"
 	tar -xf OpenBUGS-3.2.3.tar.gz
 	cd OpenBUGS-3.2.3
 	./configure
@@ -75,7 +72,7 @@ exit
 	make install
 	cd ..
 
-	wget http://www.netlib.org/blas/blas-3.8.0.tgz
+	curl -LO http://www.netlib.org/blas/blas-3.8.0.tgz
 	tar -xf blas-3.8.0.tgz
 	cd BLAS-3.8.0
 	make -j4
@@ -88,8 +85,7 @@ exit
 	mv /usr/lib64/liblapack.so.3.4.2 /usr/lib64/liblapack.so
 	cd ..
 
-	wget https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Source/JAGS-4.3.0.tar.gz/download
-	mv download download.tar.gz
+	curl -L -o download.tar.gz https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Source/JAGS-4.3.0.tar.gz/download
 	tar -xf download.tar.gz
 	cd JAGS-4.3.0
 	LDFLAGS="-L/usr/lib64" ./configure --with-blas="-L/usr/lib64/libblas.so" --with-lapack="-L/usr/lib64/liblapack.so.3.4.2 --prefix=/peregrine/JAGS-4.3.0"
@@ -120,7 +116,7 @@ exit
 	echo "MAKEFLAGS = -j4" >> ~/.R/Makevars
 
 	cd ..
-	wget https://github.com/OSGeo/PROJ/releases/download/6.1.1/proj-6.1.1.tar.gz
+	curl -LO https://github.com/OSGeo/PROJ/releases/download/6.1.1/proj-6.1.1.tar.gz
 	tar -xf proj-6.1.1.tar.gz
 	cd proj-6.1.1
 	./configure
@@ -128,7 +124,7 @@ exit
 	make install
 
 	cd ..
-	wget https://github.com/OSGeo/gdal/releases/download/v3.0.1/gdal-3.0.1.tar.gz
+	curl -LO https://github.com/OSGeo/gdal/releases/download/v3.0.1/gdal-3.0.1.tar.gz
 	tar -xf gdal-3.0.1.tar.gz
 	cd gdal-3.0.1
 	./configure
