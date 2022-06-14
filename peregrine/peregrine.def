@@ -1,209 +1,190 @@
 Bootstrap: docker
-From: centos:7
+From: rockylinux:8
+
+%environment
+export LC_ALL=C
+
+%files
+
+peregrinetest.R /opt/
 
 %post
-	echo $LD_LIBRARY_PATH
-	yum -y groupinstall "Development Tools"
-	yum -y install centos-release-scl
-	yum -y install \
-		curl \
-		infinipath-psm \
-		mlocate \
-		which \
-		kernel-devel \
-		epel-release \
-		vim \
-		glibc-devel.i686 \
-		blas \
-		libgcc \
-		libgcc.i686 \
-		readline-devel \
-		lapack
 
-	yum -y install
-		zlib-devel \
-		bzip2-devel \
-		xz-devel \
-		pcre-devel \
-		libcurl-devel \
-		pkgconfig \
-		udunits2-devel \
-		java-1.8.0-openjdk-devel \
-		openssl-devel \
-		centos-release-scl \
-		scl-utils
+export LC_ALL=C
 
-	yum -y install \
-		devtoolset-7 \
-		libpng-devel \
-		libjpeg-devel \
-		tk-devel \
-		tcl-devel \
-		libxml2-devel \
-		libssl-devel \
-		libtool \
-		libtool-devel \
-		v8-devel
+export R_VERSION=4.1.3
 
-	ionice -c3 updatedb
-	mkdir peregrine
-	cd peregrine
-	curl -LO https://sqlite.org/2019/sqlite-autoconf-3300100.tar.gz
-	tar -xf sqlite-autoconf-3300100.tar.gz
-	cd sqlite-autoconf-3300100
-	./configure
-	make -j4
-	make install
-	ls
-	cd ..
-	ionice -c3 updatedb
-	locate *.pc
-	export PKG_CONFIG_PATH=/peregrine/sqlite-autoconf-3300100/
+export PKG="dnf -y"
 
-	yum -y install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-	yum -y install geos-devel-3.5.0-1.rhel7
+$PKG update
+$PKG install dnf-plugins-core
+$PKG install epel-release
+$PKG config-manager --set-enabled powertools
+$PKG update
 
-	curl -LO https://www.mrc-bsu.cam.ac.uk/wp-content/uploads/2018/04/OpenBUGS-3.2.3.tar.gz
-	pwd
-	tar -xf OpenBUGS-3.2.3.tar.gz
-	cd OpenBUGS-3.2.3
-	./configure
-	make -j4
-	make install
-	cd ..
+$PKG groupinstall "Development Tools"
 
-	curl -LO http://www.netlib.org/blas/blas-3.8.0.tgz
-	tar -xf blas-3.8.0.tgz
-	cd BLAS-3.8.0
-	make -j4
-	gfortran -c -fPIC *.f
-	ar rv libblas.a *.o
-	cp libblas.a /usr/lib64
-	cp libblas.a /usr/lib64/libblas.so
-	rm -rf *.o
-	rm -rf *.f
-	mv /usr/lib64/liblapack.so.3.4.2 /usr/lib64/liblapack.so
-	cd ..
+$PKG install \
+	cmake \
+	gdal-devel \
+	geos-devel \
+	glibc-devel \
+	glibc-devel.i686 \
+	gsl-devel \
+	lapack-devel \
+	libjpeg-turbo-devel \
+	libpng-devel \
+	libtiff-devel \
+	libxml2-devel \
+	netcdf-devel \
+	openblas-devel \
+	openssl-devel \
+	proj-devel \
+	sqlite-devel \
+	udunits2-devel
 
-	curl -L -o download.tar.gz https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Source/JAGS-4.3.0.tar.gz/download
-	tar -xf download.tar.gz
-	cd JAGS-4.3.0
-	LDFLAGS="-L/usr/lib64" ./configure --with-blas="-L/usr/lib64/libblas.so" --with-lapack="-L/usr/lib64/liblapack.so.3.4.2 --prefix=/peregrine/JAGS-4.3.0"
-	make -j4
-	make install
-	ionice -c3 updatedb
-	locate jags.pc
+cd /opt
+curl -O https://cdn.rstudio.com/r/centos-8/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
+yum -y install R-${R_VERSION}-1-1.x86_64.rpm
 
-	yum install -y https://repo.ius.io/ius-release-el7.rpm 
-	yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R
+ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
 
-	yum install -y python36u python36u-libs python36u-devel python36u-pip
+cd /opt
+curl -L -o download.tar.gz https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Source/JAGS-4.3.0.tar.gz/download
+tar -xf download.tar.gz
+cd JAGS-4.3.0
+./configure
+make -j 24
+make install
 
-	python --version
-	python3 --version
+cd /opt
+curl -LO https://www.mrc-bsu.cam.ac.uk/wp-content/uploads/2018/04/OpenBUGS-3.2.3.tar.gz
+tar -xf OpenBUGS-3.2.3.tar.gz
+cd OpenBUGS-3.2.3
+./configure
+make -j 24
+make install
 
-	cd ..
-	wget https://cran.r-project.org/src/base/R-3/R-3.6.0.tar.gz
-	tar -xf R-3.6.0.tar.gz
-	cd R-3.6.0
-	./configure --with-x=no --enable-R-shlib=yes
-	make -j4
-	make install
-	mkdir ~/.R/
-	touch ~/.R/Makevars
-	echo "CXX14FLAGS=-O3 -march=native -mtune=native -fPIC -std=c++14" >> ~/.R/Makevars
-	echo "CXX14=/opt/rh/devtoolset-7/root/usr/bin/g++" >> ~/.R/Makevars
-	echo "MAKEFLAGS = -j4" >> ~/.R/Makevars
+# Install the r packages one by one.  Alternate the 'install.packages' calls
+# and 'library' calls so that if and installation fails, the build fails on the
+# following line.
+cd /opt
 
-	cd ..
-	curl -LO https://github.com/OSGeo/PROJ/releases/download/6.1.1/proj-6.1.1.tar.gz
-	tar -xf proj-6.1.1.tar.gz
-	cd proj-6.1.1
-	./configure
-	make -j4
-	make install
+# INLA is non-standard for some reason.
+# https://www.r-inla.org/download-install
+R -e "install.packages('INLA', repos=c('https://ftp.osuosl.org/pub/cran/', INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE, Ncpus=24)"
+R -e "library(INLA)"
 
-	cd ..
-	curl -LO https://github.com/OSGeo/gdal/releases/download/v3.0.1/gdal-3.0.1.tar.gz
-	tar -xf gdal-3.0.1.tar.gz
-	cd gdal-3.0.1
-	./configure
-	make -j4
-	make install
+# install the current requested script dependencies (WAEA)
+# g++ is getting hung up on what may be a /tmp issue or a host arch issue
+R -e "install.packages('rgdal', repo='https://ftp.osuosl.org/pub/cran/', type='source', configure.args='--host=host', Ncpus=24)"
+R -e "library(rgdal)"
+R -e "install.packages('rgeos', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(rgeos)"
+R -e "install.packages('raster', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(raster)"
+R -e "install.packages('dplyr', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(dplyr)"
 
-	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/:$PKG_CONFIG_PATH
-	export LD_RUN_PATH=/usr/local/lib:$LD_RUN_PATH
-	ionice -c3 updatedb
-	locate proj.pc
-	locate proj_api.h
-	export PROJ_LIB=/usr/local/share/proj
-	locate proj.db
-	export LD_LIBRARY_PATH=/usr/local/include/:$LD_LIBRARY_PATH
+# install the previously used packages
+R -e "install.packages('devtools', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(devtools)"
+R -e "install.packages('jpeg', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(jpeg)"
+R -e "install.packages('units', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(units)"
+R -e "install.packages('lme4', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(lme4)"
+R -e "install.packages('MuMIn', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(MuMIn)"
+R -e "install.packages('jagsUI', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(jagsUI)"
+R -e "install.packages('R2OpenBUGS', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(R2OpenBUGS)"
+R -e "install.packages('nimble', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(nimble)"
+R -e "install.packages('rjags', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(rjags)"
+R -e "install.packages('R2jags', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(R2jags)"
+R -e "install.packages('reshape2', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(reshape2)"
+R -e "install.packages('tidyr', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(tidyr)"
+R -e "install.packages('sf', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(sf)"
+R -e "install.packages('fields', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(fields)"
+R -e "install.packages('rstanarm', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(rstanarm)"
+R -e "install.packages('sp', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(sp)"
+R -e "install.packages('unmarked', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(unmarked)"
+R -e "install.packages('maxnet', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(maxnet)"
+R -e "install.packages('ENMeval', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(ENMeval)"
+R -e "install.packages('spThin', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(spThin)"
+R -e "install.packages('lubridate', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(lubridate)"
+R -e "install.packages('landscapemetrics', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(landscapemetrics)"
+R -e "install.packages('data.table', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(data.table)"
+R -e "install.packages('RPyGeo', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(RPyGeo)"
+R -e "install.packages('brms', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(brms)"
+R -e "install.packages('mgcv', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(mgcv)"
+R -e "install.packages('inlabru', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(inlabru)"
+R -e "install.packages('ggplot2', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(ggplot2)"
+R -e "install.packages('viridis', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(viridis)"
+R -e "install.packages('cowplot', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(cowplot)"
+R -e "install.packages('grid', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(grid)"
+R -e "install.packages('gridExtra', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(gridExtra)"
+R -e "install.packages('infotheo', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(infotheo)"
+R -e "install.packages('arules', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(arules)"
+R -e "install.packages('cartography', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(cartography)"
+R -e "install.packages('snow', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(snow)"
+R -e "install.packages('geosphere', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(geosphere)"
+R -e "install.packages('spatialEco', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(spatialEco)"
+R -e "install.packages('glmmTMB', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(glmmTMB)"
+R -e "install.packages('groupdata2', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(groupdata2)"
+R -e "install.packages('exactextractr', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(exactextractr)"
+R -e "install.packages('nlme', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(nlme)"
+R -e "install.packages('censusapi', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(censusapi)"
+# was in install_version, but no version
+R -e "install.packages('gratia', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(gratia)"
 
-	cd ..
-	echo "install.packages('devtools', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "require(devtools)" >> packages.R
-	echo "install_version('nloptr', version='1.2.2.1', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "install.packages('jpeg', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "install.packages('units', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "install.packages('lme4', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "install.packages('MuMIn', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "install.packages('jagsUI', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "install.packages('R2OpenBUGS', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "install.packages('nimble', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "install.packages('rjags', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "install.packages('R2jags', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "install.packages('reshape2', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "install.packages('tidyr', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "install.packages('dplyr', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R
-	echo "install.packages('sf', repos='https://ftp.osuosl.org/pub/cran/', configure.args=('--with-proj-lib=/usr/local/share/proj --with-proj-include=/usr/local/include/'))" >> packages.R
-	echo "install.packages('fields', repos='https://ftp.osuosl.org/pub/cran/')" >> packages.R 
+# use install.packages, but these may need to use install_version
+# RcppArmadillo, version='0.9.900.3.0',
+R -e "install.packages('RcppArmadillo', repos='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+# nloptr, version='1.2.2.1'
+R -e "install.packages('nloptr', repos='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
 
-	echo "require(devtools)" >> other.R
-	echo "install.packages('raster', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('rstanarm', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('sp', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "packageurl <- 'https://cran.r-project.org/src/contrib/Archive/rgdal/rgdal_1.4-8.tar.gz'" >> other.R
-	echo "install.packages(packageurl, repos=NULL, type='source')" >> other.R
-	#echo "install_version('rgdal', version='1.4-8', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('rgeos', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('unmarked', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('maxnet', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('ENMeval', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('dplyr', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('spThin', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('lubridate', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('landscapemetrics', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('data.table', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('RPyGeo', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('brms', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('mgcv', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('inlabru', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('INLA', repos='https://inla.r-inla-download.org/R/stable')" >> other.R
-	echo "install.packages('ggplot2', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('viridis', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('cowplot', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install_version('RcppArmadillo', version='0.9.900.3.0', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install_version('gratia', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('grid', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('gridExtra', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('infotheo', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('arules', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('cartography', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('snow', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('geoR', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('geosphere', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('spatialEco', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('glmmTMB', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "install.packages('groupdata2', repos='https://ftp.osuosl.org/pub/cran/')" >> other.R
-	echo "require(devtools)" >> 7.R
-	echo "install.packages('exactextractr', repos='https://ftp.osuosl.org/pub/cran/')" >> 7.R
-	echo "install.packages('nlme', repos='https://ftp.osuosl.org/pub/cran/')" >> 7.R
-	echo "install.packages('censusapi', repos='https://ftp.osuosl.org/pub/cran/')" >> 7.R
-	scl enable devtoolset-7 bash
-	Rscript packages.R
-	Rscript other.R
-	Rscript 7.R
+%help
 
 %labels
 author Kyle Shannon <kyle@pobox.com>
