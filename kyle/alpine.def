@@ -1,0 +1,23 @@
+Bootstrap: localimage
+From: /home/kyle/src/simages/alpine/v3.16.0
+
+%post
+sed -i 's/v3.16/edge/g' /etc/apk/repositories
+tail -n 1 /etc/apk/repositories | sed 's/community/testing/' >> /etc/apk/repositories
+
+apk update
+apk upgrade
+
+apk add \
+	build-base \
+	gdal-dev \
+	gdal-tools \
+	go \
+	proj-dev \
+	sqlite \
+	sqlite-dev \
+	sqlite-tcl \
+	tree \
+	valgrind \
+	viddy \
+	vim
