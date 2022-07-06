@@ -1,0 +1,59 @@
+Bootstrap: localimage
+From: /home/kyle/src/simages/alpine/v3.16.0
+
+%environment
+
+%post
+
+export SQLITE_TAG=version-3.39.0
+
+sed -i 's/v3.16/edge/g' /etc/apk/repositories
+tail -n 1 /etc/apk/repositories | sed 's/community/testing/' >> /etc/apk/repositories
+
+apk update
+apk upgrade
+
+apk add \
+	build-base \
+	curl \
+	fossil \
+	geos-dev \
+	librttopo-dev \
+	libxml2-dev \
+	minizip-dev \
+	proj-dev \
+	readline-dev \
+  tcl-dev \
+	zlib-dev
+
+mkdir -p /opt/src/sqlite3
+cd /opt/src/sqlite3
+fossil clone --user nobody https://sqlite.org/src sqlite3.fossil
+fossil open sqlite3.fossil
+fossil checkout $SQLITE_TAG
+CFLAGS="-DSQLITE_DQS=0 -DSQLITE_LIKE_DOESNT_MATCH_BLOBS -DSQLITE_MAX_EXPR_DEPTH=0 -DSQLITE_OMIT_DEPRECATED -DSQLITE_USE_ALLOCA" ./configure --enable-all
+make
+make install
+
+cd ext/misc
+for x in carray csv decimal shathree uuid;
+	do gcc -g -fPIC -shared $x.c -o $x.so;
+	cp $x.so /usr/local/lib/
+done;
+
+mkdir /opt/src/spatialite
+cd /opt/src/spatialite
+fossil clone --user nobody https://www.gaia-gis.it/fossil/libspatialite spatialite.fossil
+fossil open spatialite.fossil
+./configure --enable-freexl=no
+make
+make install
+
+%help
+SQLite3 v3.39.0 with the all core extensions enabled (except FTS3) and the
+extensions carray, csv, decimal, shathree, and uuid from ext/misc.  The
+spatialite library is also available without freexl support.
+
+%runscript
+
+sqlite3 $@
