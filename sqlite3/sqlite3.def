@@ -3,9 +3,15 @@ From: /home/kyle/src/simages/alpine/v3.16.0
 
 %environment
 
+%files
+apptest.tcl /opt
+
 %post
 
-export SQLITE_TAG=version-3.39.0
+# SQLite3 v3.39.1
+export SQLITE_SHA3=7c16541a
+export SPATIALITE_VERSION=5.0.1
+export MAKE_JOBS=16
 
 sed -i 's/v3.16/edge/g' /etc/apk/repositories
 tail -n 1 /etc/apk/repositories | sed 's/community/testing/' >> /etc/apk/repositories
@@ -17,43 +23,64 @@ apk add \
 	build-base \
 	curl \
 	fossil \
+	gdal \
+	gdal-dev \
+	gdal-tools \
 	geos-dev \
 	librttopo-dev \
 	libxml2-dev \
 	minizip-dev \
 	proj-dev \
 	readline-dev \
-  tcl-dev \
+	rlwrap \
+	tcl \
+	tcl-dev \
+	tcl-doc \
+	tcl-lib \
+	tcl-readline \
 	zlib-dev
 
-mkdir -p /opt/src/sqlite3
-cd /opt/src/sqlite3
-fossil clone --user nobody https://sqlite.org/src sqlite3.fossil
-fossil open sqlite3.fossil
-fossil checkout $SQLITE_TAG
-CFLAGS="-DSQLITE_DQS=0 -DSQLITE_LIKE_DOESNT_MATCH_BLOBS -DSQLITE_MAX_EXPR_DEPTH=0 -DSQLITE_OMIT_DEPRECATED -DSQLITE_USE_ALLOCA" ./configure --enable-all
-make
+mkdir -p /opt/src
+cd /opt/src
+curl -LO https://sqlite.org/src/tarball/$SQLITE_SHA3/SQLite-$SQLITE_SHA3.tar.gz
+tar -xf SQLite-$SQLITE_SHA3.tar.gz
+mv SQLite-$SQLITE_SHA3 sqlite3
+cd sqlite3
+CFLAGS=-DSQLITE_ENABLE_COLUMN_METADATA ./configure --enable-all
+make -j $MAKE_JOBS
 make install
+make speedtest1
+make testfixture
+
+# build the lsm extension
+tclsh ./ext/lsm1/tool/mklsm1c.tcl
+gcc -g -fPIC -shared lsm1.c -o lsm1.so
+cp lsm1.so /usr/local/lib/
 
 cd ext/misc
-for x in carray csv decimal shathree uuid;
+for x in btreeinfo carray completion compress csv dbdata \
+  decimal explain shathree spellfix sqlar uuid;
 	do gcc -g -fPIC -shared $x.c -o $x.so;
 	cp $x.so /usr/local/lib/
 done;
 
 mkdir /opt/src/spatialite
 cd /opt/src/spatialite
-fossil clone --user nobody https://www.gaia-gis.it/fossil/libspatialite spatialite.fossil
-fossil open spatialite.fossil
+curl -LO https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-$SPATIALITE_VERSION.tar.gz
+tar -xf libspatialite-$SPATIALITE_VERSION.tar.gz
+cd libspatialite-$SPATIALITE_VERSION
 ./configure --enable-freexl=no
-make
+make -j $MAKE_JOBS
 make install
 
 %help
-SQLite3 v3.39.0 with the all core extensions enabled (except FTS3) and the
-extensions carray, csv, decimal, shathree, and uuid from ext/misc.  The
-spatialite library is also available without freexl support.
+SQLite3 v3.39.1 with the all core extensions enabled (except FTS3) and some
+miscellaneous extensions. The Spatialite library is also available without
+freexl support.
+
+%test
+/opt/src/sqlite3/speedtest1 --memdb
+tclsh /opt/apptest.tcl
 
 %runscript
-
 sqlite3 $@
