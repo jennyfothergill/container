@@ -26,11 +26,14 @@ $PKG groupinstall "Development Tools"
 
 $PKG install \
 	cmake \
+	fontconfig-devel \
+	fribidi-devel \
 	gdal-devel \
 	geos-devel \
 	glibc-devel \
 	glibc-devel.i686 \
 	gsl-devel \
+	harfbuzz-devel \
 	lapack-devel \
 	libjpeg-turbo-devel \
 	libpng-devel \
@@ -75,6 +78,9 @@ cd /opt
 # https://www.r-inla.org/download-install
 R -e "install.packages('INLA', repos=c('https://ftp.osuosl.org/pub/cran/', INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE, Ncpus=24)"
 R -e "library(INLA)"
+
+# Make sure executables are available to everyone.
+chmod +x /opt/R/4.1.3/lib/R/library/INLA/bin/linux/64bit/*
 
 # install the current requested script dependencies (WAEA)
 # g++ is getting hung up on what may be a /tmp issue or a host arch issue
