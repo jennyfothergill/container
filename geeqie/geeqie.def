@@ -6,7 +6,7 @@ From: ubuntu:bionic
 
 %environment
         export PATH=${PATH}:/lfs/software/misc/geeqie/bin
-	export LC_ALL=C
+        export LC_ALL=C
 
 %post
         export DEBIAN_FRONTEND="noninteractive"
