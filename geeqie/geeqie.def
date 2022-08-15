@@ -1,0 +1,30 @@
+Bootstrap: docker
+From: ubuntu:bionic
+
+
+%files
+
+%environment
+        export PATH=${PATH}:/lfs/software/misc/geeqie/bin
+
+%post
+        export DEBIAN_FRONTEND="noninteractive"
+        apt-get  update && apt-get install -y --no-install-recommends apt-transport-https curl ca-certificates
+        apt-get -y install wget vim git unzip zip bzip2 libssl-dev libcurl4-openssl-dev zlib1g-dev libv8-dev
+        apt-get -y install libgsl-dev libxml2-dev gnupg gnupg1 gnupg2
+        
+        apt-get install -y tzdata
+        # set your timezone
+        ln -fs /usr/share/zoneinfo/America/Denver /etc/localtime
+        dpkg-reconfigure --frontend noninteractive tzdata
+
+        apt -y install software-properties-common
+        apt-get update
+        apt -y install geeqie
+
+%runscript
+
+#!/bin/sh
+/usr/bin/geeqie "$@"
+
+%startscript
