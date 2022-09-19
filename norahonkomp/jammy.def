@@ -24,6 +24,7 @@ DEBIAN_FRONTEND=NONINTERACTIVE apt install -y \
   cmake \
   flex \
   gdb \
+  gdal-bin \
   git \
   libexpat-dev \
   libgdal-dev \
