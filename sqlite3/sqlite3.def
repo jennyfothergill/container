@@ -8,8 +8,8 @@ apptest.tcl /opt
 
 %post
 
-# SQLite3 v3.39.1
-export SQLITE_SHA3=7c16541a
+# SQLite3 v3.39.4
+export SQLITE_SHA3=a29f994989532212
 export SPATIALITE_VERSION=5.0.1
 export MAKE_JOBS=16
 
