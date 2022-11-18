@@ -1,6 +1,8 @@
 # Bioinformatics stack
 Quick notes on how to access each of the programs in this container along with what version is installed
 
+UPDATED 2022-11-18
+
 Build container
 ```
 apptainer build --fakeroot bioinformatics.sif bioinformatics.def
@@ -9,6 +11,16 @@ apptainer build --fakeroot bioinformatics.sif bioinformatics.def
 ASTRAL 5.7.8
 ```
 apptainer run bioinformatics.sif astral -i test_files/song_primates.424.gene.tre 
+```
+
+BBMap 39.01
+```
+apptainer exec bioinformatics.sif bbmap.sh
+```
+
+BCFtools 1.16
+```
+apptainer exec bioinformatics.sif bcftools --help
 ```
 
 BEAST 2.6.6
