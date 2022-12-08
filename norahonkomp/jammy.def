@@ -35,6 +35,7 @@ DEBIAN_FRONTEND=NONINTERACTIVE apt install -y \
   libsqlite3-dev \
   libudunits2-dev \
   libxml2-dev \
+  pandoc \
   r-base \
   tcl \
   tcl-dev \
@@ -52,6 +53,9 @@ R -e "install.packages('mgcv', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24
 R -e "library(mgcv)"
 R -e "install.packages('rgdal', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
 R -e "library(rgdal)"
+R -e "install.packages('rmarkdown', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(rmarkdown)"
+
 R -e "install.packages('sf', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
 R -e "library(sf)"
 R -e "install.packages('sp', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
@@ -66,6 +70,7 @@ library(here)
 library(lubridate)
 library(mgcv)
 library(rgdal)
+library(rmarkdown)
 library(sf)
 library(sp)
 library(tidyverse)
