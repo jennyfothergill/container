@@ -3,6 +3,13 @@
 # Astral needs run not exec, that's why it has its own script
 ln -s astral.sh astral
 ln -s bioinformatics.sh beast
+ln -s bioinformatics.sh applauncher
+ln -s bioinformatics.sh beauti
+ln -s bioinformatics.sh densitree
+ln -s bioinformatics.sh loganalyser
+ln -s bioinformatics.sh logcombiner
+ln -s bioinformatics.sh packagemanager
+ln -s bioinformatics.sh treeannotator
 ln -s bioinformatics.sh mafft
 ln -s bioinformatics.sh trimal
 ln -s bioinformatics.sh bmge
