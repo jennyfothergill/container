@@ -1,4 +1,18 @@
-set users {buster kyle matt}
+set users {
+	sabrina
+	molly
+	matthew
+	yas
+	brittanie
+	kathleen
+	prithila
+	ashley
+	amanda
+	ben
+	ryan
+	kyle
+	matt
+}
 set i 1001
 foreach user $users {
 	set salt [exec head -c 3 /dev/urandom | base64]
