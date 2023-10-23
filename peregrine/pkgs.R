@@ -2,6 +2,7 @@
 #options(repos="http://cran.us.r-project.org")
 options(repos="https://cloud.r-project.org")
 
+# function to error out if the package fails to install
 installp <- function(pkgs) {
   for (p in pkgs) {
     install.packages(p, dependencies=TRUE, Ncpus=8);
@@ -11,15 +12,12 @@ installp <- function(pkgs) {
   }
 }
 
-# no packages
-#installp('rgdal', 'rgeos', 'spatialEco', 'glmmTMB', 'R2OpenBUGS', 'jagsUI', 'rjags', 'R2jags', 'rstanarm', 'ENMeval')
-
-# skipping rgdal, rgeos, spatialEco, ENMeval, and possibly R2OpenBUGS
-
-# need glmmTMB, jagsUI, rjags, R2jags
-
-# rstanarm and glmmTMB (maybe) runs out of memory on my mini builder (8GB RAM), so build on workstation
-
+# rgdal and rgeos have been removed from cran
+# ENMeval fails to install due to dependency issues:
+# ERROR: dependency 'BIEN' is not available for package 'rangeModelMetadata'
+# * removing '/opt/R/4.3.1/lib/R/library/rangeModelMetadata'
+# ERROR: dependency 'rangeModelMetadata' is not available for package 'ENMeval'
+# * removing '/opt/R/4.3.1/lib/R/library/ENMeval'
 pkgs <- c(
 	'raster',
 	'sf',
@@ -66,11 +64,17 @@ pkgs <- c(
 	'rjags',
 	'jagsUI',
 	'R2jags',
-	'glmmTMB')
+	'glmmTMB',
+	'terra',
+	'rstan',
+	'rstanarm',
+	'PointedSDMs',
+	'nimbleHMC',
+	'spOccupancy',
+	'loo',
+	'ENMeval')
 
 installp(pkgs)
-
-installp(c('rstanarm'))
 
 install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
 library(INLA)
