@@ -6,7 +6,6 @@ export LC_ALL=C
 
 %files
 
-peregrinetest.R /opt/
 pkgs.R /opt/
 
 %post
