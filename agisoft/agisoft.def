@@ -10,13 +10,14 @@ From: ubuntu:23.04
 
 %post
 	apt update
-    apt install -y libxcb-xinerama0 wget tar
-	apt install -y tzdata
-	# set your timezone
+    apt install -y libxcb-xinerama0 wget tar tzdata libcurl4 libgl1-mesa-glx libglu1-mesa libgomp1 libglib2.0-0
+    # set your timezone
 	ln -fs /usr/share/zoneinfo/America/Denver /etc/localtime
     cd /opt
     wget https://s3-eu-west-1.amazonaws.com/download.agisoft.com/metashape_2_0_3_amd64.tar.gz
     tar xzf metashape_2_0_3_amd64.tar.gz
+    chmod go+r -R /opt/metashape
+    find /opt/metashape -perm /u+x -execdir chmod a+x {} +
     
 %runscript
 
