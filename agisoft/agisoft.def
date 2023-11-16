@@ -7,6 +7,8 @@ From: ubuntu:23.04
 %environment
 	export LC_ALL=C
 	export PATH=/opt/metashape:$PATH
+    export QT_QPA_PLATFORM=offscreen
+    export GDK_BACKEND=x11
 
 %post
 	apt update
