@@ -21,6 +21,7 @@ installp <- function(pkgs) {
 pkgs <- c(
 	'raster',
 	'sf',
+	'sfheaders',
 	'sp',
 	'RPyGeo',
 	'cartography',
