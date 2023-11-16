@@ -72,7 +72,8 @@ pkgs <- c(
 	'PointedSDMs',
 	'nimbleHMC',
 	'spOccupancy',
-	'loo')
+	'loo',
+	'splancs')
 
 installp(pkgs)
 
