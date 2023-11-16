@@ -6,11 +6,14 @@ From: ubuntu:23.04
 
 %environment
 	export LC_ALL=C
-	export PATH=
+	export PATH=/opt/metashape:$PATH
 
 %post
 	apt update
-    apt install -y libxcb-xinerama
+    apt install -y libxcb-xinerama0 wget tar
+	apt install -y tzdata
+	# set your timezone
+	ln -fs /usr/share/zoneinfo/America/Denver /etc/localtime
     cd /opt
     wget https://s3-eu-west-1.amazonaws.com/download.agisoft.com/metashape_2_0_3_amd64.tar.gz
     tar xzf metashape_2_0_3_amd64.tar.gz
