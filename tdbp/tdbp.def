@@ -11,7 +11,7 @@ From: ubuntu:18.04
 
 %post
 	apt update
-    apt install -y tar wget octave octave-signal octave-image
+    apt install -y tar wget octave octave-signal octave-image gnupg
     # set your timezone
 	ln -fs /usr/share/zoneinfo/America/Denver /etc/localtime
     wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
