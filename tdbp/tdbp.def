@@ -3,20 +3,21 @@ From: ubuntu:18.04
 
 
 %files
-    /bsuhome/s_jennyfothergill/TDBP_gpu_Ubuntu20_04_20220113.tar.gz /opt/tdbp.tar.gz
+    TDBP_gpu_Ubuntu20_04_20220113.tar.gz /opt/tdbp.tar.gz
 
 %environment
-	export LC_ALL=C
-	export PATH=/opt/TDBP_gpu/bin:/opt/TDBP_gpu/scripts:$PATH
+    export LC_ALL=C
+    export PATH=/opt/TDBP_gpu/bin:/opt/TDBP_gpu/scripts:$PATH
 
 %post
-	apt update
-    apt install -y tar wget octave octave-signal octave-image gnupg
+    apt update
+    apt install -y tar wget octave octave-signal octave-image gnupg \
+        software-properties-common libgdal-dev
     # set your timezone
-	ln -fs /usr/share/zoneinfo/America/Denver /etc/localtime
+    ln -fs /usr/share/zoneinfo/America/Denver /etc/localtime
     wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
     mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
-    apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
+    apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
     add-apt-repository "deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/ /"
     apt update
     apt install -y cuda
