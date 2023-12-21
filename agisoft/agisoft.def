@@ -15,16 +15,16 @@ From: rockylinux:8.9
     dnf update -y
     dnf install -y epel-release
     dnf upgrade -y
-    dnf install -y libxcb wget tar tzdata curl mesa-libGL mesa-libGLU libgomp libXtst libXv
+    dnf install -y libxcb wget tar tzdata mesa-libGL mesa-libGLU libgomp libXtst libXv mesa-libEGL
     cd /opt
+    wget https://sourceforge.net/projects/virtualgl/files/3.1/VirtualGL-3.1.x86_64.rpm
+    rpm -i VirtualGL-3.1.x86_64.rpm
     wget https://developer.download.nvidia.com/compute/cuda/11.7.0/local_installers/cuda-repo-rhel8-11-7-local-11.7.0_515.43.04-1.x86_64.rpm
     rpm -i cuda-repo-rhel8-11-7-local-11.7.0_515.43.04-1.x86_64.rpm
     dnf clean all
     dnf -y module install nvidia-driver:latest-dkms
     dnf -y install cuda
-    wget https://sourceforge.net/projects/virtualgl/files/3.1/VirtualGL-3.1.x86_64.rpm
-    rpm -i VirtualGL-3.1.x86_64.rpm
-    dnf reinstall -y libglvnd
+    #dnf reinstall -y libglvnd
     wget https://s3-eu-west-1.amazonaws.com/download.agisoft.com/metashape-pro_2_0_3_amd64.tar.gz
     tar xzf metashape-pro_2_0_3_amd64.tar.gz
     chmod go+r -R /opt/metashape-pro
