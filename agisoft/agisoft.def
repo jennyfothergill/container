@@ -14,15 +14,15 @@ From: ubuntu:lunar
     export TZ="America/Denver"
 	apt update
     apt install -y apt-utils
-    apt install -y libxcb-* wget tar tzdata libcurl4 libgl1-mesa-glx libglu1-mesa libgomp1 libglib2.0-0 libxtst6 libxv1 libegl1-mesa
+    apt install -y libxcb-* wget tar tzdata libcurl4 libgl1-mesa-glx libglu1-mesa libgomp1 libglib2.0-0 libxtst6 libxv1 libegl1-mesa libglvnd-dev
     cd /opt
     wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
     mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600
-    wget https://developer.download.nvidia.com/compute/cuda/12.3.1/local_installers/cuda-repo-ubuntu2204-12-3-local_12.3.1-545.23.08-1_amd64.deb
-    dpkg -i cuda-repo-ubuntu2204-12-3-local_12.3.1-545.23.08-1_amd64.deb
-    cp /var/cuda-repo-ubuntu2204-12-3-local/cuda-*-keyring.gpg /usr/share/keyrings/
+    wget https://developer.download.nvidia.com/compute/cuda/11.7.0/local_installers/cuda-repo-ubuntu2204-11-7-local_11.7.0-515.43.04-1_amd64.deb
+    dpkg -i cuda-repo-ubuntu2204-11-7-local_11.7.0-515.43.04-1_amd64.deb
+    cp /var/cuda-repo-ubuntu2204-11-7-local/cuda-*-keyring.gpg /usr/share/keyrings/
     apt-get update
-    apt-get -y install cuda-toolkit-12-3
+    apt-get -y install cuda-toolkit-11-7
     wget https://sourceforge.net/projects/virtualgl/files/3.1/virtualgl_3.1_amd64.deb
     dpkg -i virtualgl_3.1_amd64.deb
     wget https://s3-eu-west-1.amazonaws.com/download.agisoft.com/metashape-pro_2_0_3_amd64.tar.gz
