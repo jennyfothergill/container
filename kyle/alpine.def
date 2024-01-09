@@ -1,15 +1,22 @@
-Bootstrap: localimage
-From: /home/kyle/src/simages/alpine/v3.16.0
+Bootstrap: scratch
+
+%setup
+export MAJOR=3
+export MINOR=19
+export PATCH=0
+export ARCH=x86_64
+curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
+curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
+sha512sum -c alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
+tar -C ${APPTAINER_ROOTFS} -xf alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
 
 %post
-sed -i 's/v3.16/edge/g' /etc/apk/repositories
-tail -n 1 /etc/apk/repositories | sed 's/community/testing/' >> /etc/apk/repositories
-
 apk update
 apk upgrade
 
 apk add \
 	build-base \
+	fish \
 	gdal-dev \
 	gdal-tools \
 	go \
@@ -19,5 +26,4 @@ apk add \
 	sqlite-tcl \
 	tree \
 	valgrind \
-	viddy \
 	vim

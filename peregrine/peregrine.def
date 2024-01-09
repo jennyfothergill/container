@@ -1,196 +1,102 @@
 Bootstrap: docker
-From: rockylinux:8
+From: ubuntu:22.04
 
 %environment
 export LC_ALL=C
 
-%files
-
-peregrinetest.R /opt/
-
 %post
-
 export LC_ALL=C
 
-export R_VERSION=4.1.3
+apt update -qq
+apt install -y wget
+apt install -y --no-install-recommends software-properties-common dirmngr
+wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
 
-export PKG="dnf -y"
+#DEBIAN_FRONTEND=NONINTERACTIVE apt upgrade -y -qq
+DEBIAN_FRONTEND=NONINTERACTIVE apt install --no-install-recommends -y r-base
+DEBIAN_FRONTEND=NONINTERACTIVE apt install -y -qq \
+	build-essential \
+	curl \
+	gdebi-core \
+	gfortran \
+	git \
+	gpg \
+	gpg-agent \
+	libfontconfig1-dev \
+	libgdal-dev \
+	libproj-dev \
+	libudunits2-dev \
+	vim
 
-$PKG update
-$PKG install dnf-plugins-core
-$PKG install epel-release
-$PKG config-manager --set-enabled powertools
-$PKG update
+add-apt-repository -y ppa:c2d4u.team/c2d4u4.0+
+apt update -qq
 
-$PKG groupinstall "Development Tools"
+DEBIAN_FRONTEND=NONINTERACTIVE apt install -y \
+	r-cran-raster \
+	r-cran-sf \
+	r-cran-sfheaders \
+	r-cran-sp \
+	r-cran-geosphere \
+	r-cran-dplyr \
+	r-cran-devtools \
+	r-cran-jpeg \
+	r-cran-units \
+	r-cran-lme4 \
+	r-cran-mumin \
+	r-cran-reshape2 \
+	r-cran-tidyr \
+	r-cran-fields \
+	r-cran-unmarked \
+	r-cran-lubridate \
+	r-cran-landscapemetrics \
+	r-cran-data.table \
+	r-cran-brms \
+	r-cran-mgcv \
+	r-cran-inlabru \
+	r-cran-ggplot2 \
+	r-cran-viridis \
+	r-cran-cowplot \
+	r-cran-gridextra \
+	r-cran-infotheo \
+	r-cran-arules \
+	r-cran-snow \
+	r-cran-geosphere \
+	r-cran-exactextractr \
+	r-cran-nlme \
+	r-cran-censusapi \
+	r-cran-rcpparmadillo \
+	r-cran-nloptr \
+	r-cran-lwgeom \
+	r-cran-rjags \
+	r-cran-jagsui \
+	r-cran-r2jags \
+	r-cran-glmmtmb \
+	r-cran-terra \
+	r-cran-rstan \
+	r-cran-rstanarm \
+	r-cran-loo \
+	r-cran-splancs \
+	r-cran-r2winbugs \
+	r-cran-nimble \
+	r-cran-gridbase \
+	r-cran-gridextra
 
-$PKG install \
-	cmake \
-	fontconfig-devel \
-	fribidi-devel \
-	gdal-devel \
-	geos-devel \
-	glibc-devel \
-	glibc-devel.i686 \
-	gsl-devel \
-	harfbuzz-devel \
-	lapack-devel \
-	libjpeg-turbo-devel \
-	libpng-devel \
-	libtiff-devel \
-	libxml2-devel \
-	netcdf-devel \
-	openblas-devel \
-	openssl-devel \
-	proj-devel \
-	sqlite-devel \
-	udunits2-devel
-
-cd /opt
-curl -O https://cdn.rstudio.com/r/centos-8/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
-yum -y install R-${R_VERSION}-1-1.x86_64.rpm
-
-ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R
-ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
-
-cd /opt
-curl -L -o download.tar.gz https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Source/JAGS-4.3.0.tar.gz/download
-tar -xf download.tar.gz
-cd JAGS-4.3.0
-./configure
-make -j 24
-make install
-
-cd /opt
-curl -LO https://www.mrc-bsu.cam.ac.uk/wp-content/uploads/2018/04/OpenBUGS-3.2.3.tar.gz
-tar -xf OpenBUGS-3.2.3.tar.gz
-cd OpenBUGS-3.2.3
-./configure
-make -j 24
-make install
-
-# Install the r packages one by one.  Alternate the 'install.packages' calls
-# and 'library' calls so that if and installation fails, the build fails on the
-# following line.
-cd /opt
-
-# INLA is non-standard for some reason.
-# https://www.r-inla.org/download-install
-R -e "install.packages('INLA', repos=c('https://ftp.osuosl.org/pub/cran/', INLA='https://inla.r-inla-download.org/R/stable'), dep=TRUE, Ncpus=24)"
-R -e "library(INLA)"
-
-# Make sure executables are available to everyone.
-chmod +x /opt/R/4.1.3/lib/R/library/INLA/bin/linux/64bit/*
-
-# install the current requested script dependencies (WAEA)
-# g++ is getting hung up on what may be a /tmp issue or a host arch issue
-R -e "install.packages('rgdal', repo='https://ftp.osuosl.org/pub/cran/', type='source', configure.args='--host=host', Ncpus=24)"
-R -e "library(rgdal)"
-R -e "install.packages('rgeos', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(rgeos)"
-R -e "install.packages('raster', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(raster)"
-R -e "install.packages('dplyr', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(dplyr)"
-
-# install the previously used packages
-R -e "install.packages('devtools', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(devtools)"
-R -e "install.packages('jpeg', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(jpeg)"
-R -e "install.packages('units', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(units)"
-R -e "install.packages('lme4', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(lme4)"
-R -e "install.packages('MuMIn', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(MuMIn)"
-R -e "install.packages('jagsUI', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(jagsUI)"
-R -e "install.packages('R2OpenBUGS', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(R2OpenBUGS)"
-R -e "install.packages('nimble', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(nimble)"
-R -e "install.packages('rjags', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(rjags)"
-R -e "install.packages('R2jags', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(R2jags)"
-R -e "install.packages('reshape2', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(reshape2)"
-R -e "install.packages('tidyr', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(tidyr)"
-R -e "install.packages('sf', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(sf)"
-R -e "install.packages('fields', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(fields)"
-R -e "install.packages('rstanarm', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(rstanarm)"
-R -e "install.packages('sp', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(sp)"
-R -e "install.packages('unmarked', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(unmarked)"
-R -e "install.packages('maxnet', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(maxnet)"
-R -e "install.packages('ENMeval', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(ENMeval)"
-R -e "install.packages('spThin', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(spThin)"
-R -e "install.packages('lubridate', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(lubridate)"
-R -e "install.packages('landscapemetrics', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(landscapemetrics)"
-R -e "install.packages('data.table', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(data.table)"
-R -e "install.packages('RPyGeo', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "install.packages('RPyGeo')"
 R -e "library(RPyGeo)"
-R -e "install.packages('brms', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(brms)"
-R -e "install.packages('mgcv', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(mgcv)"
-R -e "install.packages('inlabru', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(inlabru)"
-R -e "install.packages('ggplot2', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(ggplot2)"
-R -e "install.packages('viridis', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(viridis)"
-R -e "install.packages('cowplot', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(cowplot)"
-R -e "install.packages('grid', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(grid)"
-R -e "install.packages('gridExtra', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(gridExtra)"
-R -e "install.packages('infotheo', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(infotheo)"
-R -e "install.packages('arules', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(arules)"
-R -e "install.packages('cartography', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "install.packages('cartography')"
 R -e "library(cartography)"
-R -e "install.packages('snow', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(snow)"
-R -e "install.packages('geosphere', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(geosphere)"
-R -e "install.packages('spatialEco', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(spatialEco)"
-R -e "install.packages('glmmTMB', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(glmmTMB)"
-R -e "install.packages('groupdata2', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "install.packages('spThin')"
+R -e "library(spThin)"
+R -e "install.packages('groupdata2')"
 R -e "library(groupdata2)"
-R -e "install.packages('exactextractr', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(exactextractr)"
-R -e "install.packages('nlme', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(nlme)"
-R -e "install.packages('censusapi', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-R -e "library(censusapi)"
-# was in install_version, but no version
-R -e "install.packages('gratia', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "install.packages('gratia')"
 R -e "library(gratia)"
-
-# use install.packages, but these may need to use install_version
-# RcppArmadillo, version='0.9.900.3.0',
-R -e "install.packages('RcppArmadillo', repos='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-# nloptr, version='1.2.2.1'
-R -e "install.packages('nloptr', repos='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
-
-%help
-
-%labels
-author Kyle Shannon <kyle@pobox.com>
+R -e "install.packages('PointedSDMs')"
+R -e "library(PointedSDMs)"
+R -e "install.packages('nimbleHMC')"
+R -e "library(nimbleHMC)"
+R -e "install.packages('spOccupancy')"
+R -e "library(spOccupancy)"
+R -e "install.packages('maxnet')"
+R -e "library(maxnet)"
