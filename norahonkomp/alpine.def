@@ -45,6 +45,8 @@ apk add \
 	R-dev \
 	R-doc
 
+Rscript -e "install.packages('brms', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+Rscript -e "library(brms)"
 Rscript -e "install.packages('tidyverse', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
 Rscript -e "library(tidyverse)"
 Rscript -e "install.packages('auk', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
