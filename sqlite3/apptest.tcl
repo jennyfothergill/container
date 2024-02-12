@@ -9,9 +9,8 @@ puts "sqlite_version: $v"
 db enable_load_extension 1
 foreach ext {
   btreeinfo carray completion
-  compress csv dbdata
-  decimal explain shathree
-  spellfix sqlar uuid } {
+  compress csv decimal explain
+  shathree spellfix sqlar uuid } {
   puts -nonewline "loading $ext..."
   set v [db eval "SELECT load_extension('$ext');"]
   puts ok.

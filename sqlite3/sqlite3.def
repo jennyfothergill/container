@@ -1,5 +1,14 @@
-Bootstrap: localimage
-From: /home/kyle/src/simages/alpine/v3.16.0
+Bootstrap: scratch
+
+%setup
+export MAJOR=3
+export MINOR=19
+export PATCH=0
+export ARCH=x86_64
+curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
+curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
+sha512sum -c alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
+tar -C ${APPTAINER_ROOTFS} -xf alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
 
 %environment
 
@@ -9,11 +18,11 @@ apptest.tcl /opt
 %post
 
 # SQLite3 v3.39.4
-export SQLITE_SHA3=a29f994989532212
+export SQLITE_SHA3=1066602b2b1976fe
 export SPATIALITE_VERSION=5.0.1
 export MAKE_JOBS=16
 
-sed -i 's/v3.16/edge/g' /etc/apk/repositories
+sed -i 's/v3.19/edge/g' /etc/apk/repositories
 tail -n 1 /etc/apk/repositories | sed 's/community/testing/' >> /etc/apk/repositories
 
 apk update
@@ -57,11 +66,13 @@ tclsh ./ext/lsm1/tool/mklsm1c.tcl
 gcc -g -fPIC -shared lsm1.c -o lsm1.so
 cp lsm1.so /usr/local/lib/
 
+# TODO: add other extensions
+
 cd ext/misc
-for x in btreeinfo carray completion compress csv dbdata \
+for x in btreeinfo carray completion compress csv \
   decimal explain shathree spellfix sqlar uuid;
-	do gcc -g -fPIC -shared $x.c -o $x.so;
-	cp $x.so /usr/local/lib/
+    do gcc -g -fPIC -shared $x.c -o $x.so;
+    cp $x.so /usr/local/lib/
 done;
 
 mkdir /opt/src/spatialite
@@ -74,7 +85,7 @@ make -j $MAKE_JOBS
 make install
 
 %help
-SQLite3 v3.39.1 with the all core extensions enabled (except FTS3) and some
+SQLite3 v3.45.0 with the all core extensions enabled (except FTS3) and some
 miscellaneous extensions. The Spatialite library is also available without
 freexl support.
 
