@@ -3,17 +3,17 @@ From: ubuntu:23.04
 
 
 %files
-    TDBP_gpu_Ubuntu20_04_20220113.tar.gz /opt/tdbp.tar.gz
+    TDBP.zip /opt/TDBP.zip
 
 %environment
     export LC_ALL=C
-    export PATH=/opt/TDBP_gpu/bin:/opt/TDBP_gpu/scripts:$PATH
+    export PATH=/opt/TDBP/bin:/opt/TDBP/scripts:$PATH
 
 %post
     export DEBIAN_FRONTEND="noninteractive"
     apt update
-    apt install -y tar wget octave octave-signal octave-image gnupg \
-        software-properties-common 
+    apt install -y zip wget octave octave-signal octave-image gnupg \
+        software-properties-common liblapacke.so.3
     add-apt-repository -n -y "deb http://archive.ubuntu.com/ubuntu/ focal main"
     add-apt-repository -n -y "deb http://archive.ubuntu.com/ubuntu/ focal universe"
     apt update
@@ -27,8 +27,6 @@ From: ubuntu:23.04
     apt update
     apt install -y cuda-11-8
     cd /opt
-    tar xzf tdbp.tar.gz
-    
-%runscript
-
-%startscript
+    unzip TDBP.zip
+    chmod +x TDBP/bin/*
+    chmod +x TDBP/scripts/*
