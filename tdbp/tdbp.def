@@ -4,16 +4,17 @@ From: ubuntu:23.04
 
 %files
     TDBP.zip /opt/TDBP.zip
+    MSP.zip /opt/MSP.zip
 
 %environment
     export LC_ALL=C
-    export PATH=/opt/TDBP/bin:/opt/TDBP/scripts:$PATH
+    export PATH=/opt/TDBP/bin:/opt/TDBP/scripts:/opt/MSP/bin:$PATH
 
 %post
     export DEBIAN_FRONTEND="noninteractive"
     apt update
     apt install -y zip wget octave octave-signal octave-image gnupg \
-        software-properties-common liblapacke.so.3
+        software-properties-common liblapacke.so.3 csh
     add-apt-repository -n -y "deb http://archive.ubuntu.com/ubuntu/ focal main"
     add-apt-repository -n -y "deb http://archive.ubuntu.com/ubuntu/ focal universe"
     apt update
@@ -30,3 +31,5 @@ From: ubuntu:23.04
     unzip TDBP.zip
     chmod +x TDBP/bin/*
     chmod +x TDBP/scripts/*
+    unzip MSP.zip
+    chmod +x MSP/bin/*
