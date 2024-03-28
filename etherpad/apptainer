@@ -1,3 +1,5 @@
+Bootstrap: scratch
+
 %setup
 export MAJOR=3
 export MINOR=19
@@ -13,7 +15,7 @@ NODE_ENV=production
 export NODE_ENV
 
 %post
-apk add
+apk add \
   build-base \
   git \
   nodejs \
@@ -21,7 +23,8 @@ apk add
   python3 \
   python3-dev \
   sqlite \
-  sqlite-dev
+  sqlite-dev \
+  sqlite-tcl
 
 %help
 This container provides a runtime for etherpad-lite.  It does not contain the
