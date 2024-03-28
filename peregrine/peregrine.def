@@ -7,15 +7,15 @@ export LC_ALL=C
 %post
 export LC_ALL=C
 
-apt update -qq
-apt install -y wget
-apt install -y --no-install-recommends software-properties-common dirmngr
+DEBIAN_FRONTEND=noninteractive apt update -qq
+DEBIAN_FRONTEND=noninteractive apt install -y wget
+DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends software-properties-common dirmngr
 wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
 
-#DEBIAN_FRONTEND=NONINTERACTIVE apt upgrade -y -qq
-DEBIAN_FRONTEND=NONINTERACTIVE apt install --no-install-recommends -y r-base
-DEBIAN_FRONTEND=NONINTERACTIVE apt install -y -qq \
+DEBIAN_FRONTEND=noninteractive apt upgrade -y -qq
+DEBIAN_FRONTEND=noninteractive apt install -y r-base
+DEBIAN_FRONTEND=noninteractive apt install -y -qq \
 	build-essential \
 	curl \
 	gdebi-core \
@@ -30,9 +30,10 @@ DEBIAN_FRONTEND=NONINTERACTIVE apt install -y -qq \
 	vim
 
 add-apt-repository -y ppa:c2d4u.team/c2d4u4.0+
-apt update -qq
+DEBIAN_FRONTEND=noninteractive apt update -qq
+DEBIAN_FRONTEND=noninteractive apt upgrade -y -qq
 
-DEBIAN_FRONTEND=NONINTERACTIVE apt install -y \
+DEBIAN_FRONTEND=noninteractive apt install -y \
 	r-cran-raster \
 	r-cran-sf \
 	r-cran-sfheaders \
@@ -80,7 +81,9 @@ DEBIAN_FRONTEND=NONINTERACTIVE apt install -y \
 	r-cran-r2winbugs \
 	r-cran-nimble \
 	r-cran-gridbase \
-	r-cran-gridextra
+	r-cran-gridextra \
+	r-cran-spoccupancy \
+	r-cran-coda
 
 R -e "install.packages('RPyGeo')"
 R -e "library(RPyGeo)"
@@ -96,7 +99,5 @@ R -e "install.packages('PointedSDMs')"
 R -e "library(PointedSDMs)"
 R -e "install.packages('nimbleHMC')"
 R -e "library(nimbleHMC)"
-R -e "install.packages('spOccupancy')"
-R -e "library(spOccupancy)"
 R -e "install.packages('maxnet')"
 R -e "library(maxnet)"
