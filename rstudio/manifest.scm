@@ -18,7 +18,6 @@
                             "gcc-toolchain@10"
                             "gfortran-toolchain"
                             "gawk"
-                            "gdal"
                             "gzip"
                             "libxt"
                             "make"
@@ -28,6 +27,16 @@
                             "rstudio"
                             "rstudio-server"
                             "tar"
+                            "tcl"
                             "unzip"
                             "zlib"
+                            ;; GIS/Geospatial crap
+                            "gdal"
+                            "libspatialite"
+                            "proj"
+                            ;; common dependencies for r
+                            "fontconfig"
+                            "fribidi"
+                            "harfbuzz"
+                            "libxml2"
                           ))
