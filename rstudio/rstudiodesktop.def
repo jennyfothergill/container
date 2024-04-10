@@ -1,0 +1,6 @@
+Bootstrap: localimage
+From: {{GUIX_SQUASHFS}}
+
+%labels
+author Kyle Shannon <kyle@pobox.com>
+github.com/bsurc/container git rev={{GIT_REV}}
