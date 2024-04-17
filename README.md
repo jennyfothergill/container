@@ -30,6 +30,15 @@ To add the testing repository to `apk` after switching to `edge`:
 
 ### R
 
+R packages can be difficult to build, especially with dependencies on various
+systems.  Posit (creators of RStudio) have ppa repositories to help with some of
+these dependencies, and handles them especially well in conjuction with RStudio
+server.  See the `r-spatial` build for an example.
+
+Another option that appears to work well is using `guix` to create a squashfs
+image directly.  There is an HPC/cran channel for guix that mirrors R packages.
+See the `peregrine` build for an example.
+
 #### Issues on Alpine
 
 If you are getting `iconv` translation errors, set `LC_ALL=en_US.UTF-8`.

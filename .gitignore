@@ -17,3 +17,6 @@
 # tar and zip files
 *.tar*
 *.zip
+
+# guix to squashfs output
+*guix.out
