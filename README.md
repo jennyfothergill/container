@@ -68,21 +68,21 @@ using:
 Then `guix time-machine` to build the environment/squashfs.  The full process
 may look like:
 
-  $ # optional
-  $ guix pull
-  $ guix shell bash go
-  $ # test environment...
-  $ guix shell --export-manifest shell bash go > manifest.scm
-  $ # export the current channel definition
-  $ guix describe --format=channels > channels.scm
-  $ # test
-  $ guix time-machine -C channels.scm -- shell -m manifest
-  $ # build squashfs
-  $ guix time-machine -C channels.scm -- pack -f squashfs -m manifest.scm
+    $ # optional
+    $ guix pull
+    $ guix shell bash go
+    $ # test environment...
+    $ guix shell --export-manifest shell bash go > manifest.scm
+    $ # export the current channel definition
+    $ guix describe --format=channels > channels.scm
+    $ # test
+    $ guix time-machine -C channels.scm -- shell -m manifest
+    $ # build squashfs
+    $ guix time-machine -C channels.scm -- pack -f squashfs -m manifest.scm
 
 To build a container from the squashfs, simply use the squashfs as the source:
 
-  appatiner build --fakeroot x.sif /gnu/store/${guixhash}.squashfs
+    appatiner build --fakeroot x.sif /gnu/store/${guixhash}.squashfs
 
 For simple examples of adding metadata to the container, see
 `peregrine/Makefile`
