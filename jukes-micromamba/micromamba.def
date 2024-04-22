@@ -6,6 +6,8 @@ from: mambaorg/micromamba:1.5.8-bookworm-slim
     export ENV_NAME=cautorift
 
 %post
+    apt update && apt install -y libgl1
+    apt clean
     micromamba create -n cautorift -c conda-forge python autorift notebook \
         matplotlib pandas opencv rasterio
     micromamba clean --all --yes
