@@ -8,11 +8,11 @@ USER $MAMBA_USER
 RUN micromamba create -n cautorift -c conda-forge python autorift=1.1.0 \
         notebook matplotlib pandas opencv rasterio && \
     micromamba clean --all --yes
-ENV SITEPACKAGES=`micromamba run -n cautorift python -m site | grep -m 1 site-packages | sed "s/[,']//g"`
-ENV AUTORIFT=${SITEPACKAGES}/autoRIFT/autoRIFT.py
-RUN sed -i 's/np.bool/bool/g' $AUTORIFT && \
+RUN export SITEPACKAGES=`micromamba run -n cautorift python -m site | \
+    grep -m 1 site-packages | sed "s/[,']//g"` && \
+    export AUTORIFT=${SITEPACKAGES}/autoRIFT/autoRIFT.py && \
+    sed -i 's/np.bool/bool/g' $AUTORIFT && \
     sed -i 's/np.int/int/g' $AUTORIFT
 
-ENV AUTORIFT=
 ENV MAMBA_DOCKERFILE_ACTIVATE=1
 ENV ENV_NAME=cautorift
