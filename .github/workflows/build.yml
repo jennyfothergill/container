@@ -26,5 +26,5 @@ jobs:
 
       - name: 'Build Inventory Image'
         run: |
-          docker build . --tag ghcr.io/bsurc/jukes-micromamba:latest
+          docker build ./jukes-micromamba/ --tag ghcr.io/bsurc/jukes-micromamba:latest
           docker push ghcr.io/bsurc/jukes-micromamba:latest
