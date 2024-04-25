@@ -1,17 +1,17 @@
 FROM mambaorg/micromamba:1.5.8-bookworm-slim
 
-ENV MAMBA_DOCKERFILE_ACTIVATE=1
-ENV ENV_NAME=cautorift
-
-RUN apt update && apt install -y libgl1 && \
+USER root
+RUN apt update && \
+    apt install -y libgl1 && \
     apt clean
+USER $MAMBA_USER
 RUN micromamba create -n cautorift -c conda-forge python autorift=1.1.0 \
-    notebook matplotlib pandas opencv rasterio && \
+        notebook matplotlib pandas opencv rasterio && \
     micromamba clean --all --yes
-ENV SITEPACKAGES=`micromamba run -n cautorift python -m site \
-    | grep -m 1 site-packages | sed "s/[,']//g"`
-ENV AUTORIFT=${SITEPACKAGES}/autoRIFT/autoRIFT.py
+ENV AUTORIFT=opt/conda/envs/cautorift/lib/python3.9/site-packages/autoRIFT/autoRIFT.py
 RUN sed -i 's/np.bool/bool/g' $AUTORIFT && \
     sed -i 's/np.int/int/g' $AUTORIFT
-ENV SITEPACKAGES=
+
 ENV AUTORIFT=
+ENV MAMBA_DOCKERFILE_ACTIVATE=1
+ENV ENV_NAME=cautorift
