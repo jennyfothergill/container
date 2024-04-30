@@ -1,8 +1,15 @@
 Bootstrap: localimage
 From: {{GUIX_SQUASHFS}}
 
+%files
+test.R /
+
 %post
 Rscript -e "devtools::install_github('GuillemSalazar/FastaUtils')"
+
+%test
+
+Rscript /test.R
 
 %labels
 author Kyle Shannon <kyle@pobox.com>
