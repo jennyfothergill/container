@@ -1,0 +1,9 @@
+Bootstrap: localimage
+From: {{GUIX_SQUASHFS}}
+
+%post
+Rscript -e "devtools::install_github('GuillemSalazar/FastaUtils')"
+
+%labels
+author Kyle Shannon <kyle@pobox.com>
+github.com/bsurc/container git rev={{GIT_REV}}
