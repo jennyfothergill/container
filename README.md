@@ -30,6 +30,15 @@ To add the testing repository to `apk` after switching to `edge`:
 
 ### R
 
+R packages can be difficult to build, especially with dependencies on various
+systems.  Posit (creators of RStudio) have ppa repositories to help with some of
+these dependencies, and handles them especially well in conjuction with RStudio
+server.  See the `r-spatial` build for an example.
+
+Another option that appears to work well is using `guix` to create a squashfs
+image directly.  There is an HPC/cran channel for guix that mirrors R packages.
+See the `peregrine` build for an example.
+
 #### Issues on Alpine
 
 If you are getting `iconv` translation errors, set `LC_ALL=en_US.UTF-8`.
@@ -47,3 +56,33 @@ text libraries:
 Also, the `linux-headers` package is frequently needed for packages:
 
     apk add linux-headers
+
+### GUIX
+
+In order to use a `guix` based build, the user should test the environment using
+`guix shell`, then dump the channel configuration to a `channels.scm` file
+using:
+
+  guix describe --format=channels > channels.scm
+
+Then `guix time-machine` to build the environment/squashfs.  The full process
+may look like:
+
+    $ # optional
+    $ guix pull
+    $ guix shell bash go
+    $ # test environment...
+    $ guix shell --export-manifest shell bash go > manifest.scm
+    $ # export the current channel definition
+    $ guix describe --format=channels > channels.scm
+    $ # test
+    $ guix time-machine -C channels.scm -- shell -m manifest
+    $ # build squashfs
+    $ guix time-machine -C channels.scm -- pack -f squashfs -m manifest.scm
+
+To build a container from the squashfs, simply use the squashfs as the source:
+
+    appatiner build --fakeroot x.sif /gnu/store/${guixhash}.squashfs
+
+For simple examples of adding metadata to the container, see
+`peregrine/Makefile`
