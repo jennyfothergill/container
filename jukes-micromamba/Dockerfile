@@ -2,11 +2,11 @@ FROM mambaorg/micromamba:1.5.8-bookworm-slim
 
 USER root
 RUN apt update && \
-    apt install -y libgl1 && \
+    apt install -y libgl1 libegl1 libopengl0 && \
     apt clean
 USER $MAMBA_USER
 RUN micromamba create -n cautorift -c conda-forge python autorift=1.1.0 \
-        notebook matplotlib pandas opencv rasterio && \
+        notebook matplotlib pandas opencv rasterio gdal=3.0 && \
     micromamba clean --all --yes
 RUN export SITEPACKAGES=`micromamba run -n cautorift python -m site | \
     grep -m 1 site-packages | sed "s/[,']//g"` && \
