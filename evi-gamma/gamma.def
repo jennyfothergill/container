@@ -1,14 +1,24 @@
 Bootstrap: docker
-From: ubuntu:23.04
+From: ubuntu:22.04
 
 
 %files
-    TDBP.zip /opt/TDBP.zip
+    GAMMA_SOFTWARE-20240111_ISP_DIFF_LAT_IPTA.linux64_ubuntu2204.tar.gz /opt/GAMMA.tar.gz
+    TDBP_gpu_Ubuntu20_04_20220113.tar.gz /opt/TDBP.tar.gz
     MSP.zip /opt/MSP.zip
 
 %environment
     export LC_ALL=C
-    export PATH=/opt/TDBP/bin:/opt/TDBP/scripts:/opt/MSP/bin:$PATH
+    export GAMMA_HOME=/opt/GAMMA_SOFTWARE-20240111
+    export ISP_HOME=$GAMMA_HOME/ISP
+    export DIFF_HOME=$GAMMA_HOME/DIFF
+    export DISP_HOME=$GAMMA_HOME/DISP
+    export LAT_HOME=$GAMMA_HOME/LAT
+    export IPTA_HOME=$GAMMA_HOME/IPTA
+    export PATH=$MSP_HOME/bin:$ISP_HOME/bin:$DIFF_HOME/bin:$LAT_HOME/bin:\
+        $IPTA_HOME/bin:$DISP_HOME/bin:$MSP_HOME/scripts:$ISP_HOME/scripts:\
+        $DIFF_HOME/scripts:$LAT_HOME/scripts:$IPTA_HOME/scripts:\
+        $DISP_HOME/scripts:$PATH
 
 %post
     export DEBIAN_FRONTEND="noninteractive"
@@ -27,9 +37,12 @@ From: ubuntu:23.04
     add-apt-repository "deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /"
     apt update
     apt install -y cuda-11-8
+    apt clean
     cd /opt
-    unzip TDBP.zip
+    tar -xzf TDBP.tar.gz
     chmod +x TDBP/bin/*
     chmod +x TDBP/scripts/*
+    tar -xzf GAMMA.tar.gz
     unzip MSP.zip
     chmod +x MSP/bin/*
+    rm TDBP.zip MSP.zip GAMMA.tar.gz
