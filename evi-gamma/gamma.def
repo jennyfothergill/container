@@ -15,10 +15,10 @@ From: ubuntu:22.04
     export DISP_HOME=$GAMMA_HOME/DISP
     export LAT_HOME=$GAMMA_HOME/LAT
     export IPTA_HOME=$GAMMA_HOME/IPTA
-    export PATH=$MSP_HOME/bin:$ISP_HOME/bin:$DIFF_HOME/bin:$LAT_HOME/bin:\
-        $IPTA_HOME/bin:$DISP_HOME/bin:$MSP_HOME/scripts:$ISP_HOME/scripts:\
-        $DIFF_HOME/scripts:$LAT_HOME/scripts:$IPTA_HOME/scripts:\
-        $DISP_HOME/scripts:$PATH
+    export PATH=$ISP_HOME/bin:$DIFF_HOME/bin:$LAT_HOME/bin:$IPTA_HOME/bin:\
+        $DISP_HOME/bin:$ISP_HOME/scripts:$DIFF_HOME/scripts:$LAT_HOME/scripts:\
+        $IPTA_HOME/scripts:$DISP_HOME/scripts:$PATH
+    export PATH=/opt/MSP/bin:/opt/TDBP_gpu/bin:/opt/TDBP_gpu/scripts:$PATH
 
 %post
     export DEBIAN_FRONTEND="noninteractive"
@@ -40,9 +40,9 @@ From: ubuntu:22.04
     apt clean
     cd /opt
     tar -xzf TDBP.tar.gz
-    chmod +x TDBP/bin/*
-    chmod +x TDBP/scripts/*
+    chmod +x TDBP_gpu/bin/*
+    chmod +x TDBP_gpu/scripts/*
     tar -xzf GAMMA.tar.gz
     unzip MSP.zip
     chmod +x MSP/bin/*
-    rm TDBP.zip MSP.zip GAMMA.tar.gz
+    rm TDBP.tar.gz MSP.zip GAMMA.tar.gz
