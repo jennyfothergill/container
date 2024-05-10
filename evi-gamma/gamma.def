@@ -24,7 +24,7 @@ From: ubuntu:22.04
     export DEBIAN_FRONTEND="noninteractive"
     apt update
     apt install -y zip wget octave octave-signal octave-image gnupg \
-        software-properties-common liblapacke.so.3 csh
+        software-properties-common liblapacke.so.3 csh libgdal30
     add-apt-repository -n -y "deb http://archive.ubuntu.com/ubuntu/ focal main"
     add-apt-repository -n -y "deb http://archive.ubuntu.com/ubuntu/ focal universe"
     apt update
