@@ -4,7 +4,7 @@ From: ubuntu:22.04
 
 %files
     GAMMA_SOFTWARE-20240111_ISP_DIFF_LAT_IPTA.linux64_ubuntu2204.tar.gz /opt/GAMMA.tar.gz
-    TDBP_gpu_Ubuntu20_04_20220113.tar.gz /opt/TDBP.tar.gz
+    TDBP.zip /opt/TDBP.zip
     MSP.zip /opt/MSP.zip
 
 %environment
@@ -15,10 +15,7 @@ From: ubuntu:22.04
     export DISP_HOME=$GAMMA_HOME/DISP
     export LAT_HOME=$GAMMA_HOME/LAT
     export IPTA_HOME=$GAMMA_HOME/IPTA
-    export PATH=$MSP_HOME/bin:$ISP_HOME/bin:$DIFF_HOME/bin:$LAT_HOME/bin:\
-        $IPTA_HOME/bin:$DISP_HOME/bin:$MSP_HOME/scripts:$ISP_HOME/scripts:\
-        $DIFF_HOME/scripts:$LAT_HOME/scripts:$IPTA_HOME/scripts:\
-        $DISP_HOME/scripts:$PATH
+    export PATH=$ISP_HOME/bin:$DIFF_HOME/bin:$LAT_HOME/bin:$IPTA_HOME/bin:$DISP_HOME/bin:$ISP_HOME/scripts:$DIFF_HOME/scripts:$LAT_HOME/scripts:$IPTA_HOME/scripts:$DISP_HOME/scripts:/opt/MSP/bin:/opt/TDBP/bin:/opt/TDBP/scripts:$PATH
 
 %post
     export DEBIAN_FRONTEND="noninteractive"
@@ -39,7 +36,7 @@ From: ubuntu:22.04
     apt install -y cuda-11-8
     apt clean
     cd /opt
-    tar -xzf TDBP.tar.gz
+    unzip TDBP.zip
     chmod +x TDBP/bin/*
     chmod +x TDBP/scripts/*
     tar -xzf GAMMA.tar.gz
