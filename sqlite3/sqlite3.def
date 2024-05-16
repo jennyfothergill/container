@@ -3,7 +3,7 @@ Bootstrap: scratch
 %setup
 export MAJOR=3
 export MINOR=19
-export PATCH=0
+export PATCH=1
 export ARCH=x86_64
 curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
 curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
@@ -17,8 +17,8 @@ apptest.tcl /opt
 
 %post
 
-# SQLite3 v3.39.4
-export SQLITE_SHA3=1066602b2b1976fe
+# SQLite3 v3.45.3
+export SQLITE_SHA3=8653b758870e6ef0
 export SPATIALITE_VERSION=5.0.1
 export MAKE_JOBS=16
 
