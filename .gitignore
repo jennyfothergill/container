@@ -13,3 +13,10 @@
 
 # alpine minirootfs
 *alpine-minirootfs-*.tar.gz*
+
+# tar and zip files
+*.tar*
+*.zip
+
+# guix to squashfs output
+*guix.out

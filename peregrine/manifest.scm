@@ -28,6 +28,7 @@
                             "gdal"
                             ;; r stuff
                             "r"
+                            "r-codetools"
                             "r-raster"
                             "r-sf"
                             "r-sfheaders"
