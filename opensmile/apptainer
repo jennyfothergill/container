@@ -1,0 +1,31 @@
+Bootstrap: scratch
+
+%setup
+export MAJOR=3
+export MINOR=19
+export PATCH=1
+export ARCH=x86_64
+curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
+curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
+sha512sum -c alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
+tar -C ${APPTAINER_ROOTFS} -xf alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
+
+%post
+
+apk update
+apk upgrade
+
+apk add \
+	bash \
+	build-base \
+	cmake \
+	ffmpeg \
+	gcc \
+	git
+
+
+mkdir /opt/src
+cd /opt/src
+git clone https://github.com/audeering/opensmile
+cd opensmile
+./build.sh
