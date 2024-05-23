@@ -1,31 +1,28 @@
-Bootstrap: scratch
+Bootstrap: localimage
+From: {{GUIX_SQUASHFS}}
 
-%setup
-export MAJOR=3
-export MINOR=19
-export PATCH=1
-export ARCH=x86_64
-curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
-curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
-sha512sum -c alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
-tar -C ${APPTAINER_ROOTFS} -xf alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
+%environment
+PATH=$PATH:/usr/local/bin
+export PATH
 
 %post
 
-apk update
-apk upgrade
-
-apk add \
-	bash \
-	build-base \
-	cmake \
-	ffmpeg \
-	gcc \
-	git
-
-
-mkdir /opt/src
+mkdir -p /opt/src
 cd /opt/src
 git clone https://github.com/audeering/opensmile
 cd opensmile
-./build.sh
+mkdir build
+cd build
+cmake ..
+make -j $(nproc)
+make install
+
+%test
+SMILExtract -h 2> /dev/null
+
+%runscript
+SMILExtract "$@"
+
+%labels
+author "Kyle Shannon <kyle@pobox.com>"
+github.com/bsurc/container git rev={{GIT_REV}}
