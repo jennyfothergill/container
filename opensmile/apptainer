@@ -1,0 +1,28 @@
+Bootstrap: localimage
+From: {{GUIX_SQUASHFS}}
+
+%environment
+PATH=$PATH:/usr/local/bin
+export PATH
+
+%post
+
+mkdir -p /opt/src
+cd /opt/src
+git clone https://github.com/audeering/opensmile
+cd opensmile
+mkdir build
+cd build
+cmake ..
+make -j $(nproc)
+make install
+
+%test
+SMILExtract -h 2> /dev/null
+
+%runscript
+SMILExtract "$@"
+
+%labels
+author "Kyle Shannon <kyle@pobox.com>"
+github.com/bsurc/container git rev={{GIT_REV}}
