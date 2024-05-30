@@ -28,4 +28,5 @@ dependencies:
    - "--editable=git+https://github.com/dshean/demcoreg.git#egg=demcoreg"
    - "--editable=git+https://github.com/ShashankBice/imview.git@isprs_version#egg=imview"
    - "--editable=git+https://github.com/cmla/rpcm.git#egg=rpcm"
+   - "--editable=git+https://github.com/uw-cryo/skysat_stereo@v0.3.0-prealpha#egg=skysat_stereo"
    # review and add bare
