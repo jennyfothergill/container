@@ -1,0 +1,23 @@
+bootstrap: docker
+from: mambaorg/micromamba:1.5.8-bookworm-slim
+
+%files
+    environment.yml env.yml
+
+%environment
+    export MAMBA_DOCKERFILE_ACTIVATE=1
+
+%post
+    chown $MAMBA_USER:$MAMBA_USER env.yml
+    apt update && apt install -y libtiff-dev wget tar git make
+    apt clean
+    micromamba install -y -n base -f env.yml && \
+    micromamba clean --all --yes
+    rm env.yml
+    cd /opt
+    wget https://github.com/uw-cryo/skysat_stereo/archive/refs/tags/v0.3.0-prealpha.tar.gz
+    tar xzf v0.3.0-prealpha.tar.gz
+    rm v0.3.0-prealpha.tar.gz
+    cd skysat_stereo-0.3.0-prealpha
+    which pip
+    python -m pip install -e .
