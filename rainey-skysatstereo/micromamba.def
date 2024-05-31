@@ -6,6 +6,7 @@ from: mambaorg/micromamba:1.5.8-bookworm-slim
 
 %environment
     export MAMBA_DOCKERFILE_ACTIVATE=1
+    export PATH=/opt/StereoPipeline-3.2.0-2023-01-01-x86_64-Linux/bin:$PATH
 
 %post
     chown $MAMBA_USER:$MAMBA_USER env.yml
@@ -14,3 +15,7 @@ from: mambaorg/micromamba:1.5.8-bookworm-slim
     micromamba install -y -n base -f env.yml && \
     micromamba clean --all --yes
     rm env.yml
+    cd /opt
+    wget https://github.com/NeoGeographyToolkit/StereoPipeline/releases/download/3.2.0/StereoPipeline-3.2.0-2023-01-01-x86_64-Linux.tar.bz2
+    tar xf StereoPipeline-3.2.0-2023-01-01-x86_64-Linux.tar.bz2 --no-same-owner
+    rm StereoPipeline-3.2.0-2023-01-01-x86_64-Linux.tar.bz2
