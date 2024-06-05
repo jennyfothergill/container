@@ -88,4 +88,5 @@
                             "r-pointedsdms"
                             "r-nimblehmc"
                             "r-maxnet"
+                            "r-tidyverse"
                           ))
