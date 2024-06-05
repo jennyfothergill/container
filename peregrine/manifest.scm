@@ -1,6 +1,7 @@
 (specifications->manifest (list
                             ;; base packages
                             "bash-minimal"
+                            "bash-completion"
                             "glibc-locales"
                             "nss-certs"
                             ;; Common command line tools lest the container is too empty.
@@ -88,4 +89,5 @@
                             "r-pointedsdms"
                             "r-nimblehmc"
                             "r-maxnet"
+                            "r-tidyverse"
                           ))
