@@ -28,3 +28,4 @@ dependencies:
    - "--editable=git+https://github.com/dshean/demcoreg.git#egg=demcoreg"
    - "--editable=git+https://github.com/ShashankBice/imview.git@isprs_version#egg=imview"
    - "--editable=git+https://github.com/cmla/rpcm.git#egg=rpcm"
+   - "--editable=git+https://github.com/uw-cryo/skysat_stereo@0.2#egg=skysat_stereo"
