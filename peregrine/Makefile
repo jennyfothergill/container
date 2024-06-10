@@ -1,3 +1,4 @@
+DATE    = $(shell date --utc "+%Y%m%dT%H%M%S")
 GIT_REV = $(shell git rev-parse --short=16 HEAD)
 
 peregrine.sif: peregrine.def guix.out
@@ -5,6 +6,14 @@ peregrine.sif: peregrine.def guix.out
 
 guix.out: channels.scm manifest.scm
 	guix time-machine -C channels.scm -- pack -f squashfs -m manifest.scm > guix.out
+
+.PHONY: dist
+dist: gitdiff peregrine.sif
+	cp peregrine.sif peregrine-$(DATE).sif
+
+.PHONY: gitdiff
+gitdiff:
+	git diff --quiet
 
 .PHONY: clean
 clean:

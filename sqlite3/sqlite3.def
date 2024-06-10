@@ -2,11 +2,11 @@ Bootstrap: scratch
 
 %setup
 export MAJOR=3
-export MINOR=19
-export PATCH=1
+export MINOR=20
+export PATCH=0
 export ARCH=x86_64
-curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
-curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
+curl --silent -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
+curl --silent -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
 sha512sum -c alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
 tar -C ${APPTAINER_ROOTFS} -xf alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
 
@@ -21,9 +21,6 @@ apptest.tcl /opt
 export SQLITE_SHA3=8653b758870e6ef0
 export SPATIALITE_VERSION=5.0.1
 export MAKE_JOBS=16
-
-sed -i 's/v3.19/edge/g' /etc/apk/repositories
-tail -n 1 /etc/apk/repositories | sed 's/community/testing/' >> /etc/apk/repositories
 
 apk update
 apk upgrade
@@ -51,7 +48,7 @@ apk add \
 
 mkdir -p /opt/src
 cd /opt/src
-curl -LO https://sqlite.org/src/tarball/$SQLITE_SHA3/SQLite-$SQLITE_SHA3.tar.gz
+curl --silent -LO https://sqlite.org/src/tarball/$SQLITE_SHA3/SQLite-$SQLITE_SHA3.tar.gz
 tar -xf SQLite-$SQLITE_SHA3.tar.gz
 mv SQLite-$SQLITE_SHA3 sqlite3
 cd sqlite3
@@ -77,7 +74,7 @@ done;
 
 mkdir /opt/src/spatialite
 cd /opt/src/spatialite
-curl -LO https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-$SPATIALITE_VERSION.tar.gz
+curl --silent -LO https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-$SPATIALITE_VERSION.tar.gz
 tar -xf libspatialite-$SPATIALITE_VERSION.tar.gz
 cd libspatialite-$SPATIALITE_VERSION
 ./configure --enable-freexl=no
