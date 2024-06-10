@@ -11,6 +11,8 @@ From: {{GUIX_SQUASHFS}}
 mkdir -p /usr/share/
 mv /zoneinfo /usr/share/
 
+Rscript -e "devtools::install_github('doserjef/spOccupancy')"
+
 %labels
 author Kyle Shannon <kyle@pobox.com>
 github.com/bsurc/container git rev={{GIT_REV}}

@@ -8,7 +8,7 @@ guix.out: channels.scm manifest.scm
 	guix time-machine -C channels.scm -- pack -f squashfs -m manifest.scm > guix.out
 
 .PHONY: dist
-dist: peregrine.sif gitdiff
+dist: gitdiff peregrine.sif
 	cp peregrine.sif peregrine-$(DATE).sif
 
 .PHONY: gitdiff
