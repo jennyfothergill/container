@@ -79,7 +79,8 @@
                             "r-nimble"
                             "r-gridbase"
                             "r-gridextra"
-                            "r-spoccupancy"
+                            ;; using devtools in peregrine.def
+                            ;"r-spoccupancy"
                             "r-coda"
                             "r-rpygeo"
                             "r-cartography"
