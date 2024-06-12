@@ -1,15 +1,12 @@
 Bootstrap: localimage
 From: {{GUIX_SQUASHFS}}
 
-%files
-
-# TODO(kyle): build from source/data distribution
-/usr/share/zoneinfo /
-
 %post
-
-mkdir -p /usr/share/
-mv /zoneinfo /usr/share/
+mkdir -p /opt/src
+cd /opt/src
+git clone https://github.com/eggert/tz
+cd tz
+CC=gcc make install
 
 Rscript -e "devtools::install_github('doserjef/spOccupancy')"
 
