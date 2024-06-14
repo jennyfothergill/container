@@ -3,18 +3,19 @@ channels:
  - conda-forge
 dependencies:
  # core data science
- - python=3.7
+ - python
  - scipy
  - numpy
  - pandas
  - matplotlib
  # geospatial (raster+vector)
- - gdal=2.4
+ - gdal = 2.4
  - rasterio
  - geopandas
  - shapely
  - contextily
  - descartes
+ - pyproj >= 3
  # misc
  - pip
  - psutil
