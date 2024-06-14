@@ -27,9 +27,12 @@
                             "zlib"
                             "git"
                             "openblas"
+                            "openblas-omp"
                             "lapack"
+                            "perl"
                             ;; gdal
                             "gdal"
+                            ;;
                             ;; r stuff
                             "r"
                             "r-codetools"

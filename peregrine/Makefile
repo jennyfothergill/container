@@ -5,9 +5,11 @@ peregrine-$(GIT_REV).sif: peregrine.def guix.out
 
 
 #guix time-machine -C channels.scm -- pack -f squashfs -m manifest.scm > guix.out
+#guix time-machine -C channels.scm -- pack --with-input=openblas=openblas-omp -f squashfs -m manifest.scm > guix.out
+#guix time-machine -C channels.scm -- pack --with-input=openblas=openblas-omp -f squashfs -m manifest.scm > guix.out
 
 guix.out: channels.scm manifest.scm
-	guix time-machine -C channels.scm -- pack -L . -f squashfs -m manifest.scm > guix.out
+	guix time-machine -C channels.scm -- pack -f squashfs -m manifest.scm > guix.out
 
 .PHONY: dist
 dist: gitdiff peregrine-$(GIT_REV).sif
