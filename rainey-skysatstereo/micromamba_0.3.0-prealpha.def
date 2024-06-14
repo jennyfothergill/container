@@ -2,7 +2,7 @@ bootstrap: docker
 from: mambaorg/micromamba:1.5.8-bookworm-slim
 
 %files
-    environment.yml env.yml
+    environment_0.3.0-prealpha.yml env.yml
 
 %environment
     export MAMBA_DOCKERFILE_ACTIVATE=1
