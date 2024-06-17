@@ -15,6 +15,7 @@ dependencies:
  - shapely
  - contextily
  - descartes
+ - proj-data
  # misc
  - pip
  - psutil
