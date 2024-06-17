@@ -10,7 +10,8 @@ from: mambaorg/micromamba:1.5.8-bookworm-slim
 
 %post
     chown $MAMBA_USER:$MAMBA_USER env.yml
-    apt update && apt install -y libtiff-dev wget tar git build-essential
+    apt update && apt install -y libtiff-dev wget tar git build-essential \
+        libdrm2
     apt clean
     micromamba install -y -n base -f env.yml && \
     micromamba clean --all --yes
@@ -18,4 +19,6 @@ from: mambaorg/micromamba:1.5.8-bookworm-slim
     cd /opt
     wget https://github.com/NeoGeographyToolkit/StereoPipeline/releases/download/3.2.0/StereoPipeline-3.2.0-2023-01-01-x86_64-Linux.tar.bz2
     tar xf StereoPipeline-3.2.0-2023-01-01-x86_64-Linux.tar.bz2 --no-same-owner
+    chown $MAMBA_USER:$MAMBA_USER -R StereoPipeline-3.2.0-2023-01-01-x86_64-Linux
+    chmod 775 -R StereoPipeline-3.2.0-2023-01-01-x86_64-Linux
     rm StereoPipeline-3.2.0-2023-01-01-x86_64-Linux.tar.bz2
