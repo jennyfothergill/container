@@ -1,4 +1,8 @@
-(list (channel
+(list  (channel
+        (name 'boisestate-variants)
+        (url "https://github.com/bsurc/guix.git")
+        (branch "main"))
+      (channel
         (name 'guix-cran)
         (url "https://github.com/guix-science/guix-cran.git")
         (branch "master")

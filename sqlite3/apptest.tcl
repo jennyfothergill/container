@@ -11,9 +11,9 @@ foreach ext {
   btreeinfo carray completion
   compress csv decimal explain
   shathree spellfix sqlar uuid } {
-  puts -nonewline "loading $ext..."
+  puts -nonewline "loading $ext... "
   set v [db eval "SELECT load_extension('$ext');"]
-  puts ok.
+  puts ok
 }
 
 db eval {SELECT load_extension('mod_spatialite')}
