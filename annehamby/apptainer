@@ -6,6 +6,14 @@ From: {{GUIX_SQUASHFS}}
 PATH=$PATH:/usr/local/bin
 export PATH
 
+%files
+
+calculate_voiced_pauses.R /opt/
+Makefile.smile /opt/Makefile
+pause.batch /opt/
+smile.batch /opt/
+smile.go /opt/
+
 %post
 
 mkdir -p /opt/src
@@ -18,11 +26,25 @@ cmake ..
 make -j $(nproc)
 make install
 
+go build -o /usr/local/bin/ /opt/smile.go
+
 %test
 
 PATH=$PATH:/usr/local/bin
+
+R --version | head -1
+go version
+smile -help 2> /dev/null
 SMILExtract -h 2> /dev/null
+
+
+%runscript
+cp /opt/Makefile .
+cp /opt/smile.batch .
+cp /opt/pause.batch .
+cp /opt/calculate_voiced_pauses.R .
 
 %labels
 author Kyle Shannon <kyle@pobox.com>
 github.com/bsurc/container git rev={{GIT_REV}}
+guix {{GUIX_SQUASHFS}}

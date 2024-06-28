@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH -J postproc
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kyleshannon@boisestate.edu
+#SBATCH -o logs/postproc-%j.log
+#SBATCH --cpus-per-task 24
+#SBATCH -p short
+#SBATCH -t 01:00:00
+#SBATCH -x peregrine01,cryogars01
+module load apptainer/1.2.5
+cd /bsuscratch/kyle/anne
+apptainer exec -B /bsuscratch Rscript calculate_voiced_pauses.R

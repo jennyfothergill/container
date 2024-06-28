@@ -15,6 +15,8 @@
                             "cmake"
                             "git"
                             "make"
+                            ;; Go
+                            "go"
                             ;; R packages
                             "r-minimal"
                             "r-tidyverse"
