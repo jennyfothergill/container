@@ -35,3 +35,45 @@ And finally, to run the summary statistics, run:
     sbatch pause.batch
 
 This should write the file speech\_variables.csv to the current directory.
+
+## Running
+
+To run the entire analysis, the following commands need to be run:
+
+0. module load apptainer
+0. apptainer run --app=unpack annehamby.sif
+0. sbatch --array=1-81 smile.batch
+0. apptainer run --app=check annehamby.sif
+0. sbatch pause.batch
+
+## `smile.go`
+
+The binary stored in the container at `/usr/local/bin/smile` is a go program
+that runs batches of `SMILExtract`.  It reads `SLURM_ARRAY_TASK_ID`, and runs a
+the analysis on a group of wav files.  For example, if it is invoked with:
+
+    sbatch --array=1 smile.batch -batch=480
+
+will run the wav files for indices 0-479 inclusive from a sorted list of
+directories in the input file directory.
+
+smile takes the following options:
+
+    smile -help
+    Usage of smile:
+      -batch int
+            number of analyses to do per task (default 480)
+      -check
+            check input vs output, requires argc==2
+      -config string
+            OpenSMILE config file (default "prosodyAcf.conf")
+      -jobs int
+            concurrent jobs
+      -n    dry run
+      -output string
+            output folder (default "/bsushare/annehamby-shared/oskoutput")
+      -version
+            show version and exit
+      -wavs string
+            wav folder (default "/bsushare/annehamby-shared/oskwavs")
+
