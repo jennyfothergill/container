@@ -8,5 +8,4 @@
 #SBATCH -t 01:00:00
 #SBATCH -x peregrine01,cryogars01
 module load apptainer/1.2.5
-cd /bsuscratch/kyle/anne
-apptainer exec -B /bsuscratch Rscript calculate_voiced_pauses.R
+apptainer run -B /bsushare -B /bsuscratch --app=summary annehamby.sif
