@@ -1,6 +1,6 @@
 GIT_REV = $(shell git rev-parse --short=16 HEAD)
 DEPS    = apptainer guix.out smile.go \
-          Makefile.smile calculate_voiced_pauses.R \
+          calculate_voiced_pauses.R \
           pause.batch smile.batch
 annehamby.sif: $(DEPS)
 	apptainer build -F --fakeroot --build-arg GIT_REV=$(GIT_REV) --build-arg GUIX_SQUASHFS=$$(tail -1 guix.out) $@ apptainer

@@ -9,7 +9,6 @@ export PATH
 %files
 
 calculate_voiced_pauses.R /opt/
-Makefile.smile /opt/Makefile
 pause.batch /opt/
 smile.batch /opt/
 smile.go /opt/
@@ -26,7 +25,7 @@ cmake ..
 make -j $(nproc)
 make install
 
-go build -o /usr/local/bin/ /opt/smile.go
+go build -ldflags "-X main.version={{GIT_REV}}" -o /usr/local/bin/ /opt/smile.go
 
 %test
 
@@ -34,15 +33,18 @@ PATH=$PATH:/usr/local/bin
 
 R --version | head -1
 go version
-smile -help 2> /dev/null
-SMILExtract -h 2> /dev/null
+smile -version
+SMILExtract -h 2>&1 | head -8
 
-
-%runscript
-cp /opt/Makefile .
+%apprun unpack
 cp /opt/smile.batch .
 cp /opt/pause.batch .
-cp /opt/calculate_voiced_pauses.R .
+
+%apprun runsmile
+smile -batch=480 -config=/opt/src/opensmile/config/prosody/prosodyAcf.conf -jobs=24 -output=/bsuscratch/kyle/osk/output -wavs=/bsushare/annehamby-shared/oskwavs
+
+%apprun check
+smile -check /bsushare/annehamby-shared/oskwavs /bsuscratch/kyle/osk/output
 
 %labels
 author Kyle Shannon <kyle@pobox.com>

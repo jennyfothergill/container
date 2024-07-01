@@ -7,6 +7,5 @@
 #SBATCH -p short
 #SBATCH -t 01:00:00
 #SBATCH -x peregrine01,cryogars01
-module load opensmile
-cd $WORKDIR
-./smile -batch=$BATCH -config=$CONFIG -jobs=$JOBS -output=$OUT -wavs=$IN -workdir=$WORKDIR
+module load apptainer/1.2.5
+apptainer run -B /bsushare -B /bsuscratch --app=runsmile annehamby.sif

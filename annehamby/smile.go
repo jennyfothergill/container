@@ -13,8 +13,9 @@ import (
 	"sort"
 	"strconv"
 	"sync"
-	"time"
 )
+
+var version string
 
 func check(in, out string) (int, error) {
 	missing := 0
@@ -61,15 +62,20 @@ func check(in, out string) (int, error) {
 }
 
 func main() {
-	flagConfig := flag.String("config", "/bsuhome/annehamby/osk/prosodyAcf.conf", "OpenSMILE config file")
-	flagWorkDir := flag.String("workdir", "/bsuhome/annehamby/osk", "working directory")
+	flagConfig := flag.String("config", "prosodyAcf.conf", "OpenSMILE config file")
 	flagWavs := flag.String("wavs", "/bsushare/annehamby-shared/oskwavs", "wav folder")
 	flagOutput := flag.String("output", "/bsushare/annehamby-shared/oskoutput", "output folder")
 	flagJobs := flag.Int("jobs", 0, "concurrent jobs")
 	flagBatch := flag.Int("batch", 480, "number of analyses to do per task")
 	flagDryRun := flag.Bool("n", false, "dry run")
 	flagCheck := flag.Bool("check", false, "check input vs output, requires argc==2")
+	flagVersion := flag.Bool("version", false, "show version and exit")
 	flag.Parse()
+
+	if *flagVersion {
+		fmt.Println(version)
+		os.Exit(0)
+	}
 
 	if *flagCheck {
 		missing, err := check(flag.Arg(0), flag.Arg(1))
@@ -137,13 +143,12 @@ func main() {
 				}
 			}
 			cmd := exec.Command("SMILExtract", "-C", *flagConfig, "-I", infile, "-csvoutput", outfile)
+			log.Print(cmd)
 			if *flagDryRun {
 				log.Print(cmd)
-				time.Sleep(5 * time.Second)
 			} else {
 				cmd.Stderr = os.Stderr
 				cmd.Stdout = os.Stdout
-				cmd.Dir = *flagWorkDir
 				err := cmd.Run()
 				if err != nil {
 					log.Print(err)
