@@ -52,7 +52,7 @@ smile -batch=480 -config=/opt/src/opensmile/config/prosody/prosodyAcf.conf \
 smile -check /bsushare/annehamby-shared/oskwavs /bsushare/annehamby-shared/oskoutput
 
 %apprun summary
-Rscript calculate_voiced_pauses.R /bsushare/annehamby-shared/oskoutput
+Rscript /opt/calculate_voiced_pauses.R /bsushare/annehamby-shared/oskoutput
 
 %apprun readme
 cat /opt/README.md
