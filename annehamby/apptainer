@@ -13,6 +13,8 @@ pause.batch /opt/
 smile.batch /opt/
 smile.go /opt/
 
+README.md /opt/
+
 %post
 
 mkdir -p /opt/src
@@ -41,10 +43,19 @@ cp /opt/smile.batch .
 cp /opt/pause.batch .
 
 %apprun runsmile
-smile -batch=480 -config=/opt/src/opensmile/config/prosody/prosodyAcf.conf -jobs=24 -output=/bsuscratch/kyle/osk/output -wavs=/bsushare/annehamby-shared/oskwavs
+smile -batch=480 -config=/opt/src/opensmile/config/prosody/prosodyAcf.conf \
+    -jobs=24 \
+    -output=/bsushare/annehamby-shared/oskoutput \
+    -wavs=/bsushare/annehamby-shared/oskwavs
 
 %apprun check
-smile -check /bsushare/annehamby-shared/oskwavs /bsuscratch/kyle/osk/output
+smile -check /bsushare/annehamby-shared/oskwavs /bsushare/annehamby-shared/oskoutput
+
+%apprun summary
+Rscript calculate_voiced_pauses.R /bsushare/annehamby-shared/oskoutput
+
+%apprun readme
+cat /opt/README.md
 
 %labels
 author Kyle Shannon <kyle@pobox.com>
