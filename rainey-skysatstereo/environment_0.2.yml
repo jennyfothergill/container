@@ -3,18 +3,19 @@ channels:
  - conda-forge
 dependencies:
  # core data science
- - python <= 3.10
+ - python
  - scipy
- - numpy <= 1.19
+ - numpy
  - pandas
  - matplotlib
  # geospatial (raster+vector)
- - gdal
+ - gdal = 2.4
  - rasterio
  - geopandas
  - shapely
  - contextily
  - descartes
+ - pyproj >= 3
  # misc
  - pip
  - psutil
@@ -28,5 +29,4 @@ dependencies:
    - "--editable=git+https://github.com/dshean/demcoreg.git#egg=demcoreg"
    - "--editable=git+https://github.com/ShashankBice/imview.git@isprs_version#egg=imview"
    - "--editable=git+https://github.com/cmla/rpcm.git#egg=rpcm"
-   - "--editable=git+https://github.com/uw-cryo/skysat_stereo@v0.3.0-prealpha#egg=skysat_stereo"
-   # review and add bare
+   - "--editable=git+https://github.com/uw-cryo/skysat_stereo@0.2#egg=skysat_stereo"

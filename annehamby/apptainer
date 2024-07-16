@@ -1,0 +1,63 @@
+Bootstrap: localimage
+From: {{GUIX_SQUASHFS}}
+
+%environment
+
+PATH=$PATH:/usr/local/bin
+export PATH
+
+%files
+
+calculate_voiced_pauses.R /opt/
+pause.batch /opt/
+smile.batch /opt/
+smile.go /opt/
+
+README.md /opt/
+
+%post
+
+mkdir -p /opt/src
+cd /opt/src
+git clone --depth=1 --branch=v3.0.2 https://github.com/audeering/opensmile
+cd opensmile
+mkdir build
+cd build
+cmake ..
+make -j $(nproc)
+make install
+
+go build -ldflags "-X main.version={{GIT_REV}}" -o /usr/local/bin/ /opt/smile.go
+
+%test
+
+PATH=$PATH:/usr/local/bin
+
+R --version | head -1
+go version
+smile -version
+SMILExtract -h 2>&1 | head -8
+
+%apprun unpack
+cp /opt/smile.batch .
+cp /opt/pause.batch .
+
+%apprun runsmile
+smile -batch=480 -config=/opt/src/opensmile/config/prosody/prosodyAcf.conf \
+    -jobs=24 \
+    -output=/bsushare/annehamby-shared/oskoutput \
+    -wavs=/bsushare/annehamby-shared/oskwavs
+
+%apprun check
+smile -check /bsushare/annehamby-shared/oskwavs /bsushare/annehamby-shared/oskoutput
+
+%apprun summary
+Rscript /opt/calculate_voiced_pauses.R /bsushare/annehamby-shared/oskoutput
+
+%apprun readme
+cat /opt/README.md
+
+%labels
+author Kyle Shannon <kyle@pobox.com>
+github.com/bsurc/container git rev={{GIT_REV}}
+guix {{GUIX_SQUASHFS}}
