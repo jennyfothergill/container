@@ -1,6 +1,0 @@
-rhetorixlab.boisestate.edu {
-    root * /home/kyle/Desktop/spc/RhetorixLab_LaravelDev/public
-    encode zstd gzip
-    file_server
-    php_fastcgi :9000
-}
