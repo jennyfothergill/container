@@ -7,15 +7,14 @@ From: ubuntu:jammy
 %post
 	export DEBIAN_FRONTEND="noninteractive"
 	apt -y update && apt -y dist-upgrade
-	apt -y install wget openjdk-8-jre openjdk-8-jdk zip
+	apt -y install wget openjdk-8-jre openjdk-8-jdk
     apt -y install cmake build-essential autoconf automake libtool pkg-config
 
 	# Download BEAST 2.6.6
     cd /opt
     wget https://github.com/beast-dev/beast-mcmc/releases/download/v10.5.0-beta3/BEAST_X_v10.5.0-beta3.tgz
     tar -zxvf BEAST_X_v10.5.0-beta3.tgz
-    wget http://www.indriid.com/2023/STACEY.addon.v1.3.1.zip
-    unzip STACEY.addon.v1.3.1.zip
+
     wget https://github.com/beagle-dev/beagle-lib/archive/refs/tags/v4.0.1.tar.gz
     tar -zxvf v4.0.1.tar.gz
     mkdir beagle
@@ -28,7 +27,8 @@ From: ubuntu:jammy
     cd /opt
 
 	# Clean up
-	rm *.tgz *.zip *.tar.gz
+	rm *.tgz *.tar.gz
+    rm -rf beagle-lib-4.0.1
 
 %environment
  	export LC_ALL=C.UTF-8
