@@ -1,6 +1,6 @@
 (specifications->manifest (list
                             ;; base packages
-                            "bash-minimal"
+                            "bash"
                             "bash-completion"
                             "glibc-locales"
                             "nss-certs"
@@ -25,8 +25,14 @@
                             "openssl"
                             "curl"
                             "zlib"
+                            "git"
+                            "openblas"
+                            "openblas-omp"
+                            "lapack"
+                            "perl"
                             ;; gdal
                             "gdal"
+                            ;;
                             ;; r stuff
                             "r"
                             "r-codetools"
@@ -80,6 +86,7 @@
                             "r-gridbase"
                             "r-gridextra"
                             ;; using devtools in peregrine.def
+                            ;; git commit: 7f7fc3e42c6beb156948c23ba85e21f4271da05b
                             ;"r-spoccupancy"
                             "r-coda"
                             "r-rpygeo"

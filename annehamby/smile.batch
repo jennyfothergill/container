@@ -1,0 +1,11 @@
+#!/bin/bash
+#SBATCH -J opensmile
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kyleshannon@boisestate.edu
+#SBATCH -o logs/opensmile-%J-%A-%a.log
+#SBATCH --cpus-per-task 24
+#SBATCH -p short
+#SBATCH -t 01:00:00
+#SBATCH -x peregrine01,cryogars01
+module load apptainer/1.2.5
+apptainer run -B /bsushare -B /bsuscratch --app=runsmile annehamby.sif
