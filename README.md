@@ -1,5 +1,5 @@
 # Container
-Singularity container definition files for Boise State University Research Computing
+Container definition files for Boise State University Research Computing
 
 ## Notes on specific distributions and applications
 

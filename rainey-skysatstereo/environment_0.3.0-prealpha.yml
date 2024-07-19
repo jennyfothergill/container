@@ -1,0 +1,33 @@
+name: skysat_stereo
+channels:
+ - conda-forge
+dependencies:
+ # core data science
+ - python <= 3.10
+ - scipy
+ - numpy <= 1.19
+ - pandas
+ - matplotlib
+ # geospatial (raster+vector)
+ - gdal
+ - rasterio
+ - geopandas
+ - shapely
+ - contextily
+ - descartes
+ - proj-data
+ # misc
+ - pip
+ - psutil
+ - pip:
+   # rotation_matrices
+   - pyquaternion
+   # misc
+   - p_tqdm
+   # geospatial+plotting
+   - "--editable=git+https://github.com/dshean/pygeotools.git#egg=pygeotools"
+   - "--editable=git+https://github.com/dshean/demcoreg.git#egg=demcoreg"
+   - "--editable=git+https://github.com/ShashankBice/imview.git@isprs_version#egg=imview"
+   - "--editable=git+https://github.com/cmla/rpcm.git#egg=rpcm"
+   - "--editable=git+https://github.com/uw-cryo/skysat_stereo@v0.3.0-prealpha#egg=skysat_stereo"
+   # review and add bare
