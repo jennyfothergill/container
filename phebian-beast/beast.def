@@ -7,18 +7,32 @@ From: ubuntu:jammy
 %post
 	export DEBIAN_FRONTEND="noninteractive"
 	apt -y update && apt -y dist-upgrade
-	apt -y install wget openjdk-8-jre openjdk-8-jdk
+	apt -y install wget openjdk-8-jre openjdk-8-jdk zip
+    apt -y install cmake build-essential autoconf automake libtool pkg-config
 
 	# Download BEAST 2.6.6
     cd /opt
     wget https://github.com/beast-dev/beast-mcmc/releases/download/v10.5.0-beta3/BEAST_X_v10.5.0-beta3.tgz
-    tar -zxvf BEASTv10.5.0-beta3.tgz
+    tar -zxvf BEAST_X_v10.5.0-beta3.tgz
+    wget http://www.indriid.com/2023/STACEY.addon.v1.3.1.zip
+    unzip STACEY.addon.v1.3.1.zip
+    wget https://github.com/beagle-dev/beagle-lib/archive/refs/tags/v4.0.1.tar.gz
+    tar -zxvf v4.0.1.tar.gz
+    mkdir beagle
+    cd beagle-lib-4.0.1
+    mkdir build
+    cd build
+    cmake -DCMAKE_INSTALL_PREFIX:PATH=/opt/beagle ..
+    make install
+
+    cd /opt
 
 	# Clean up
-	rm /opt/*.tgz
+	rm *.tgz *.zip *.tar.gz
 
 %environment
  	export LC_ALL=C.UTF-8
-    export PATH=/opt/BEASTv10.5.0-beta3/bin:$PATH
+    export PATH=/opt/BEASTv10.5.0/bin:$PATH
+    export LD_LIBRARY_PATH=/opt/beagle/lib:$LD_LIBRARY_PATH
 	export JAVA_OPTS="-Xmx140G"
 
