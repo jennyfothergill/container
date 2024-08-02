@@ -26,7 +26,6 @@ RUN add-apt-repository -y ppa:c2d4u.team/c2d4u4.0+
 RUN curl -LO https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2023.06.1-524-amd64.deb
 RUN gdebi --n rstudio-server-2023.06.1-524-amd64.deb
 
-
 # install the r packages via apt instead of install.packages from the posit ppa
 RUN apt install -y \
   r-cran-terra \
@@ -34,6 +33,29 @@ RUN apt install -y \
   r-cran-stars \
   r-cran-tmap \
   r-cran-tidyverse
+
+RUN apt install -y caret
+RUN apt install -y r-cran-gitcreds
+RUN apt install -y r-cran-googledrive
+RUN apt install -y r-cran-knitr
+RUN apt install -y r-cran-lubridate
+RUN apt install -y r-cran-markdown
+RUN apt install -y r-cran-maps
+RUN apt install -y r-cran-mgcv
+RUN apt install -y r-cran-nlme
+RUN apt install -y r-cran-quarto
+RUN apt install -y r-cran-RColorBrewer
+RUN apt install -y r-cran-readxl
+RUN apt install -y r-cran-reprex
+RUN apt install -y r-cran-scales
+RUN apt install -y r-cran-sf
+RUN apt install -y r-cran-terra
+RUN apt install -y r-cran-tidycensus
+RUN apt install -y r-cran-tidyverse
+RUN apt install -y r-cran-tmap
+RUN apt install -y r-cran-units
+RUN apt install -y r-cran-usethis
+RUN apt install -y r-cran-viridisLite
 
 # edit/run tclsh pword.tcl to generate encrypted passwords for users
 RUN useradd -l -m -s /bin/bash -N -u 1001 sabrina -p '$6$oq7l$vO47iZXy19GKbGWK2VyslTLiRFyHnZVKoc06BjY3wiQWpUdZKOnK844ZYd7Z7Y8l/DHJJ8EZjRIFpr/VJLRm6.'
