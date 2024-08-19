@@ -10,10 +10,10 @@ From: ubuntu:jammy
 	apt -y install wget openjdk-8-jre openjdk-8-jdk
     apt -y install cmake build-essential autoconf automake libtool pkg-config
 
-	# Download BEAST 2.7.7
+	# Download BEAST 2.7.6
     cd /opt
-    wget https://github.com/CompEvol/beast2/releases/download/v2.7.7/BEAST.v2.7.7.Linux.x86.tgz
-    tar -zxvf BEAST.v2.7.7.Linux.x86.tgz
+    wget https://github.com/CompEvol/beast2/releases/download/v2.7.6/BEAST.v2.7.6.Linux.x86.tgz
+    tar -zxvf BEAST.v2.7.6.Linux.x86.tgz
     /opt/beast/bin/packagemanager -update
 	/opt/beast/bin/packagemanager -dir /opt/beast -add STACEY
 
