@@ -1,6 +1,10 @@
 Bootstrap: localimage
 From: {{GUIX_SQUASHFS}}
 
+%post
+Rscript -e "devtools::install_github('johnbaums/jagstools')"
+Rscript -e "devtools::install_github('stan-dev/projpred')"
+
 %labels
 author Kyle Shannon <kyle@pobox.com>
 github.com/bsurc/container git rev={{GIT_REV}}
