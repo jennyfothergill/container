@@ -8,17 +8,33 @@ From: ubuntu:jammy
 	export DEBIAN_FRONTEND="noninteractive"
 	apt -y update && apt -y dist-upgrade
 	apt -y install wget openjdk-8-jre openjdk-8-jdk
+    apt -y install cmake build-essential autoconf automake libtool pkg-config
 
-	# Download BEAST 2.6.6
+	# Download BEAST 2.7.6
     cd /opt
-    wget https://github.com/beast-dev/beast-mcmc/releases/download/v10.5.0-beta3/BEAST_X_v10.5.0-beta3.tgz
-    tar -zxvf BEASTv10.5.0-beta3.tgz
+    wget https://github.com/CompEvol/beast2/releases/download/v2.7.6/BEAST.v2.7.6.Linux.x86.tgz
+    tar -zxvf BEAST.v2.7.6.Linux.x86.tgz
+    /opt/beast/bin/packagemanager -update
+	/opt/beast/bin/packagemanager -dir /opt/beast -add STACEY
+
+    wget https://github.com/beagle-dev/beagle-lib/archive/refs/tags/v4.0.1.tar.gz
+    tar -zxvf v4.0.1.tar.gz
+    mkdir beagle
+    cd beagle-lib-4.0.1
+    mkdir build
+    cd build
+    cmake -DCMAKE_INSTALL_PREFIX:PATH=/opt/beagle ..
+    make install
+
+    cd /opt
 
 	# Clean up
-	rm /opt/*.tgz
+	rm *.tgz *.tar.gz
+    rm -rf beagle-lib-4.0.1
 
 %environment
  	export LC_ALL=C.UTF-8
-    export PATH=/opt/BEASTv10.5.0-beta3/bin:$PATH
+    export PATH=/opt/beast/bin:$PATH
+    export LD_LIBRARY_PATH=/opt/beagle/lib:$LD_LIBRARY_PATH
 	export JAVA_OPTS="-Xmx140G"
 
