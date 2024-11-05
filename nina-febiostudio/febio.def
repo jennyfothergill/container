@@ -1,25 +1,37 @@
 Bootstrap: docker
 From: ubuntu:noble-20241011
 
+%files
+    FEBioStudio_linux-x64_2.7_FEBio_4.7.run
+
 %post
-	export DEBIAN_FRONTEND="noninteractive"
-	apt -y update
-	apt -y install wget
+    apt -y update
+    apt -y install wget tar cmake ffmpeg libopengl-dev zlib1g-dev \
+        libglu1-mesa build-essential openssl libssl-dev libgl1-mesa-dev \
+        libqt5x11extras5 '^libxcb.*-dev' libx11-xcb-dev \
+        libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev
+    echo "deb http://dk.archive.ubuntu.com/ubuntu/ jammy main" >> /etc/apt/sources.list
+    echo "deb http://dk.archive.ubuntu.com/ubuntu/ jammy universe" >> /etc/apt/sources.list
+    apt update
+    apt -y install libicu70
 
-	
-	# Install miniforge
-	wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
-	bash ./Miniforge3-Linux-x86_64.sh -b -p /opt/conda
-     	. /opt/conda/etc/profile.d/conda.sh
-    	conda activate base
-    	conda update --yes --all
-    	conda clean --yes --all
-	rm ./Miniforge3-Linux-x86_64.sh
 
-	# Install aqt
-	pip install --root-user-action ignore aqtinstall
-	aqt install-qt linux desktop 5.14.2 gcc_64 -m qtcharts qtwebengine
+    # Install miniforge for aqt
+    wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+    bash ./Miniforge3-Linux-x86_64.sh -b -p /opt/conda
+    . /opt/conda/etc/profile.d/conda.sh
+    conda activate base
+    conda update --yes --all
+    conda clean --yes --all
+    rm ./Miniforge3-Linux-x86_64.sh
+
+    # Install aqt
+    pip install --root-user-action ignore aqtinstall
+    aqt install-qt -O /opt/Qt linux desktop 6.4.0 gcc_64 -m qtcharts qtwebengine
+
+    # Install FEBioStudio
+    ./FEBioStudio_linux-x64_2.7_FEBio_4.7.run  --unattendedmodeui minimal --mode unattended --prefix /opt/FEBioStudio
 
 %environment
- 	export LC_ALL=C.UTF-8
-    	export PATH=/opt/conda/bin:$PATH
+     export LC_ALL=C.UTF-8
+     export PATH=/opt/FEBioStudio/bin:$PATH
