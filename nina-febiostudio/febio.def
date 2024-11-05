@@ -1,0 +1,25 @@
+Bootstrap: docker
+From: ubuntu:noble-20241011
+
+%post
+	export DEBIAN_FRONTEND="noninteractive"
+	apt -y update
+	apt -y install wget
+
+	
+	# Install miniforge
+	wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+	bash ./Miniforge3-Linux-x86_64.sh -b -p /opt/conda
+     	. /opt/conda/etc/profile.d/conda.sh
+    	conda activate base
+    	conda update --yes --all
+    	conda clean --yes --all
+	rm ./Miniforge3-Linux-x86_64.sh
+
+	# Install aqt
+	pip install --root-user-action ignore aqtinstall
+	aqt install-qt linux desktop 5.14.2 gcc_64 -m qtcharts qtwebengine
+
+%environment
+ 	export LC_ALL=C.UTF-8
+    	export PATH=/opt/conda/bin:$PATH
