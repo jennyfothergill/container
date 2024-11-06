@@ -1,0 +1,86 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%environment
+LC_ALL=C
+TZ=UTC
+export LC_ALL TZ
+
+%files
+
+%post
+
+export LC_ALL=C
+
+apt update
+apt upgrade -y
+
+apt install -y software-properties-common
+add-apt-repository ppa:ubuntugis/ppa
+
+DEBIAN_FRONTEND=NONINTERACTIVE apt install -y \
+  bison \
+  build-essential \
+  cmake \
+  flex \
+  gdb \
+  gdal-bin \
+  git \
+  libexpat-dev \
+  libgdal-dev \
+  libgeos-dev \
+  libgit2-dev \
+  libtool \
+  libproj-dev \
+  libsqlite3-dev \
+  libudunits2-dev \
+  libxml2-dev \
+  pandoc \
+  r-base \
+  tcl \
+  tcl-dev \
+  texinfo \
+  tzdata \
+  valgrind
+
+R -e "install.packages('auk', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(auk)"
+R -e "install.packages('here', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(here)"
+R -e "install.packages('lubridate', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(lubridate)"
+R -e "install.packages('mgcv', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(mgcv)"
+R -e "install.packages('rgdal', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(rgdal)"
+R -e "install.packages('rmarkdown', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(rmarkdown)"
+
+R -e "install.packages('sf', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(sf)"
+R -e "install.packages('sp', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(sp)"
+R -e "install.packages('tidyverse', repo='https://ftp.osuosl.org/pub/cran/', Ncpus=24)"
+R -e "library(tidyverse)"
+
+cd /opt/
+cat << EOF > test.R
+library(auk)
+library(here)
+library(lubridate)
+library(mgcv)
+library(rgdal)
+library(rmarkdown)
+library(sf)
+library(sp)
+library(tidyverse)
+EOF
+
+%test
+Rscript /opt/test.R
+
+%help
+R and dependencies for Nora Honkomp.
+
+%labels
+author Kyle Shannon <kyle@pobox.com>

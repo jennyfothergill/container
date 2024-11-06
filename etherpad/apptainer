@@ -1,0 +1,36 @@
+Bootstrap: scratch
+
+%setup
+export MAJOR=3
+export MINOR=19
+export PATCH=1
+export ARCH=x86_64
+curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
+curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
+sha512sum -c alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
+tar -C ${APPTAINER_ROOTFS} -xf alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
+
+%environment
+NODE_ENV=production
+export NODE_ENV
+
+%post
+apk add \
+  build-base \
+  git \
+  nodejs \
+  npm \
+  python3 \
+  python3-dev \
+  sqlite \
+  sqlite-dev \
+  sqlite-tcl
+
+%help
+This container provides a runtime for etherpad-lite.  It does not contain the
+actual etherpad instance.  To run etherpad:
+
+- clone https://github.com/ether/etherpad-lite
+- update settings.json as needed.
+- run `singularity exec -B /x/y:/z/a /path/to/etherpad/bin/run.sh
+

@@ -1,0 +1,56 @@
+Bootstrap: docker
+From: ubuntu:20.04
+
+%files
+pkgs.R /opt/
+testload.R /opt/
+
+%environment
+
+export LC_ALL=C
+
+%post
+
+export LC_ALL=C
+
+apt update
+apt upgrade -y
+
+apt install -y software-properties-common
+add-apt-repository ppa:ubuntugis/ppa
+
+DEBIAN_FRONTEND=NONINTERACTIVE apt install -y \
+  bison \
+  build-essential \
+  cmake \
+  flex \
+  gdb \
+  git \
+  libexpat-dev \
+  libgdal-dev \
+  libgeos-dev \
+  libgit2-dev \
+  libtool \
+  libproj-dev \
+  libsqlite3-dev \
+  libudunits2-dev \
+  libxml2-dev \
+  r-base \
+  texinfo \
+  tzdata \
+  valgrind
+
+cd /opt
+Rscript pkgs.R
+
+%test
+
+Rscript /opt/testload.R
+
+%help
+
+This container supplies dependencies for Fiona Noonan's thesis project.
+
+%labels
+
+author "Kyle Shannon <kyle@pobox.com>

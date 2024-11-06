@@ -1,0 +1,72 @@
+Bootstrap: scratch
+
+%setup
+export MAJOR=3
+export MINOR=19
+export PATCH=0
+export ARCH=x86_64
+curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
+curl -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
+sha512sum -c alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
+tar -C ${APPTAINER_ROOTFS} -xf alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
+
+%post
+
+sed -i 's/v3.19/edge/g' /etc/apk/repositories
+tail -n 1 /etc/apk/repositories | sed 's/community/testing/' >> /etc/apk/repositories
+
+apk update
+apk upgrade
+
+apk add \
+	bison \
+	build-base \
+	curl \
+	ffmpeg \
+	fish \
+	flex \
+	fossil \
+	gdal \
+	gdal-bash-completion \
+	gdal-dev \
+	gdal-doc \
+	gdal-driver-all \
+	gdal-tools \
+	go \
+	groff \
+	groff-doc \
+	htop \
+	proj \
+	proj-data \
+	proj-dev \
+	proj-util \
+	python3 \
+	py3-gdal \
+	sqlite \
+	sqlite-dev \
+	sqlite-tcl \
+	tcl \
+	tcl-dev \
+	tcl-doc \
+	tcl-lib \
+	tcl-lib-doc \
+	tcl-readline \
+	tcl-readline-dev \
+	tcl-readline-doc \
+	tree \
+	typst \
+	valgrind \
+	vim
+
+mkdir /opt/src
+cd /opt/src
+curl -LO https://www.lunabase.org/~faber/Vault/software/grap/grap-1.47.tar.gz
+ls
+tar -xf grap-1.47.tar.gz
+cd grap-1.47
+./configure
+make install
+
+%test
+gdalinfo --version
+sqlite3 --version

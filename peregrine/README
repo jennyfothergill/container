@@ -1,0 +1,6 @@
+# Peregrine
+
+The recipe here represents the history of Forrest Burt's Peregrine fund
+definition file.  Each version (peregrine[0-8].def will be added as a change to
+one canonical peregrine.def file.  See checkin comments and %help sections for
+more info.

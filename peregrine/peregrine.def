@@ -1,0 +1,26 @@
+Bootstrap: localimage
+From: {{GUIX_SQUASHFS}}
+
+%environment
+LD_LIBRARY_PATH=/opt/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH
+
+%post
+mkdir -p /opt/src
+cd /opt/src
+git clone https://github.com/eggert/tz
+cd tz
+CC=gcc make install
+
+cd /opt/src
+
+git clone --branch v0.3.20 --depth=1 https://github.com/OpenMathLib/OpenBLAS
+cd OpenBLAS
+make PREFIX=/opt DYNAMIC_ARCH=1 DYNAMIC_OLDER=1 TARGET=GENERIC USE_OPENMP=1
+make PREFIX=/opt install
+
+LD_LIBRARY_PATH=/opt/lib:$LD_LIBRARY_PATH Rscript -e "devtools::install_github('doserjef/spOccupancy')"
+
+%labels
+author Kyle Shannon <kyle@pobox.com>
+github.com/bsurc/container git rev={{GIT_REV}}

@@ -1,0 +1,33 @@
+bootstrap: docker
+from: debian:bookworm
+
+%environment
+    export LC_ALL=C
+    export PATH=/opt/metashape-pro:$PATH
+    export AGISOFT_FLS=172.18.0.11:5842
+
+%files
+    server.lic
+
+%post
+    apt update
+    apt install -y \
+        curl \
+        libegl1-mesa \
+        libfontconfig \
+        libgl1-mesa-glx \
+        libglu1-mesa \
+        libglib2.0-0 \
+        libgomp1 \
+        libsm6 \
+        libtree \
+        libxcb-* \
+        libxkbcommon-x11-0
+
+    mkdir -p /var/tmp/agisoft/licensing/licenses/
+    mv server.lic /var/tmp/agisoft/licensing/licenses/
+    cd /opt
+    curl -LO https://s3-eu-west-1.amazonaws.com/download.agisoft.com/metashape-pro_2_1_0_amd64.tar.gz
+    tar xzf metashape-pro_2_1_0_amd64.tar.gz
+    chmod go+r -R /opt/metashape-pro
+    find /opt/metashape-pro -perm /u+x -execdir chmod a+x {} +

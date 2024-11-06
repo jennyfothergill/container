@@ -1,0 +1,44 @@
+Bootstrap: localimage
+From: bioinformatics.sif
+
+%files
+
+%post
+	apt-get update
+	apt-get install -y zlib1g-dev libbz2-dev liblzma-dev
+	apt clean
+
+	cd /opt
+
+	# bcftools
+	wget https://github.com/samtools/bcftools/releases/download/1.16/bcftools-1.16.tar.bz2
+	tar xf bcftools-1.16.tar.bz2
+	cd bcftools-1.16
+	mkdir /opt/bcftools
+	./configure --prefix=/opt/bcftools
+	make
+	make install
+
+	# BBMap
+	cd /opt
+	wget https://sourceforge.net/projects/bbmap/files/BBMap_39.01.tar.gz
+	tar xf BBMap_39.01.tar.gz
+
+	# clean
+	rm /opt/BBMap_39.01.tar.gz
+	rm /opt/bcftools-1.16.tar.bz2
+	rm -rf /opt/bcftools-1.16
+
+%environment
+ 	export LC_ALL=C.UTF-8
+    	export PATH=/opt/conda/bin:/opt/bpp-4.4.1-linux-x86_64/bin:/opt/exonerate-2.2.0-x86_64/bin:/opt/fasttree:/opt/HybPiper:/opt/iBPP/src:/opt/beast/bin:/opt/bcftools/bin:/opt/bbmap:$PATH
+	export GETORG_PATH=/opt/.GetOrganelle
+	export JAVA_OPTS="-Xmx140G"
+
+%runscript
+	alias astral="java -jar /opt/Astral/astral.5.7.8.jar"
+	eval ${@}
+	
+	alias get_seq_lengths.py="python /opt/HybPiper/get_seq_lengths.py"
+
+%startscript

@@ -1,0 +1,77 @@
+Bootstrap: localimage
+From: /home/kyle/src/simages/alpine/v3.15.0
+
+%files
+pkgs.R /opt/
+testload.R /opt/
+
+%environment
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US
+
+%post
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US
+
+apk update
+apk upgrade
+
+apk add \
+  autoconf \
+  automake \
+  bison \
+  build-base \
+  cmake \
+  expat-dev \
+  flex \
+  fontconfig \
+  font-noto \
+  font-noto-extra \
+  gdal \
+  gdal-dev \
+  gdal-tools \
+  gdb \
+  geos-dev \
+  git \
+  libgit2-dev \
+  libtbb \
+  libtool \
+  libuv-dev \
+  libxml2-dev \
+  linux-headers \
+  m4 \
+  proj-data \
+  proj-dev \
+  proj-util \
+  R \
+  R-dev \
+  sqlite \
+  sqlite-dev \
+  texinfo \
+  tzdata \
+  valgrind
+
+mkdir /opt/src
+cd /opt/src
+git clone https://github.com/Unidata/UDUNITS-2
+mkdir UDUNITS-2/build
+cd /opt/src/UDUNITS-2/build
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
+make -j 4
+make install
+
+Rscript /opt/pkgs.R
+
+%test
+
+Rscript /opt/testload.R
+
+%help
+
+This container supplies dependencies for Fiona Noonan's thesis project.
+
+%labels
+
+author "Kyle Shannon <kyle@pobox.com>

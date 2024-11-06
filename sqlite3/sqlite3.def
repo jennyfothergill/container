@@ -1,0 +1,94 @@
+Bootstrap: scratch
+
+%setup
+export MAJOR=3
+export MINOR=20
+export PATCH=0
+export ARCH=x86_64
+curl --silent -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
+curl --silent -LO https://dl-cdn.alpinelinux.org/alpine/v$MAJOR.$MINOR/releases/$ARCH/alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
+sha512sum -c alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz.sha512
+tar -C ${APPTAINER_ROOTFS} -xf alpine-minirootfs-$MAJOR.$MINOR.$PATCH-$ARCH.tar.gz
+
+%environment
+
+%files
+apptest.tcl /opt
+
+%post
+
+# SQLite3 v3.45.3
+export SQLITE_SHA3=8653b758870e6ef0
+export SPATIALITE_VERSION=5.0.1
+export MAKE_JOBS=16
+
+apk update
+apk upgrade
+
+apk add \
+	build-base \
+	curl \
+	fossil \
+	gdal \
+	gdal-dev \
+	gdal-tools \
+	geos-dev \
+	librttopo-dev \
+	libxml2-dev \
+	minizip-dev \
+	proj-dev \
+	readline-dev \
+	rlwrap \
+	tcl \
+	tcl-dev \
+	tcl-doc \
+	tcl-lib \
+	tcl-readline \
+	zlib-dev
+
+mkdir -p /opt/src
+cd /opt/src
+curl --silent -LO https://sqlite.org/src/tarball/$SQLITE_SHA3/SQLite-$SQLITE_SHA3.tar.gz
+tar -xf SQLite-$SQLITE_SHA3.tar.gz
+mv SQLite-$SQLITE_SHA3 sqlite3
+cd sqlite3
+CFLAGS=-DSQLITE_ENABLE_COLUMN_METADATA ./configure --enable-all
+make -j $MAKE_JOBS
+make install
+make speedtest1
+make testfixture
+
+# build the lsm extension
+tclsh ./ext/lsm1/tool/mklsm1c.tcl
+gcc -g -fPIC -shared lsm1.c -o lsm1.so
+cp lsm1.so /usr/local/lib/
+
+# TODO: add other extensions
+
+cd ext/misc
+for x in btreeinfo carray completion compress csv \
+  decimal explain shathree spellfix sqlar uuid;
+    do gcc -g -fPIC -shared $x.c -o $x.so;
+    cp $x.so /usr/local/lib/
+done;
+
+mkdir /opt/src/spatialite
+cd /opt/src/spatialite
+curl --silent -LO https://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-$SPATIALITE_VERSION.tar.gz
+tar -xf libspatialite-$SPATIALITE_VERSION.tar.gz
+cd libspatialite-$SPATIALITE_VERSION
+./configure --enable-freexl=no
+make -j $MAKE_JOBS
+make install
+
+%help
+SQLite3 v3.45.0 with the all core extensions enabled (except FTS3) and some
+miscellaneous extensions. The Spatialite library is also available without
+freexl support.
+
+%test
+/opt/src/sqlite3/speedtest1 --memdb
+tclsh /opt/apptest.tcl
+
+%runscript
+sqlite3 $@

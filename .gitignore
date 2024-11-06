@@ -1,8 +1,22 @@
 # built containers
 *.sif
 
-# dev containers 
+# dev containers
 *dev*_*.def
 
 # history file for R
 .Rhistory
+
+# vim
+*.swp
+*.swo
+
+# alpine minirootfs
+*alpine-minirootfs-*.tar.gz*
+
+# tar and zip files
+*.tar*
+*.zip
+
+# guix to squashfs output
+*guix.out
