@@ -10,10 +10,12 @@ From: ubuntu:jammy
 	apt -y install wget openjdk-8-jre openjdk-8-jdk
     apt -y install cmake build-essential autoconf automake libtool pkg-config
 
-	# Download BEAST 2.6.6
+	# Download BEAST 2.7.6
     cd /opt
-    wget https://github.com/beast-dev/beast-mcmc/releases/download/v10.5.0-beta3/BEAST_X_v10.5.0-beta3.tgz
-    tar -zxvf BEAST_X_v10.5.0-beta3.tgz
+    wget https://github.com/CompEvol/beast2/releases/download/v2.7.6/BEAST.v2.7.6.Linux.x86.tgz
+    tar -zxvf BEAST.v2.7.6.Linux.x86.tgz
+    /opt/beast/bin/packagemanager -update
+	/opt/beast/bin/packagemanager -dir /opt/beast -add STACEY
 
     wget https://github.com/beagle-dev/beagle-lib/archive/refs/tags/v4.0.1.tar.gz
     tar -zxvf v4.0.1.tar.gz
@@ -32,7 +34,7 @@ From: ubuntu:jammy
 
 %environment
  	export LC_ALL=C.UTF-8
-    export PATH=/opt/BEASTv10.5.0/bin:$PATH
+    export PATH=/opt/beast/bin:$PATH
     export LD_LIBRARY_PATH=/opt/beagle/lib:$LD_LIBRARY_PATH
 	export JAVA_OPTS="-Xmx140G"
 
