@@ -1,0 +1,24 @@
+Bootstrap: docker
+From: rockylinux:9.3.20231119
+
+
+%files
+    # Files required a form to fill out but they provide this download link
+    # https://www.megasoftware.net/do_force_download/mega-11.0.13-1.x86_64.rpm
+    mega-11.0.13-1.x86_64.rpm /opt/
+
+%post
+    yum -y update
+    yum -y install wget
+    wget https://dl.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/e/epel-release-9-8.el9.noarch.rpm
+    rpm -Uvh epel-release*rpm
+    dnf -y install GConf2
+    yum -y install libX11-devel alsa-lib-devel atk cairo dbus-libs fontconfig \
+	freetype gtk2 nspr nss nss-util pango libxcb libXScrnSaver
+    yum clean all
+    cd /opt
+    rpm -i mega-11.0.13-1.x86_64.rpm
+
+    # Clean up
+    rm /opt/*.rpm
+

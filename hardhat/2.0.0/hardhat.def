@@ -1,0 +1,20 @@
+Bootstrap: docker
+From: ubuntu:focal
+Stage: build
+
+
+%files
+
+%environment
+    export LC_ALL=C
+
+%post
+        export DEBIAN_FRONTEND="noninteractive"
+        apt-get  update && apt-get install -y --no-install-recommends apt-transport-https curl ca-certificates
+
+        apt -y install wget git
+
+	curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+	sudo apt install nodejs
+
+	
