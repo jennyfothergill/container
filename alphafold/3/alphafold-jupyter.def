@@ -1,0 +1,12 @@
+Bootstrap: localimage
+From: alphafold_3.0.0.sif
+
+
+%post
+    /alphafold3_venv/bin/pip3 install jupyterlab notebook
+
+%environment
+    export PATH="/hmmer/bin:/alphafold3_venv/bin:$PATH"
+    export XLA_FLAGS="--xla_gpu_enable_triton_gemm=false"
+    export XLA_PYTHON_CLIENT_PREALLOCATE=true
+    export XLA_CLIENT_MEM_FRACTION=0.95
