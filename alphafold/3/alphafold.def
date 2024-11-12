@@ -1,0 +1,42 @@
+Bootstrap: docker
+From: nvidia/cuda:12.6.0-base-ubuntu22.04
+
+# https://github.com/google-deepmind/alphafold3/blob/main/docker/Dockerfile
+
+%post
+    apt update --quiet
+    apt install -y --quiet software-properties-common git wget
+
+    add-apt-repository ppa:deadsnakes/ppa
+    DEBIAN_FRONTEND=noninteractive apt install --yes --quiet python3.11 \
+        python3-pip python3.11-venv python3.11-dev
+    python3.11 -m venv /alphafold3_venv
+
+    mkdir /hmmer_build /hmmer
+    cd /hmmer_build
+    wget http://eddylab.org/software/hmmer/hmmer-3.4.tar.gz
+    tar zxf hmmer-3.4.tar.gz
+    rm hmmer-3.4.tar.gz
+    cd hmmer-3.4
+    ./configure --prefix /hmmer
+    make -j8
+    make install
+    cd easel
+    make install
+    rm -R /hmmer_build
+
+    cd /app/
+    wget https://github.com/google-deepmind/alphafold3/archive/refs/tags/v3.0.0.tar.gz
+    tar xzf v3.0.0.tar.gz
+    mv alphafold3-3.0.0 alphafold
+    cd alphafold
+
+    pip3 install -r dev-requirements.txt
+    pip3 install --no-deps .
+    build_data
+
+%environment
+    export PATH="/hmmer/bin:/alphafold3_venv/bin:$PATH"
+    export XLA_FLAGS="--xla_gpu_enable_triton_gemm=false"
+    export XLA_PYTHON_CLIENT_PREALLOCATE=true
+    export XLA_CLIENT_MEM_FRACTION=0.95
