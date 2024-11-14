@@ -5,12 +5,20 @@ From: nvidia/cuda:12.6.0-base-ubuntu22.04
 
 %post
     apt update --quiet
-    apt install -y --quiet software-properties-common git wget
+    apt install -y --quiet software-properties-common git wget build-essential \
+        zlib1g-dev
 
-    add-apt-repository ppa:deadsnakes/ppa
-    DEBIAN_FRONTEND=noninteractive apt install --yes --quiet python3.11 \
-        python3-pip python3.11-venv python3.11-dev
-    python3.11 -m venv /alphafold3_venv
+    # Install miniforge
+    wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+    bash ./Miniforge3-Linux-x86_64.sh -b -p /opt/conda
+    . /opt/conda/etc/profile.d/conda.sh
+    conda activate base
+    conda update --yes -q --all
+    conda clean --yes -q --all
+    rm ./Miniforge3-Linux-x86_64.sh
+
+    mamba create -q -y -n af-env 'python=3.11' pip
+    conda activate af-env
 
     mkdir /hmmer_build /hmmer
     cd /hmmer_build
@@ -33,12 +41,12 @@ From: nvidia/cuda:12.6.0-base-ubuntu22.04
     cd /opt/alphafold3-3.0.0
     sed -i '1i #!/usr/bin/env python3' *.py
     chmod +x *.py
-    /alphafold3_venv/bin/pip3 install -r dev-requirements.txt
-    /alphafold3_venv/bin/pip3 install --no-deps .
-    /alphafold3_venv/bin/build_data
+    pip3 install --root-user-action ignore -r dev-requirements.txt
+    pip3 install --root-user-action ignore --no-deps .
+    build_data
 
 %environment
-    export PATH="/hmmer/bin:/alphafold3_venv/bin:/opt/alphafold3-3.0.0:$PATH"
+    export PATH="/hmmer/bin:/opt/conda/envs/af-env/bin:/opt/alphafold3-3.0.0:$PATH"
     export XLA_FLAGS="--xla_gpu_enable_triton_gemm=false"
     export XLA_PYTHON_CLIENT_PREALLOCATE=true
     export XLA_CLIENT_MEM_FRACTION=0.95
