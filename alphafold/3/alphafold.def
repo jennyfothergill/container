@@ -1,0 +1,52 @@
+Bootstrap: docker
+From: nvidia/cuda:12.6.0-base-ubuntu22.04
+
+# https://github.com/google-deepmind/alphafold3/blob/main/docker/Dockerfile
+
+%post
+    apt update --quiet
+    apt install -y --quiet software-properties-common git wget build-essential \
+        zlib1g-dev
+
+    # Install miniforge
+    wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+    bash ./Miniforge3-Linux-x86_64.sh -b -p /opt/conda
+    . /opt/conda/etc/profile.d/conda.sh
+    conda activate base
+    conda update --yes -q --all
+    conda clean --yes -q --all
+    rm ./Miniforge3-Linux-x86_64.sh
+
+    mamba create -q -y -n af-env 'python=3.11' pip
+    conda activate af-env
+
+    mkdir /hmmer_build /hmmer
+    cd /hmmer_build
+    wget http://eddylab.org/software/hmmer/hmmer-3.4.tar.gz
+    tar zxf hmmer-3.4.tar.gz
+    rm hmmer-3.4.tar.gz
+    cd hmmer-3.4
+    ./configure --prefix /hmmer
+    make -j8
+    make install
+    cd easel
+    make install
+    rm -R /hmmer_build
+
+    cd /opt/
+    wget https://github.com/google-deepmind/alphafold3/archive/refs/tags/v3.0.0.tar.gz
+    tar xzf v3.0.0.tar.gz
+    rm v3.0.0.tar.gz
+
+    cd /opt/alphafold3-3.0.0
+    sed -i '1i #!/usr/bin/env python3' *.py
+    chmod +x *.py
+    pip3 install --root-user-action ignore -r dev-requirements.txt
+    pip3 install --root-user-action ignore --no-deps .
+    build_data
+
+%environment
+    export PATH="/hmmer/bin:/opt/conda/envs/af-env/bin:/opt/alphafold3-3.0.0:$PATH"
+    export XLA_FLAGS="--xla_gpu_enable_triton_gemm=false"
+    export XLA_PYTHON_CLIENT_PREALLOCATE=true
+    export XLA_CLIENT_MEM_FRACTION=0.95
