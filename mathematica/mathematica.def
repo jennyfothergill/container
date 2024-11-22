@@ -1,0 +1,16 @@
+Bootstrap: docker
+From: rockylinux:8
+
+%files
+    Wolfram_14.1.0_LIN_Bndl.sh /opt/Wolfram_14.1.0_LIN_Bndl.sh
+
+%post
+    yum update -y
+    yum install -y xz findutils
+
+    bash /opt/Wolfram_14.1.0_LIN_Bndl.sh --confirm -- -targetdir=/opt/mathematica \
+        -auto -execdir=/opt/mathematica/bin
+
+%environment
+    export LC_ALL=C.UTF-8
+    export PATH=/opt/mathematica/bin:$PATH
