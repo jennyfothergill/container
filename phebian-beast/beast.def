@@ -31,6 +31,8 @@ From: ubuntu:jammy
     cmake -DCMAKE_INSTALL_PREFIX:PATH=/opt/beagle ..
     make install
 
+    # Replace Java heap size
+    sed i 's/-Xmx8g/-Xmx32g/' /opt/beast/bin/densitree
     cd /opt
 
 	# Clean up
