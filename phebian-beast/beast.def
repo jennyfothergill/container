@@ -4,16 +4,21 @@ From: ubuntu:jammy
 
 %files
 
+%arguments
+    # If version is not passed in during build, build 2.7.6, e.g.,
+    # apptainer build --build-arg VERSION=2.7.7 beast_2.7.7.sif beast.def
+    VERSION=2.7.6
+
 %post
 	export DEBIAN_FRONTEND="noninteractive"
 	apt -y update && apt -y dist-upgrade
 	apt -y install wget openjdk-8-jre openjdk-8-jdk
     apt -y install cmake build-essential autoconf automake libtool pkg-config
 
-	# Download BEAST 2.7.6
+	# Download BEAST {{ VERSION }}
     cd /opt
-    wget https://github.com/CompEvol/beast2/releases/download/v2.7.6/BEAST.v2.7.6.Linux.x86.tgz
-    tar -zxvf BEAST.v2.7.6.Linux.x86.tgz
+    wget https://github.com/CompEvol/beast2/releases/download/v{{ VERSION }}/BEAST.v{{ VERSION }}.Linux.x86.tgz
+    tar -zxvf BEAST.v{{ VERSION }}.Linux.x86.tgz
     /opt/beast/bin/packagemanager -update
 	/opt/beast/bin/packagemanager -dir /opt/beast -add STACEY
 
