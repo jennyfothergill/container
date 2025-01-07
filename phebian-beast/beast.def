@@ -45,3 +45,6 @@ From: ubuntu:jammy
     export LD_LIBRARY_PATH=/opt/beagle/lib:$LD_LIBRARY_PATH
 	export JAVA_OPTS="-Xmx140G"
 
+%labels
+    author Jenny Fothergill <jennyfothergill@boisestate.edu>
+    github.com/bsurc/container git rev={{GIT_REV}}
