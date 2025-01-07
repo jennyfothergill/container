@@ -33,7 +33,7 @@ From: ubuntu:jammy
     make install
 
     # Replace Java heap size
-    sed i 's/-Xmx8g/-Xmx32g/' /opt/beast/bin/densitree
+    sed -i 's/-Xmx8g/-Xmx32g/' /opt/beast/bin/densitree
     cd /opt
 
 	# Clean up
