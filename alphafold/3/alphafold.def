@@ -41,7 +41,8 @@ From: nvidia/cuda:12.6.0-base-ubuntu22.04
         --branch main --single-branch
 
     cd /opt/alphafold3
-    AF_GIT_REV=$(shell git rev-parse --short=16 HEAD)
+    AF_REV="$(git rev-parse --short=16 HEAD)"
+    echo "github.com/google-deepmind/alphafold3 git rev=$AF_REV" >> "$APPTAINER_LABELS"
     sed -i '1i #!/usr/bin/env python3' *.py
     chmod +x *.py
     pip3 install --root-user-action ignore -r dev-requirements.txt
@@ -49,7 +50,7 @@ From: nvidia/cuda:12.6.0-base-ubuntu22.04
     build_data
 
 %environment
-    export PATH="/hmmer/bin:/opt/conda/envs/af-env/bin:/opt/alphafold3-3.0.0:$PATH"
+    export PATH="/hmmer/bin:/opt/conda/envs/af-env/bin:/opt/alphafold3:$PATH"
     export XLA_FLAGS="--xla_gpu_enable_triton_gemm=false"
     export XLA_PYTHON_CLIENT_PREALLOCATE=true
     export XLA_CLIENT_MEM_FRACTION=0.95
@@ -57,4 +58,3 @@ From: nvidia/cuda:12.6.0-base-ubuntu22.04
 %labels
     author Jenny Fothergill <jennyfothergill@boisestate.edu>
     github.com/bsurc/container git rev={{GIT_REV}}
-    github.com/google-deepmind/alphafold3 git rev={{AF_GIT_REV}}
