@@ -1,5 +1,5 @@
 Bootstrap: localimage
-From: alphafold_3.0.0.sif
+From: alphafold_v3.0.0.sif
 
 
 %post

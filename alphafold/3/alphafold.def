@@ -37,11 +37,11 @@ From: nvidia/cuda:12.6.0-base-ubuntu22.04
     rm -R /hmmer_build
 
     cd /opt/
-    wget https://github.com/google-deepmind/alphafold3/archive/refs/tags/v3.0.0.tar.gz
-    tar xzf v3.0.0.tar.gz
-    rm v3.0.0.tar.gz
+    git clone --depth 1 https://github.com/google-deepmind/alphafold3.git \
+        --branch main --single-branch
 
-    cd /opt/alphafold3-3.0.0
+    cd /opt/alphafold3
+    AF_GIT_REV=$(shell git rev-parse --short=16 HEAD)
     sed -i '1i #!/usr/bin/env python3' *.py
     chmod +x *.py
     pip3 install --root-user-action ignore -r dev-requirements.txt
@@ -57,3 +57,4 @@ From: nvidia/cuda:12.6.0-base-ubuntu22.04
 %labels
     author Jenny Fothergill <jennyfothergill@boisestate.edu>
     github.com/bsurc/container git rev={{GIT_REV}}
+    github.com/google-deepmind/alphafold3 git rev={{AF_GIT_REV}}
