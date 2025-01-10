@@ -8,7 +8,7 @@ From: alphafold_v3.0.0.sif
     mamba install -q -y jupyterlab notebook
 
 %environment
-    export PATH="/hmmer/bin:/opt/conda/envs/af-env/bin:/opt/alphafold3-3.0.0:$PATH"
+    export PATH="/hmmer/bin:/opt/conda/envs/af-env/bin:/opt/alphafold3:$PATH"
     export XLA_FLAGS="--xla_gpu_enable_triton_gemm=false"
     export XLA_PYTHON_CLIENT_PREALLOCATE=true
     export XLA_CLIENT_MEM_FRACTION=0.95
