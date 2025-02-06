@@ -1,0 +1,9 @@
+bootstrap: docker
+from: rockylinux:8
+
+%environment
+
+%files
+
+%post
+    dnf install qgis python3-qgis qgis-grass qgis-server
