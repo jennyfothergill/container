@@ -52,6 +52,7 @@ apk add \
 	sqlite-dev \
 	sqlite-tcl \
 	st \
+	strace \
 	tcl \
 	tcl-dev \
 	tcl-doc \
@@ -61,6 +62,7 @@ apk add \
 	tcl-readline-dev \
 	tcl-readline-doc \
 	tree \
+	tree-sitter-grammars \
 	typst \
 	valgrind \
 	vim
