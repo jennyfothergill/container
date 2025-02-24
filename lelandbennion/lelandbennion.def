@@ -1,0 +1,12 @@
+Bootstrap: localimage
+From: {{GUIX_SQUASHFS}}
+
+%post
+export GITHUB_PAT={{GITHUB_PAT}}
+Rscript -e "devtools::install_github('johnbaums/jagstools', upgrade='never')"
+Rscript -e "devtools::install_github('DrylandEcology/rSOILWAT2', upgrade='never')"
+Rscript -e "devtools::install_github('DrylandEcology/rSW2exter', upgrade='never')"
+
+%labels
+author Kyle Shannon <kyle@pobox.com>
+github.com/bsurc/container git rev={{GIT_REV}}
