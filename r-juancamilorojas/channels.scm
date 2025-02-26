@@ -1,10 +1,4 @@
 (list (channel
-        (name 'boisestate-variants)
-        (url "https://github.com/bsurc/guix.git")
-        (branch "main")
-        (commit
-          "e4581ff3891814d5b77ed0bd56d280f5ff70a7fe"))
-      (channel
         (name 'guix-cran)
         (url "https://github.com/guix-science/guix-cran.git")
         (branch "master")

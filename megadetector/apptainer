@@ -1,0 +1,10 @@
+Bootstrap: docker
+From: debian:bookworm-slim
+
+%post
+apt update
+apt install -y libgl1 libglib2.0-0 python3.11 python3.11-venv tcl tcllib
+mkdir /opt/venv
+python3.11 -m venv /opt/venv/megadetector
+. /opt/venv/megadetector/bin/activate
+pip install megadetector

@@ -1,0 +1,21 @@
+bootstrap: docker
+from: rockylinux:8
+
+%environment
+    REVEAL=/opt/reveal-time-6.0-2024-07-10-x86_64-RHEL8
+    export PATH=$REVEAL:$REVEAL/thirdparty/linux64/python/bin:$PATH
+    export LD_LIBRARY_PATH=$REVEAL/thirdparty/linux64/python/lib:$REVEAL/thirdparty/cuda/lib64:$REVEAL/thirdparty/acceleware/lib:$LD_LIBRARY_PATH
+
+%files
+    license-demo-univ-boisestate-08-31-2024-al-am /opt
+    reveal-time-6.0-2024-07-10-x86_64-RHEL8.tar.gz /opt
+
+%post
+    yum install -y tar which xorg-x11-xauth
+    yum clean all
+
+    cd /opt/
+    tar xzf reveal-time-6.0-2024-07-10-x86_64-RHEL8.tar.gz
+    mv /opt/license-demo-univ-boisestate-08-31-2024-al-am /opt/reveal-time-6.0-2024-07-10-x86_64-RHEL8
+    rm reveal-time-6.0-2024-07-10-x86_64-RHEL8.tar.gz
+    chown -R 1001:1001 /opt/reveal*

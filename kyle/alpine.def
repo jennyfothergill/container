@@ -19,6 +19,8 @@ apk update
 apk upgrade
 
 apk add \
+	abduco \
+	althttpd \
 	bison \
 	build-base \
 	curl \
@@ -35,7 +37,11 @@ apk add \
 	go \
 	groff \
 	groff-doc \
+	jimtcl \
+	helix \
 	htop \
+	ledger \
+	mtm \
 	proj \
 	proj-data \
 	proj-dev \
@@ -45,6 +51,7 @@ apk add \
 	sqlite \
 	sqlite-dev \
 	sqlite-tcl \
+	st \
 	tcl \
 	tcl-dev \
 	tcl-doc \
@@ -57,6 +64,9 @@ apk add \
 	typst \
 	valgrind \
 	vim
+
+# docs for all
+apk add docs
 
 mkdir /opt/src
 cd /opt/src

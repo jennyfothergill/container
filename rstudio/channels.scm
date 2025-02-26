@@ -1,15 +1,33 @@
 (list (channel
+        (name 'boisestate-variants)
+        (url "https://github.com/bsurc/guix.git")
+        (branch "main")
+        (commit
+          "e4581ff3891814d5b77ed0bd56d280f5ff70a7fe"))
+      (channel
         (name 'guix-cran)
         (url "https://github.com/guix-science/guix-cran.git")
         (branch "master")
         (commit
-          "466d876bcc15a1a6c2053eb150548f7f471f75b7"))
+          "f1676a22dadb99972874432cce3af4216cee4637"))
+      (channel
+        (name 'guix-hpc)
+        (url "https://gitlab.inria.fr/guix-hpc/guix-hpc.git")
+        (branch "master")
+        (commit
+          "b9f9d59f2d9e5c7c07dc3b18363fccfcbde3e775"))
+      (channel
+        (name 'guix-bioc)
+        (url "https://github.com/guix-science/guix-bioc.git")
+        (branch "master")
+        (commit
+          "ef7e9ed83ace31bbab5a8ffa71f94d30fed82fe8"))
       (channel
         (name 'guix-science)
         (url "https://github.com/guix-science/guix-science.git")
         (branch "master")
         (commit
-          "7c6ca7e1c19c92bfe5e6add688662e08b07db2bf")
+          "df4649af69966b433113a9dd53b81b446786a0ff")
         (introduction
           (make-channel-introduction
             "b1fe5aaff3ab48e798a4cce02f0212bc91f423dc"
@@ -20,7 +38,7 @@
         (url "https://git.savannah.gnu.org/git/guix.git")
         (branch "master")
         (commit
-          "d616e85ac8a380d5126da3184f7037c20866c884")
+          "7fa9df431e9423e2b79c8c520de1d0ef7aed910d")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"

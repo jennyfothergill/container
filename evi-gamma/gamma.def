@@ -3,7 +3,7 @@ From: ubuntu:22.04
 
 
 %files
-    GAMMA_SOFTWARE-20240111_ISP_DIFF_LAT_IPTA.linux64_ubuntu2204.tar.gz /opt/GAMMA.tar.gz
+    GAMMA_SOFTWARE-20241205_ISP_DIFF_LAT_IPTA.linux64_ubuntu2204.tar.gz /opt/GAMMA.tar.gz
     TDBP.zip /opt/TDBP.zip
     MSP.zip /opt/MSP.zip
 

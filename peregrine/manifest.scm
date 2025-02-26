@@ -98,4 +98,8 @@
                             "r-nimblehmc"
                             "r-maxnet"
                             "r-tidyverse"
+                            ;; 2024-11-12 Brian Rolek requests
+                            "r-nimbleecology"
+                            "r-rstan"
+                            "r-cmdstanr"
                           ))
