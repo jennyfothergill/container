@@ -5,9 +5,6 @@ From: ollama/ollama:{{ OLLAMA_TAG }}
 	OLLAMA_TAG=latest
 	OLLAMA_LIBRARY_URL=https://ollama.com/library
 
-%setup
-	[ -n "${APPTAINER_ROOTFS:-}" ] && ./.build-scripts/write-apptainer-labels.sh >"${APPTAINER_ROOTFS}/.build_labels"
-
 %post
 	if ! [ -f /etc/debian_version ]; then
 		echo "This container is only fully supported on Debian-based systems. Some commands may not work." >&2
