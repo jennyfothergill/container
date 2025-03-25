@@ -8,8 +8,14 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"sync"
 
 	"golang.org/x/crypto/acme/autocert"
+)
+
+var (
+	dpsApiKey     = ""
+	dpsApiKeyOnce sync.Once
 )
 
 // bowser is a simple reverse proxy to handle a few
@@ -32,12 +38,16 @@ func main() {
 		mux.ServeHTTP(w, r)
 	})
 
+	// dps survey handles some qualtrics data
+	mux.HandleFunc("/dpssurvey/", dpsSurveyHandler)
+
 	srv := http.Server{
 		Addr:    *flagAddr,
 		Handler: handler,
 	}
+	slog.Info("listen", "address", *flagAddr)
 	if *flagAddr != ":https" && *flagAddr != ":443" {
-		log.Fatal(srv.ListenAndServeTLS("", ""))
+		log.Fatal(srv.ListenAndServe())
 	}
 	m := &autocert.Manager{
 		Cache:      autocert.DirCache("acme"),
