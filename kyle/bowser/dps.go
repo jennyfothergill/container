@@ -42,6 +42,7 @@ func init() {
 		slog.Info("dps back office", "tick", tick)
 		t := time.NewTicker(tick)
 		for {
+			slog.Info("dps back office", "time", time.Now())
 			<-t.C
 			if err := dpsBackOffice(context.TODO()); err != nil {
 				slog.Error("sending failure", "error", err)
