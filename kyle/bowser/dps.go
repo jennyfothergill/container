@@ -37,7 +37,9 @@ func init() {
 			if err != nil {
 				panic("failed to parse duration for dps tick: " + v)
 			}
+			slog.Info("dps back office overriding tick")
 		}
+		slog.Info("dps back office", "tick", tick)
 		t := time.NewTicker(tick)
 		for {
 			<-t.C
@@ -85,15 +87,16 @@ func dpsBackOffice(ctx context.Context) error {
 		to := []string{m["email"]}
 		from := m["from"]
 		title := m["title"]
+		survey := m["followup"]
+		response := m["response"]
 		subject := "Survey Followup for " + title
 
-		body := []byte(m["followup"] + "?response=" + m["response"])
+		body := []byte(survey + "?response=" + response)
 
 		var buf bytes.Buffer
 
 		fmt.Fprintf(&buf, "To: %s\r\n", strings.Join(to, ", "))
 		fmt.Fprintf(&buf, "From: %s\r\n", from)
-		//fmt.Fprintf(&buf, "Cc: %s\r\n", strings.Join(cc, ","))
 		fmt.Fprintf(&buf, "Reply-To: %s\r\n", from)
 		fmt.Fprintf(&buf, "Subject: %s\r\n", subject)
 		fmt.Fprintf(&buf, "\r\n")
@@ -144,6 +147,8 @@ func dpsSurveyHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	case http.MethodGet:
+		dpsMutex.Lock()
+		defer dpsMutex.Unlock()
 		p := filepath.Join("dps", r.FormValue("response")) + ".json"
 		slog.Info("dps survey", "get", p)
 		fin, err := os.Open(p)
