@@ -18,6 +18,36 @@ import (
 	"time"
 )
 
+func init() {
+	payload, err := os.ReadFile("key.txt")
+	if err != nil {
+		panic("failed to read key file (key.txt)")
+	}
+	dpsApiKey = strings.TrimSpace(string(payload))
+	if dpsApiKey == "" {
+		panic("failed to read key file (key.txt)")
+	}
+	go func() {
+		// default tick is one hour, set DPS_QUALTRICS_TICK to override
+		// that value, for example DPS_QUALTRICS_TICK=10s to debug
+		tick := time.Hour
+		if v := os.Getenv("DPS_QUALTRICS_TICK"); v != "" {
+			var err error
+			tick, err = time.ParseDuration(v)
+			if err != nil {
+				panic("failed to parse duration for dps tick: " + v)
+			}
+		}
+		t := time.NewTicker(tick)
+		for {
+			<-t.C
+			if err := dpsBackOffice(context.TODO()); err != nil {
+				slog.Error("sending failure", "error", err)
+			}
+		}
+	}()
+}
+
 var dpsMutex sync.Mutex
 
 func dpsBackOffice(ctx context.Context) error {
@@ -85,35 +115,6 @@ func dpsBackOffice(ctx context.Context) error {
 }
 
 func dpsSurveyHandler(w http.ResponseWriter, r *http.Request) {
-	dpsApiKeyOnce.Do(func() {
-		payload, err := os.ReadFile("key.txt")
-		if err != nil {
-			panic("failed to read key file (key.txt)")
-		}
-		dpsApiKey = strings.TrimSpace(string(payload))
-		if dpsApiKey == "" {
-			panic("failed to read key file (key.txt)")
-		}
-		go func() {
-			// default tick is one hour, set DPS_QUALTRICS_TICK to override
-			// that value, for example DPS_QUALTRICS_TICK=10s to debug
-			tick := time.Hour
-			if v := os.Getenv("DPS_QUALTRICS_TICK"); v != "" {
-				var err error
-				tick, err = time.ParseDuration(v)
-				if err != nil {
-					panic("failed to parse duration for dps tick: " + v)
-				}
-			}
-			t := time.NewTicker(tick)
-			for {
-				<-t.C
-				if err := dpsBackOffice(context.TODO()); err != nil {
-					slog.Error("sending failure", "error", err)
-				}
-			}
-		}()
-	})
 	if key := r.Header.Get("key"); key != dpsApiKey {
 		slog.Error("dpssurvey", "invalid key", key)
 		http.Error(w, http.StatusText(401), 401)
