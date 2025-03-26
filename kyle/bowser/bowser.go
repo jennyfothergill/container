@@ -8,14 +8,8 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
-	"sync"
 
 	"golang.org/x/crypto/acme/autocert"
-)
-
-var (
-	dpsApiKey     = ""
-	dpsApiKeyOnce sync.Once
 )
 
 // bowser is a simple reverse proxy to handle a few

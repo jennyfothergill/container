@@ -18,6 +18,8 @@ import (
 	"time"
 )
 
+var dpsApiKey = ""
+
 func init() {
 	payload, err := os.ReadFile("key.txt")
 	if err != nil {
