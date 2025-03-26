@@ -129,13 +129,16 @@ func dpsSurveyHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	case http.MethodGet:
-		fin, err := os.Open(filepath.Join("dps", r.FormValue("response")) + ".json")
+		p := filepath.Join("dps", r.FormValue("response")) + ".json"
+		slog.Info("dps survey", "get", p)
+		fin, err := os.Open(p)
 		if err != nil {
 			if errors.Is(err, fs.ErrNotExist) {
 				http.Error(w, http.StatusText(404), 404)
 			} else {
 				http.Error(w, http.StatusText(500), 500)
 			}
+			slog.Error("dps survey", "error", err)
 			return
 		}
 		defer fin.Close()
