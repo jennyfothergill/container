@@ -1,16 +1,84 @@
 package main
 
 import (
+	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"io/fs"
 	"log/slog"
 	"net/http"
+	"net/smtp"
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
+	"time"
 )
+
+var dpsMutex sync.Mutex
+
+func dpsBackOffice(ctx context.Context) error {
+	dpsMutex.Lock()
+	defer dpsMutex.Unlock()
+	glob, err := filepath.Glob("dps/*.json")
+	if err != nil {
+		slog.Error("back office", "error", err)
+		return err
+	}
+	for _, g := range glob {
+		fin, err := os.Open(g)
+		if err != nil {
+			slog.Error("back office", "error", err)
+			continue
+		}
+		m := map[string]string{}
+		err = json.NewDecoder(fin).Decode(&m)
+		fin.Close()
+		if err != nil {
+			slog.Error("back office", "error", err)
+			continue
+		}
+		event, err := time.Parse("01/02/2006", m["date"])
+		if err != nil {
+			slog.Error("back office", "error", err)
+			continue
+		}
+		if time.Now().Before(event.Add(24 * time.Hour)) {
+			continue
+		}
+		slog.Info("sending email", "payload", m)
+		host := "relay.boisestate.edu:25"
+		to := []string{m["email"]}
+		from := m["from"]
+		title := m["title"]
+		subject := "Survey Followup for " + title
+
+		body := []byte(m["followup"] + "?response=" + m["response"])
+
+		var buf bytes.Buffer
+
+		fmt.Fprintf(&buf, "To: %s\r\n", strings.Join(to, ", "))
+		fmt.Fprintf(&buf, "From: %s\r\n", from)
+		//fmt.Fprintf(&buf, "Cc: %s\r\n", strings.Join(cc, ","))
+		fmt.Fprintf(&buf, "Reply-To: %s\r\n", from)
+		fmt.Fprintf(&buf, "Subject: %s\r\n", subject)
+		fmt.Fprintf(&buf, "\r\n")
+
+		fmt.Fprintf(&buf, "This is a followup survey for the event %s:\n\n%s\n", title, body)
+
+		if err := smtp.SendMail(host, nil, from, to, buf.Bytes()); err != nil {
+			return err
+		}
+		if err := os.Remove(g); err != nil {
+			slog.Error("back office", "error", err)
+			continue
+		}
+	}
+	return nil
+}
 
 func dpsSurveyHandler(w http.ResponseWriter, r *http.Request) {
 	dpsApiKeyOnce.Do(func() {
@@ -22,6 +90,15 @@ func dpsSurveyHandler(w http.ResponseWriter, r *http.Request) {
 		if dpsApiKey == "" {
 			panic("failed to read key file (key.txt)")
 		}
+		go func() {
+			t := time.NewTicker(time.Hour)
+			for {
+				<-t.C
+				if err := dpsBackOffice(context.TODO()); err != nil {
+					slog.Error("sending failure", "error", err)
+				}
+			}
+		}()
 	})
 	if key := r.Header.Get("key"); key != dpsApiKey {
 		slog.Error("dpssurvey", "invalid key", key)
