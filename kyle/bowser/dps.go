@@ -105,13 +105,10 @@ func dpsBackOffice(ctx context.Context) error {
 		fmt.Fprintf(&buf, "This is a followup survey for the event %s:\n\n%s\n", title, body)
 
 		if os.Getenv("DPS_QUALTRICS_DRYRUN") == "1" {
-			slog.Info("dps survey keeping file", "file", g)
+			slog.Info("dps survey dry run file", "file", g, "payload", m)
 		} else {
 			if err := smtp.SendMail(host, nil, from, to, buf.Bytes()); err != nil {
 				return err
-			}
-			if err := os.Remove(g); err != nil {
-				slog.Error("back office", "error", err)
 			}
 		}
 	}
