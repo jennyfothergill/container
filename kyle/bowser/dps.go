@@ -73,9 +73,12 @@ func dpsBackOffice(ctx context.Context) error {
 		if err := smtp.SendMail(host, nil, from, to, buf.Bytes()); err != nil {
 			return err
 		}
-		if err := os.Remove(g); err != nil {
-			slog.Error("back office", "error", err)
-			continue
+		if os.Getenv("DPS_QUALTRICS_KEEP") == "1" {
+			slog.Info("dps survey keeping file", "file", g)
+		} else {
+			if err := os.Remove(g); err != nil {
+				slog.Error("back office", "error", err)
+			}
 		}
 	}
 	return nil
