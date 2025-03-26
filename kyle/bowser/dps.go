@@ -110,13 +110,18 @@ func dpsBackOffice(ctx context.Context) error {
 			if err := smtp.SendMail(host, nil, from, to, buf.Bytes()); err != nil {
 				return err
 			}
+			dst := filepath.Join("dps", "sent", filepath.Base(g))
+			slog.Info("moving", "source", g, "destination", dst)
+			if err := os.Rename(g, dst); err != nil {
+				slog.Error("failed to move", "source", g, "destination", dst)
+			}
 		}
 	}
 	return nil
 }
 
 func dpsSurveyHandler(w http.ResponseWriter, r *http.Request) {
-	if key := r.Header.Get("key"); key != dpsApiKey {
+	if key := r.Header.Get("X-Auth-Token"); key != dpsApiKey {
 		slog.Error("dpssurvey", "invalid key", key)
 		http.Error(w, http.StatusText(401), 401)
 		return
@@ -147,7 +152,7 @@ func dpsSurveyHandler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodGet:
 		dpsMutex.Lock()
 		defer dpsMutex.Unlock()
-		p := filepath.Join("dps", r.FormValue("response")) + ".json"
+		p := filepath.Join("dps", "sent", r.FormValue("response")) + ".json"
 		slog.Info("dps survey", "get", p)
 		fin, err := os.Open(p)
 		if err != nil {
