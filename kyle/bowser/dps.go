@@ -29,6 +29,7 @@ func dpsBackOffice(ctx context.Context) error {
 		return err
 	}
 	for _, g := range glob {
+		slog.Info("dps backoffice", "response file", g)
 		fin, err := os.Open(g)
 		if err != nil {
 			slog.Error("back office", "error", err)
@@ -91,7 +92,17 @@ func dpsSurveyHandler(w http.ResponseWriter, r *http.Request) {
 			panic("failed to read key file (key.txt)")
 		}
 		go func() {
-			t := time.NewTicker(time.Hour)
+			// default tick is one hour, set DPS_QUALTRICS_TICK to override
+			// that value, for example DPS_QUALTRICS_TICK=10s to debug
+			tick := time.Hour
+			if v := os.Getenv("DPS_QUALTRICS_TICK"); v != "" {
+				var err error
+				tick, err = time.ParseDuration(v)
+				if err != nil {
+					panic("failed to parse duration for dps tick: " + v)
+				}
+			}
+			t := time.NewTicker(tick)
 			for {
 				<-t.C
 				if err := dpsBackOffice(context.TODO()); err != nil {
