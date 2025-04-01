@@ -56,6 +56,7 @@ func init() {
 var dpsMutex sync.Mutex
 
 func dpsBackOffice(ctx context.Context) error {
+	_ = ctx
 	dpsMutex.Lock()
 	defer dpsMutex.Unlock()
 	glob, err := filepath.Glob("dps/*.json")
@@ -87,14 +88,10 @@ func dpsBackOffice(ctx context.Context) error {
 		}
 		slog.Info("sending email", "payload", m)
 		host := "relay.boisestate.edu:25"
-		to := []string{m["email"]}
+		to := []string{m["to"]}
 		from := m["from"]
-		title := m["title"]
-		survey := m["followup"]
-		response := m["response"]
-		subject := "Survey Followup for " + title
-
-		body := []byte(survey + "?response=" + response)
+		subject := m["subject"]
+		body := m["body"]
 
 		var buf bytes.Buffer
 
@@ -104,7 +101,7 @@ func dpsBackOffice(ctx context.Context) error {
 		fmt.Fprintf(&buf, "Subject: %s\r\n", subject)
 		fmt.Fprintf(&buf, "\r\n")
 
-		fmt.Fprintf(&buf, "This is a followup survey for the event %s:\n\n%s\n", title, body)
+		fmt.Fprintf(&buf, body)
 
 		if os.Getenv("DPS_QUALTRICS_DRYRUN") == "1" {
 			slog.Info("dps survey dry run file", "file", g, "payload", m)
