@@ -88,6 +88,7 @@ func dpsBackOffice(ctx context.Context) error {
 		}
 		slog.Info("sending email", "payload", m)
 		host := "relay.boisestate.edu:25"
+
 		to := []string{m["to"]}
 		from := m["from"]
 		subject := m["subject"]
