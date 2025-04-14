@@ -47,4 +47,14 @@
                             "r-rcolorbrewer"
                             "r-blockcv"
                             "r-automap"
+                            "r-jpeg"
+                            "r-terra"
+                            "r-gsl"
+                            "r-runjags"
+                            "r-tidyterra"
+                            "r-inlaspacetime"
+                            "r-rworldmap"
+                            "r-ecfun"
+                            "r-ecdat"
+
                           ))
