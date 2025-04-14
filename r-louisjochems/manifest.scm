@@ -55,4 +55,5 @@
                             "r-rworldmap"
                             "r-ecfun"
                             "r-ecdat"
+                            "r-jags"
                           ))
