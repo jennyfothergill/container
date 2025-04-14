@@ -27,7 +27,6 @@
                             "tzdata"
                             ;; r stuff
                             "r"
-                            "r-inla"
                             "r-raster"
                             "r-plotly"
                             "r-lattice"
