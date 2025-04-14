@@ -1,6 +1,9 @@
 Bootstrap: localimage
 From: {{GUIX_SQUASHFS}}
 
+%post
+Rscript -e 'install.packages("INLA",repos=c("https://ftp.osuosl.org/pub/cran/",INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)'
+
 %labels
 author Jenny Fothergill <jennyfothergill@boisestate.edu>
 github.com/bsurc/container git rev={{GIT_REV}}
