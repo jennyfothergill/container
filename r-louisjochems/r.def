@@ -4,6 +4,7 @@ From: {{GUIX_SQUASHFS}}
 %post
 Rscript -e 'install.packages("runjags",repos="https://ftp.osuosl.org/pub/cran/", dep=TRUE)'
 Rscript -e 'install.packages("INLA",repos=c("https://ftp.osuosl.org/pub/cran/",INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)'
+Rscript -e 'devtools::install_github("timcdlucas/INLAutils", dependencies=FALSE)'
 
 %labels
 author Jenny Fothergill <jennyfothergill@boisestate.edu>
