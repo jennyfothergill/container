@@ -37,4 +37,5 @@
                             "r-rblast"
                             "r-seqinr"
                             "r-stringr"
+                            "r-vcfr"
                           ))
