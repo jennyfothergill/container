@@ -25,6 +25,9 @@
                             "curl"
                             "zlib"
                             "tzdata"
+                            "vim"
+                            "file"
+                            "readline"
                             ;; r stuff
                             "r"
                             "r-plotly"
