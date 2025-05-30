@@ -3,7 +3,7 @@
         (url "https://github.com/guix-science/guix-cran.git")
         (branch "master")
         (commit
-          "963e4b0d66834f0f1bf3fc4b6b7b4bf323266359"))
+          "10dde982ecde3d405106e03a127307d18d9d362a"))
       (channel
         (name 'guix-hpc)
         (url "https://gitlab.inria.fr/guix-hpc/guix-hpc.git")
