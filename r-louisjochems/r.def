@@ -3,12 +3,10 @@ From: {{GUIX_SQUASHFS}}
 
 %post
 Rscript -e 'install.packages("runjags",repos="https://ftp.osuosl.org/pub/cran/", dep=TRUE)'
-#Rscript -e 'install.packages("INLA",repos=c("https://ftp.osuosl.org/pub/cran/",INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)'
-wget https://inla.r-inla-download.org/R/testing/src/contrib/INLA_25.05.07.tar.gz
+wget --no-check-certificate https://inla.r-inla-download.org/R/testing/src/contrib/INLA_25.05.07.tar.gz
 R CMD INSTALL --build INLA_25.05.07.tar.gz
 Rscript -e 'devtools::install_github("timcdlucas/INLAutils", dependencies=FALSE)'
-chmod +x /gnu/store/ka3qjgbnf3r7r4780xicxrfqmgnnapix-profile/site-library/INLA/bin/linux/64bit/fmesher*
-chmod +x /gnu/store/ka3qjgbnf3r7r4780xicxrfqmgnnapix-profile/site-library/INLA/bin/linux/64bit/inla*
+chmod +x /gnu/store/4irh0j34jzb7m6sjf67pzyhfwnhj4kal-profile/site-library/INLA/bin/linux/64bit/*
 
 %labels
 author Jenny Fothergill <jennyfothergill@boisestate.edu>
