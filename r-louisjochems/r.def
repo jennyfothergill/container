@@ -6,7 +6,7 @@ Rscript -e 'install.packages("runjags",repos="https://ftp.osuosl.org/pub/cran/",
 wget --no-check-certificate https://inla.r-inla-download.org/R/testing/src/contrib/INLA_25.05.07.tar.gz
 R CMD INSTALL --build INLA_25.05.07.tar.gz
 Rscript -e 'devtools::install_github("timcdlucas/INLAutils", dependencies=FALSE)'
-chmod +x /gnu/store/4irh0j34jzb7m6sjf67pzyhfwnhj4kal-profile/site-library/INLA/bin/linux/64bit/*
+chmod +x /gnu/store/awmbqi376alxc9gy3w9fv1rvxsgnn9c5-profile/site-library/INLA/bin/linux/64bit/*
 
 %labels
 author Jenny Fothergill <jennyfothergill@boisestate.edu>
