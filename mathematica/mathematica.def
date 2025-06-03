@@ -5,11 +5,13 @@ From: rockylinux:8
     Wolfram_14.1.0_LIN_Bndl.sh /opt/Wolfram_14.1.0_LIN_Bndl.sh
 
 %post
+    #mkdir -p /bsuscratch /cm/shared
     yum update -y
-    yum install -y xz findutils
+    yum install -y xz findutils ncurses
 
     bash /opt/Wolfram_14.1.0_LIN_Bndl.sh --confirm -- -targetdir=/opt/mathematica \
         -auto -execdir=/opt/mathematica/bin
+    yum install /opt/mathematica/SystemFiles/Installation/wolframscript-1.12-20240626802.x86_64.rpm -y
 
 %environment
     export LC_ALL=C.UTF-8
