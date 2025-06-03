@@ -3,7 +3,9 @@ From: {{GUIX_SQUASHFS}}
 
 %post
 Rscript -e "devtools::install_github('johnbaums/jagstools')"
-Rscript -e "devtools::install_github('stan-dev/projpred')"
+#Rscript -e "devtools::install_github('stan-dev/projpred')"
+Rscript -e "devtools::install_github('DrylandEcology/rSOILWAT2')"
+Rscript -e "devtools::install_github('DrylandEcology/rSW2exter')"
 
 %labels
 author Kyle Shannon <kyle@pobox.com>

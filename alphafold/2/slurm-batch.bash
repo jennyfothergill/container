@@ -2,7 +2,7 @@
 
 #SBATCH -J Alphafold      # job name
 #SBATCH -o log_slurm.o%j  # output and error file name (%j expands to jobID)
-#SBATCH -N 1 		  # number of nodes you want to run on	
+#SBATCH -N 1 		  # number of nodes you want to run on
 #SBATCH --gres=gpu:2
 #SBATCH -p gpu            # queue (partition) -- bsudfq, eduq, gpuq, shortq
 #SBATCH -t 12:00:00       # run time (hh:mm:ss) - 12.0 hours in this example.

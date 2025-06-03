@@ -1,0 +1,10 @@
+Bootstrap: localimage
+From: {{GUIX_SQUASHFS}}
+
+%post
+mkdir -p /usr/bin
+ln -s /bin/env /usr/bin/env
+
+%labels
+author Jenny Fothergill <jennyfothergill@boisestate.edu>
+github.com/bsurc/container git rev={{GIT_REV}}

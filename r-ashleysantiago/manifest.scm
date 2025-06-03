@@ -24,18 +24,11 @@
                             "openssl"
                             "curl"
                             "zlib"
+                            ;; jags
+                            ;; "jags"
                             ;; r stuff
                             "r"
-                            "r-ape"
-                            "r-biostrings"
-                            "r-devtools"
-                            "r-dplyr"
-                            ;; "r-fastautils"
-                            "r-orfik"
-                            "r-readr"
                             "r-tidyr"
-                            "r-rblast"
-                            "r-seqinr"
-                            "r-stringr"
-                            "r-vcfr"
+                            "r-jagsui"
+                            "r-dplyr"
                           ))

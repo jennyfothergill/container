@@ -1,0 +1,13 @@
+bootstrap: docker
+from: rockylinux:8
+
+%environment
+
+%files
+
+%post
+    dnf install -y epel-release
+    dnf install dnf-plugins-core
+    dnf config-manager --set-enabled powertools
+    yum update -y
+    dnf install -y qgis python3-qgis qgis-grass qgis-server
