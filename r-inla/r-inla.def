@@ -1,0 +1,21 @@
+BootStrap: docker 
+From: ghcr.io/rocker-org/geospatial:4.2.3
+
+%files
+  pkgs.R /opt/
+  testload.R /opt/
+%post
+  #create bind path dirs for Borah
+  mkdir -p /bsuhome /bsuscratch /cm/shared
+  
+  # install jags
+  DEBIAN_FRONTEND=NONINTERACTIVE apt-get update  && apt-get install -y jags 
+  
+  # Install required R packages
+  cd /opt
+  Rscript pkgs.R
+  chmod +x /usr/local/lib/R/site-library/INLA/bin/linux/64bit/fmesher*
+  chmod +x /usr/local/lib/R/site-library/INLA/bin/linux/64bit/inla*
+%test
+  Rscript /opt/testload.R
+
