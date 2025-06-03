@@ -16,11 +16,12 @@
                             "cairo"
                             "cmake"
                             "gcc-toolchain@11"
-                            ;; "gfortran-toolchain@13"
+                            "gfortran-toolchain@11"
                             "gawk"
                             "git"
                             "gzip"
                             "libxt"
+                            "lzip"
                             "make"
                             "openssl"
                             "pkg-config"
@@ -30,6 +31,7 @@
                             "tar"
                             "tcl"
                             "unzip"
+                            "xz"
                             "zlib"
                             ;; GIS/Geospatial crap
                             "gdal"
@@ -74,4 +76,9 @@
                             "r-units"
                             "r-xml2"
                             "r-zoo"
+                            ;; Added 2025-06-02
+                            "r-stepgbm"
+                            "r-glmnet"
+                            "r-caret"
+                            ;;"r-randomForestSRC"
                           ))

@@ -6,6 +6,7 @@ export GITHUB_PAT={{GITHUB_PAT}}
 Rscript -e "devtools::install_github('johnbaums/jagstools', upgrade='never')"
 Rscript -e "devtools::install_github('DrylandEcology/rSOILWAT2', upgrade='never')"
 Rscript -e "devtools::install_github('DrylandEcology/rSW2exter', upgrade='never')"
+Rscript -e "install.packages('randomForestSRC', repo='https://ftp.osuosl.org/pub/cran/')"
 
 %labels
 author Kyle Shannon <kyle@pobox.com>
