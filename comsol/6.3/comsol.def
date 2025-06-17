@@ -1,0 +1,17 @@
+bootstrap: docker
+from: rockylinux:8.9
+
+%environment
+    export LC_ALL=C
+
+%files
+    COMSOL63_lnx /opt
+
+
+%post
+    #dnf update -y
+    dnf install -y which
+    #which tar
+    #dnf clean all
+#/opt/COMSOL63_lnx/setup -s /opt/COMSOL63_lnx/setupconfig.ini
+#cat /root/.comsol/v63/configuration/comsol/*log
