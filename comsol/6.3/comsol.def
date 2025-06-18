@@ -15,3 +15,7 @@ from: rockylinux:8.9
     dnf clean all
     /opt/COMSOL63_lnx/setup -s /opt/COMSOL63_lnx/setupconfig.ini
     rm -rf /opt/COMSOL63_lnx
+
+%labels
+    author Jenny Fothergill <jennyfothergill@boisestate.edu>
+    github.com/bsurc/container git rev={{GIT_REV}}
