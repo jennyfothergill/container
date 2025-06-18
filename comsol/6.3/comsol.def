@@ -3,7 +3,7 @@ from: rockylinux:8.9
 
 %environment
     export LC_ALL=C
-    export DISPLAY=:0.0
+    export PATH=/opt/comsol/bin:$PATH
 
 %files
     COMSOL63_lnx /opt
@@ -11,6 +11,7 @@ from: rockylinux:8.9
 
 %post
     dnf update -y
-    dnf install -y which
+    dnf install -y which libXext libXrender libXtst
     dnf clean all
     /opt/COMSOL63_lnx/setup -s /opt/COMSOL63_lnx/setupconfig.ini
+    rm -rf /opt/COMSOL63_lnx
