@@ -13,4 +13,4 @@ from: rockylinux:8.9
     dnf update -y
     dnf install -y which
     dnf clean all
-#/opt/COMSOL63_lnx/setup -s /opt/COMSOL63_lnx/setupconfig.ini
+    /opt/COMSOL63_lnx/setup -s /opt/COMSOL63_lnx/setupconfig.ini
