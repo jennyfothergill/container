@@ -11,7 +11,7 @@ from: rockylinux:8.9
 
 %post
     dnf update -y
-    dnf install -y which libXext libXrender libXtst
+    dnf install -y which libXext libXrender libXtst freetype
     dnf clean all
     /opt/COMSOL63_lnx/setup -s /opt/COMSOL63_lnx/setupconfig.ini
     rm -rf /opt/COMSOL63_lnx
