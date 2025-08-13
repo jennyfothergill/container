@@ -1,0 +1,16 @@
+Bootstrap: localimage
+From: {{GUIX_SQUASHFS}}
+
+%files
+  testload.R /opt/
+
+%post
+  #create bind path dirs for Borah
+  mkdir -p /bsuhome /bsuscratch /cm/shared
+
+%test
+  Rscript /opt/testload.R
+
+%labels
+  author Jenny Fothergill <jennyfothergill@boisestate.edu>
+  github.com/bsurc/container git rev={{GIT_REV}}
