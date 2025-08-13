@@ -30,6 +30,7 @@
                             "readline"
                             ;; r stuff
                             "r"
+                            "r-data-table"
                             "r-tidyverse"
                             "r-prism"
                             "r-terra"
@@ -44,7 +45,6 @@
                             "r-tidybayes"
                             "r-ggplot2"
                             "r-lubridate"
-                            "r-marginaleffects"
                             "r-loo"
                             "r-performance"
                           ))
