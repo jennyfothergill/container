@@ -47,4 +47,5 @@
                             "r-lubridate"
                             "r-loo"
                             "r-performance"
+                            "r-bayesmix"
                           ))
