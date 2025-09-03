@@ -3,25 +3,25 @@
         (url "https://github.com/guix-science/guix-cran.git")
         (branch "master")
         (commit
-          "e86de4976166628cc7cee6b017de7ce047b8ac94"))
+          "963e4b0d66834f0f1bf3fc4b6b7b4bf323266359"))
       (channel
         (name 'guix-hpc)
         (url "https://gitlab.inria.fr/guix-hpc/guix-hpc.git")
         (branch "master")
         (commit
-          "088e167be87125f8b238c745a15f9e0e72f5a503"))
+          "971f60b2854afb8b7dff77096c0f0f3149ee5070"))
       (channel
         (name 'guix-bioc)
         (url "https://github.com/guix-science/guix-bioc.git")
         (branch "master")
         (commit
-          "77630dffbfc2906cc2f3590bd7c527e337e8e16a"))
+          "5a63fc722773efa87cb56e89dc88804726b95728"))
       (channel
         (name 'guix-science)
         (url "https://codeberg.org/guix-science/guix-science.git")
         (branch "master")
         (commit
-          "e6953ee8dbe61883a7801ea8a7bf2a95e509fdfc")
+          "7304e37d4d664f27a18577e388c91413878d62fc")
         (introduction
           (make-channel-introduction
             "b1fe5aaff3ab48e798a4cce02f0212bc91f423dc"
@@ -32,7 +32,7 @@
         (url "https://codeberg.org/guix-science/guix-science-nonfree.git")
         (branch "master")
         (commit
-          "0c87d98159cf2a27bb01c6b650825bda084eb507")
+          "0505db27f162053bc917f527ec4026bec9031dff")
         (introduction
           (make-channel-introduction
             "58661b110325fd5d9b40e6f0177cc486a615817e"
@@ -43,7 +43,7 @@
         (url "https://git.savannah.gnu.org/git/guix.git")
         (branch "master")
         (commit
-          "c4fcf8fb627c9ea54a4a639a81766e5df3973fdc")
+          "b10ce47d8be5b6c15987f4e1d93b3bd71b1eb220")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -54,7 +54,7 @@
         (url "https://codeberg.org/guix-science/guix-past.git")
         (branch "master")
         (commit
-          "70fc56e752ef6d5ff6e1e1a0997fa72e04337b24")
+          "f99ada4123de1eadf668d34dac2d726407634549")
         (introduction
           (make-channel-introduction
             "0c119db2ea86a389769f4d2b9c6f5c41c027e336"
