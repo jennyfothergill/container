@@ -15,4 +15,5 @@ library("lubridate")
 library("marginaleffects")
 library("loo")
 library("performance")
+library("rjags")
 

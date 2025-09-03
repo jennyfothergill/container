@@ -49,4 +49,5 @@
                             "r-performance"
                             "r-bayesmix"
                             "r-rjags"
+                            "r-r2jags"
                           ))
