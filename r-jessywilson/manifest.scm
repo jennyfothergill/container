@@ -48,4 +48,5 @@
                             "r-loo"
                             "r-performance"
                             "r-bayesmix"
+                            "r-rjags"
                           ))
