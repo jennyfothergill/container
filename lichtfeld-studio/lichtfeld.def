@@ -1,0 +1,46 @@
+Bootstrap: docker
+From: ubuntu:24.04
+
+%files
+
+%environment
+    export LC_ALL=C
+    export PATH=/usr/local/cuda/bin:$PATH
+
+%post
+    export DEBIAN_FRONTEND="noninteractive"
+    apt update
+    apt install -y gcc-14 g++-14 gfortran-14 git wget unzip curl zip tar \
+       libssl-dev openssl pkg-config libxinerama-dev libxcursor-dev xorg-dev \
+       libglu1-mesa-dev ninja-build
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 60
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 60
+    update-alternatives --config gcc
+    update-alternatives --config g++
+
+    # set your timezone
+    ln -fs /usr/share/zoneinfo/America/Denver /etc/localtime
+
+    # install cuda toolkit 12.8
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-ubuntu2404.pin
+    mv cuda-ubuntu2404.pin /etc/apt/preferences.d/cuda-repository-pin-600
+    wget https://developer.download.nvidia.com/compute/cuda/12.8.0/local_installers/cuda-repo-ubuntu2404-12-8-local_12.8.0-570.86.10-1_amd64.deb
+    dpkg -i cuda-repo-ubuntu2404-12-8-local_12.8.0-570.86.10-1_amd64.deb
+    cp /var/cuda-repo-ubuntu2404-12-8-local/cuda-*-keyring.gpg /usr/share/keyrings/
+    apt update
+    apt -y install cuda-toolkit-12-8
+    apt clean
+
+    # Install cmake
+    cd /opt
+    wget https://github.com/Kitware/CMake/archive/refs/tags/v3.30.1.tar.gz
+    tar xzf v3.30.1.tar.gz
+    cd CMake-3.30.1
+    ./configure
+    make
+    make install
+
+
+%labels
+  author Jenny Fothergill <jennyfothergill@boisestate.edu>
+  github.com/bsurc/container git rev={{GIT_REV}}
