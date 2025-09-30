@@ -9,8 +9,8 @@ From: lichtfeld.sif
 %post
     export CUDACXX=/usr/local/cuda/bin/nvcc
     export CUDA_PATH=/usr/local/cuda
-    export CMAKE_CXX_COMPILER=/usr/bin/g++-14
-    export CMAKE_C_COMPILER=/usr/bin/gcc-14
+    export CXX=/usr/bin/g++-14
+    export CC=/usr/bin/gcc-14
     # Set up vcpkg (one-time setup)
     cd /opt
     git clone https://github.com/microsoft/vcpkg.git
@@ -30,7 +30,8 @@ From: lichtfeld.sif
     rm libtorch-cxx11-abi-shared-with-deps-2.7.0+cu128.zip
 
     # Build
-    cmake -B build -DCMAKE_BUILD_TYPE=Release -G Ninja
+    cmake -B build -DCMAKE_BUILD_TYPE=Release -G Ninja \
+        -DCMAKE_CXX_COMPILER=/usr/bin/g++-14 -DCMAKE_C_COMPILER=/usr/bin/gcc-14
 
     ## Or if you want you can specify your own vcpkg
     # cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="<path-to-vcpkg>/scripts/buildsystems/vcpkg.cmake" -G Ninja
