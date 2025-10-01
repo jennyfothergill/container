@@ -30,13 +30,16 @@ From: lichtfeld.sif
     rm libtorch-cxx11-abi-shared-with-deps-2.7.0+cu128.zip
 
     # Build
-    cmake -B build -DCMAKE_BUILD_TYPE=Release -G Ninja \
+    # remove the Ninja build system, using the default, Unix Makefiles
+    cmake -B build -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_CXX_COMPILER=/usr/bin/g++-14 -DCMAKE_C_COMPILER=/usr/bin/gcc-14
 
     ## Or if you want you can specify your own vcpkg
     # cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="<path-to-vcpkg>/scripts/buildsystems/vcpkg.cmake" -G Ninja
 
-    cmake --build build --
+    # run make manually rather than using cmake
+    cd build
+    make -j 8
 
 %labels
   author Jenny Fothergill <jennyfothergill@boisestate.edu>
