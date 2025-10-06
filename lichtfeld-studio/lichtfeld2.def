@@ -5,6 +5,7 @@ From: lichtfeld.sif
 
 %environment
     export LC_ALL=C
+    export PATH=/opt/LichtFeld-Studio/build:$PATH
 
 %post
     export CUDACXX=/usr/local/cuda/bin/nvcc
