@@ -50,4 +50,8 @@
                             "r-bayesmix"
                             "r-rjags"
                             "r-r2jags"
+                            "r-spdep"
+                            "r-gstat"
+                            "r-blockCV"
+                            "r-zoo"
                           ))
