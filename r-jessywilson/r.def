@@ -12,7 +12,7 @@ From: {{GUIX_SQUASHFS}}
   mkdir -p /usr/bin
   ln -snf /bin/env /usr/bin/env
 
-  Rscript -e "install.packages('marginaleffects', repo='https://ftp.osuosl.org/pub/cran/')"
+  Rscript -e "install.packages(c('marginaleffects','blockCV'), repo='https://ftp.osuosl.org/pub/cran/')"
 
 %test
   Rscript /opt/testload.R
