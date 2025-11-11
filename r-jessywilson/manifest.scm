@@ -52,6 +52,5 @@
                             "r-r2jags"
                             "r-spdep"
                             "r-gstat"
-                            "r-blockCV"
                             "r-zoo"
                           ))
