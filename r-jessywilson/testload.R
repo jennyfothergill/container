@@ -16,4 +16,7 @@ library("marginaleffects")
 library("loo")
 library("performance")
 library("rjags")
-
+library("spdep")
+library("gstat")
+library("blockCV")
+library("zoo")
