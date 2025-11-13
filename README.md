@@ -48,8 +48,8 @@ text libraries:
 
     apk add \
         fontconfig-dev \
-        freetype-dev f\
-        ribidi-dev \
+        freetype-dev \
+        fribidi-dev \
         gnu-libiconv-dev \
         harfbuzz-dev
 
