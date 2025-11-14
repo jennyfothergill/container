@@ -33,6 +33,11 @@
                             "fribidi"
                             "harfbuzz"
                             "libxml2"
+                            "freetype"
+                            "libpng"
+                            "libtiff"
+                            "libjpeg"
+                            "libwebp"
                             ;; r stuff
                             "r"
                             "rstudio"
