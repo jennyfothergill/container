@@ -30,13 +30,14 @@
                             "zlib"
                             ;; common dependencies for r
                             "fontconfig"
-                            "fribidi"
-                            "harfbuzz"
-                            "libxml2"
                             "freetype"
+                            "fribidi"
+                            "guile-lzma"
+                            "harfbuzz"
+                            "libjpeg"
                             "libpng"
                             "libtiff"
-                            "libjpeg"
+                            "libxml2"
                             "libwebp"
                             ;; r stuff
                             "r"
