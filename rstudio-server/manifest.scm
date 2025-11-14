@@ -32,7 +32,6 @@
                             "fontconfig"
                             "freetype"
                             "fribidi"
-                            "guile-lzma"
                             "harfbuzz"
                             "libjpeg"
                             "libpng"
@@ -43,4 +42,5 @@
                             "r"
                             "rstudio"
                             "rstudio-server"
+                            "r-xml2"
                           ))
