@@ -43,4 +43,8 @@
                             "rstudio"
                             "rstudio-server"
                             "r-xml2"
+                            "r-here"
+                            "r-ggplot2"
+                            "r-tidyverse"
+                            "r-patchwork"
                           ))
