@@ -50,4 +50,6 @@
 			    "r-ggplot2"
 			    "r-arrow"
 			    "r-purrr"
+			    "r-future-apply"
+			    "r-progressr"
                           ))
