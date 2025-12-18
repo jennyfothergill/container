@@ -2,6 +2,7 @@ bootstrap: docker
 from: pytorch/pytorch:2.6.0-cuda12.4-cudnn9-devel
 
 %post
+    mamba install -yq jupyterlab
     pip install mamba-ssm[dev,causal-conv1d]
 
 %labels
