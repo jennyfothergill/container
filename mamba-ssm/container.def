@@ -2,8 +2,20 @@ bootstrap: docker
 from: pytorch/pytorch:2.6.0-cuda12.4-cudnn9-devel
 
 %post
+    apt update
+    apt install -y wget tar
     mamba install -yq jupyterlab
-    pip install mamba-ssm[dev,causal-conv1d]
+
+    cd /opt
+    wget https://github.com/Dao-AILab/causal-conv1d/archive/refs/tags/v1.5.4.tar.gz
+    tar xzf causal-conv1d-1.5.4.tar.gz
+    cd causal-conv1d-1.5.4
+    pip install .
+    cd /opt
+    wget https://github.com/state-spaces/mamba/archive/refs/tags/v2.2.5.tar.gz
+    tar xzf v2.2.5
+    cd mamba-2.2.5
+    pip install .
 
 %labels
   author Jenny Fothergill <jennyfothergill@boisestate.edu>
