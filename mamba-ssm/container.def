@@ -1,13 +1,8 @@
 bootstrap: docker
-from: mambaorg/micromamba:2-cuda12.4.1-ubuntu22.04
+from: pytorch/pytorch:2.6.0-cuda12.4-cudnn9-devel
 
 %post
-    export CONDA_OVERRIDE_CUDA="12.4"
-    micromamba install -qy -c conda-forge python 'pytorch>=1.12' pip jupyter \
-        ipykernel
-    micromamba clean --all --yes
-    /opt/conda/bin/pip install mamba-ssm[causal-conv1d,dev]
-
+    pip install mamba-ssm[dev,causal-conv1d]
 
 %labels
   author Jenny Fothergill <jennyfothergill@boisestate.edu>
