@@ -2,14 +2,13 @@ Bootstrap: docker
 From: rockylinux:8
 
 %files
-    Wolfram_14.1.0_LIN_Bndl.sh /opt/Wolfram_14.1.0_LIN_Bndl.sh
+    Wolfram_14.1.0_LIN.sh /opt/Wolfram_14.1.0_LIN.sh
 
 %post
-    #mkdir -p /bsuscratch /cm/shared
     yum update -y
     yum install -y xz findutils ncurses
 
-    bash /opt/Wolfram_14.1.0_LIN_Bndl.sh --confirm -- -targetdir=/opt/mathematica \
+    bash /opt/Wolfram_14.1.0_LIN.sh --confirm -- -targetdir=/opt/mathematica \
         -auto -execdir=/opt/mathematica/bin
     yum install /opt/mathematica/SystemFiles/Installation/wolframscript-1.12-20240626802.x86_64.rpm -y
 
