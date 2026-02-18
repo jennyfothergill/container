@@ -1,0 +1,17 @@
+Bootstrap: docker
+From: nvidia/cuda:13.1.1-cudnn-runtime-ubuntu24.04
+
+%files
+    TDBP_gpu2 /opt/TDBP_gpu2
+
+%post
+    export DEBIAN_FRONTEND=NONINTERACTIVE
+    apt update -y
+    apt install -y libfftw3-single3 libgdal34t64 libgomp1 liblapacke
+
+%environment
+    export PATH="/opt/TDBP_gpu2/bin:/opt/TDBP_gpu2/scripts:$PATH"
+
+%labels
+  author Jenny Fothergill <jennyfothergill@boisestate.edu>
+  github.com/bsurc/container git rev={{GIT_REV}}
