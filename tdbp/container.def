@@ -7,7 +7,8 @@ From: nvidia/cuda:13.0.0-cudnn-runtime-ubuntu24.04
 %post
     export DEBIAN_FRONTEND=NONINTERACTIVE
     apt update -y
-    apt install -y libfftw3-single3 libgdal34t64 libgomp1 liblapacke
+    apt install -y libfftw3-single3 libgdal34t64 libgomp1 liblapacke \
+        libcufft11 libcudart12 libcublas12
 
 %environment
     export PATH="/opt/TDBP_gpu2/bin:/opt/TDBP_gpu2/scripts:$PATH"
