@@ -28,5 +28,6 @@ TDBP_gpu/
 __MACOSX/
 
 # licensed files
-Wolfram_14.1.0_LIN_Bndl.sh
+Wolfram_*_LIN*.sh
 license-demo-univ-boisestate-08-31-2024-al-am
+mathpass

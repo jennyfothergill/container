@@ -1,17 +1,50 @@
 Bootstrap: docker
-From: rockylinux:9
+From: rockylinux:9.3.20231119
 
 %files
-    /cm/shared/apps/mathematica/14.1.0 /opt/mathematica
+    Wolfram_14.1.0_LIN.sh /opt
+    mathpass /opt
+    wrapper.sh /opt
+
+%environment
+    export PATH=/usr/local/Wolfram/Mathematica/14.0/Executables:$PATH
+    export LC_ALL=C.UTF-8
 
 %post
     dnf install -y epel-release
     yum update -y
-    yum install -y xz findutils ncurses freetype mesa-libGL fontconfig \
-        qt6-qtbase alsa-lib libxkbcommon libglvnd-egl
-    strip --remove-section=.note.ABI-tag /usr/lib64/libQt6Core.so.6.6.2
+    yum install -y xz \
+        findutils \
+        ncurses \
+        freetype \
+        mesa-libGL \
+        fontconfig \
+        qt6-qtbase \
+        alsa-lib \
+        libxkbcommon \
+        libglvnd-egl
+    bash /opt/Wolfram_14.1.0_LIN.sh \
+        -- -auto \
+        -createdir=y \
+        -execdir=/usr/local/bin \
+        -method=Full \
+        -overwrite=y \
+        -targetdir=/usr/local/Wolfram/Mathematica/14.0 \
+        -silent
+    cd /usr/local/bin
+    rm MathKernel WolframKernel WolframNB math mcc wolfram wolframnb
+    chmod +x /opt/wrapper.sh
+    ln -s /opt/wrapper.sh MathKernel
+    ln -s /opt/wrapper.sh WolframKernel
+    ln -s /opt/wrapper.sh WolframNB
+    ln -s /opt/wrapper.sh math
+    ln -s /opt/wrapper.sh mcc
+    ln -s /opt/wrapper.sh wolfram
+    ln -s /opt/wrapper.sh wolframnb
+
+    rm /opt/Wolfram_14.1.0_LIN.sh
 
 
-%environment
-    export LC_ALL=C.UTF-8
-    export PATH=/opt/mathematica/bin:$PATH
+%labels
+    author Jenny Fothergill <jennyfothergill@boisestate.edu>
+    github.com/bsurc/container git rev={{GIT_REV}}
