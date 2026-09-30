@@ -1,43 +1,36 @@
 Bootstrap: docker
-From: rockylinux:9.3.20231119
+From: almalinux:10-kitten-20260902
 
 %files
     Wolfram_14.1.0_LIN.sh /opt
 
 %environment
     export LC_ALL=C.UTF-8
-    export LD_LIBRARY_PATH=/usr/local/Qt-6.12.0/lib:$LD_LIBRARY_PATH
 
 %post
     dnf install -y epel-release
     dnf config-manager --enable crb
+    dnf install -y yum
     yum update -y
     yum install -y xz \
         findutils \
         ncurses \
+        fontconfig \
         freetype \
+        libX11 \
+        libxcb \
+        libXext \
+        libxkbcommon \
+        libxkbcommon-x11 \
+        xcb-util-image \
+        xcb-util-keysyms \
+        xcb-util-renderutil \
+        xcb-util-wm \
         mesa-libGL \
         mesa-libGL-devel \
-        fontconfig \
         alsa-lib \
-        libxkbcommon \
         libglvnd-egl \
-        git \
-        cmake \
-        ninja-build \
-        python3 \
-        gcc \
-        gcc-c++
-    # build qt...
-    cd /opt
-    git clone --branch v6.12.0 git://code.qt.io/qt/qt5.git qt
-    cd qt
-    ./init-repository --module-subset=essential
-    mkdir build
-    cd build
-    ../configure
-    cmake --build . --parallel
-    cmake --install .
+        qt6-qtbase
     bash /opt/Wolfram_14.1.0_LIN.sh \
         -- -auto \
         -createdir=y \
@@ -48,7 +41,6 @@ From: rockylinux:9.3.20231119
         -silent
 
     rm /opt/Wolfram_14.1.0_LIN.sh
-    rm -rf /opt/qt
 
 
 %labels
