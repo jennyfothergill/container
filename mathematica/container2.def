@@ -7,6 +7,14 @@ From: container.sif
 
 %post
     rm -rf /opt/qt
+    yum install -y libX11 \
+        libxcb \
+        libXext \
+        libxkbcommon-x11 \
+        xcb-util-image \
+        xcb-util-keysyms \
+        xcb-util-renderutil \
+        xcb-util-wm
 
 
 %labels
