@@ -3,26 +3,41 @@ From: rockylinux:9.3.20231119
 
 %files
     Wolfram_14.1.0_LIN.sh /opt
-    mathpass /opt
-    wrapper.sh /opt
 
 %environment
-    export PATH=/usr/local/Wolfram/Mathematica/14.0/Executables:$PATH
     export LC_ALL=C.UTF-8
+    export LD_LIBRARY_PATH=/usr/local/Qt-6.12.0/lib:$LD_LIBRARY_PATH
 
 %post
     dnf install -y epel-release
+    dnf config-manager --enable crb
     yum update -y
     yum install -y xz \
         findutils \
         ncurses \
         freetype \
         mesa-libGL \
+        mesa-libGL-devel \
         fontconfig \
-        qt6-qtbase \
         alsa-lib \
         libxkbcommon \
-        libglvnd-egl
+        libglvnd-egl \
+        git \
+        cmake \
+        ninja-build \
+        python3 \
+        gcc \
+        gcc-c++
+    # build qt...
+    cd /opt
+    git clone --branch v6.12.0 git://code.qt.io/qt/qt5.git qt
+    cd qt
+    ./init-repository --module-subset=essential
+    mkdir build
+    cd build
+    ../configure
+    cmake --build . --parallel
+    cmake --install .
     bash /opt/Wolfram_14.1.0_LIN.sh \
         -- -auto \
         -createdir=y \
@@ -31,18 +46,9 @@ From: rockylinux:9.3.20231119
         -overwrite=y \
         -targetdir=/usr/local/Wolfram/Mathematica/14.0 \
         -silent
-    cd /usr/local/bin
-    rm MathKernel WolframKernel WolframNB math mcc wolfram wolframnb
-    chmod +x /opt/wrapper.sh
-    ln -s /opt/wrapper.sh MathKernel
-    ln -s /opt/wrapper.sh WolframKernel
-    ln -s /opt/wrapper.sh WolframNB
-    ln -s /opt/wrapper.sh math
-    ln -s /opt/wrapper.sh mcc
-    ln -s /opt/wrapper.sh wolfram
-    ln -s /opt/wrapper.sh wolframnb
 
     rm /opt/Wolfram_14.1.0_LIN.sh
+    rm -rf /opt/qt
 
 
 %labels
