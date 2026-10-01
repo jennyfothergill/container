@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: almalinux:10-kitten-20260902
+From: almalinux:8.10-20260902
 
 %files
     Wolfram_14.1.0_LIN.sh /opt
@@ -9,8 +9,9 @@ From: almalinux:10-kitten-20260902
 
 %post
     dnf install -y epel-release
-    dnf config-manager --enable crb
-    dnf install -y yum
+    dnf config-manager --enable epel
+    dnf install -y yum-utils yum
+    dnf config-manager --set-enabled powertools
     yum update -y
     yum install -y xz \
         findutils \
@@ -30,7 +31,27 @@ From: almalinux:10-kitten-20260902
         mesa-libGL-devel \
         alsa-lib \
         libglvnd-egl \
-        qt6-qtbase
+        libpng \
+        libjpeg \
+        git \
+        cmake \
+        ninja-build \
+        python3 \
+        gcc \
+        gcc-c++
+
+    # fix rdseed32 error?
+    sed -i '27i #include <x86intrin.h>' /usr/lib/gcc/x86_64-redhat-linux/8/include/rdseedintrin.h 
+    # build qt...
+    cd /opt
+    git clone --branch v6.12.0 git://code.qt.io/qt/qt5.git qt
+    cd qt
+    ./init-repository --module-subset=essential
+    mkdir build
+    cd build
+    ../configure
+    cmake --build . --parallel
+    cmake --install .
     bash /opt/Wolfram_14.1.0_LIN.sh \
         -- -auto \
         -createdir=y \
