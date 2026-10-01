@@ -1,0 +1,7 @@
+Bootstrap: localimage
+From: {{GUIX_SQUASHFS}}
+
+%post
+%labels
+author James Nelson <jsnelson@boisestate.edu
+github.com/bsurc/container git rev={{GIT_REV}}
