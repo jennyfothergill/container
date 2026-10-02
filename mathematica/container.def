@@ -20,9 +20,12 @@ From: stateoftheartio/qt6:6.10-gcc-aqt
         libxcb-xfixes0 \
         libxcb1 \
         libxext6 \
-        libXinerama1 \
+        libxinerama1 \
         libxkbcommon-x11-0 \
-        libxkbcommon0
+        libxkbcommon0 \
+        libasound2t64 \
+        libpng16-16t64 \
+        libjpeg8
 
     # Install Mathematica
     bash /opt/Wolfram_14.1.0_LIN.sh \
