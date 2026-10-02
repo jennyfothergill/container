@@ -20,7 +20,7 @@ From: stateoftheartio/qt6:6.10-gcc-aqt
         libxcb-xfixes0 \
         libxcb1 \
         libxext6 \
-        libXinerama.so.1 \
+        libXinerama1 \
         libxkbcommon-x11-0 \
         libxkbcommon0
 
