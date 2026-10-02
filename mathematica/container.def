@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: almalinux:8.10-20260902
+From: stateoftheartio/qt6:6.10-gcc-aqt
 
 %files
     Wolfram_14.1.0_LIN.sh /opt
@@ -11,11 +11,8 @@ From: almalinux:8.10-20260902
     dnf install -y epel-release
     dnf config-manager --enable epel
     dnf install -y yum-utils yum
-    dnf config-manager --set-enabled powertools
     yum update -y
-    yum install -y xz \
-        findutils \
-        ncurses \
+    yum install -y \
         fontconfig \
         freetype \
         libX11 \
@@ -26,34 +23,9 @@ From: almalinux:8.10-20260902
         xcb-util-image \
         xcb-util-keysyms \
         xcb-util-renderutil \
-        xcb-util-wm \
-        mesa-libGL \
-        mesa-libGL-devel \
-        alsa-lib \
-        libglvnd-egl \
-        libpng \
-        libjpeg \
-        git \
-        cmake \
-        ninja-build \
-        python3 \
-        gcc \
-        gcc-c++
+        xcb-util-wm 
 
-    # fix rdseed32 error?
-    sed -i '27i #include <x86intrin.h>' /usr/lib/gcc/x86_64-redhat-linux/8/include/rdseedintrin.h 
-    sed -i '27i #include <immintrin.h>' /usr/lib/gcc/x86_64-redhat-linux/8/include/rdseedintrin.h 
-
-    # build qt...
-    cd /opt
-    git clone --branch v6.12.0 git://code.qt.io/qt/qt5.git qt
-    cd qt
-    ./init-repository --module-subset=essential
-    mkdir build
-    cd build
-    ../configure
-    cmake --build . --parallel
-    cmake --install .
+    # Install Mathematica
     bash /opt/Wolfram_14.1.0_LIN.sh \
         -- -auto \
         -createdir=y \
