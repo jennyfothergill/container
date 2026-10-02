@@ -8,22 +8,21 @@ From: stateoftheartio/qt6:6.10-gcc-aqt
     export LC_ALL=C.UTF-8
 
 %post
-    dnf install -y epel-release
-    dnf config-manager --enable epel
-    dnf install -y yum-utils yum
-    yum update -y
-    yum install -y \
-        fontconfig \
-        freetype \
-        libX11 \
-        libxcb \
-        libXext \
-        libxkbcommon \
-        libxkbcommon-x11 \
-        xcb-util-image \
-        xcb-util-keysyms \
-        xcb-util-renderutil \
-        xcb-util-wm 
+    apt update -y
+    apt install -y \
+        libfontconfig1 \
+        libfreetype6 \
+        libx11-6 \
+        libxcb-icccm4 \
+        libxcb-image0 \
+        libxcb-keysyms1 \
+        libxcb-render-util0 \
+        libxcb-xfixes0 \
+        libxcb1 \
+        libxext6 \
+        libXinerama.so.1 \
+        libxkbcommon-x11-0 \
+        libxkbcommon0
 
     # Install Mathematica
     bash /opt/Wolfram_14.1.0_LIN.sh \
