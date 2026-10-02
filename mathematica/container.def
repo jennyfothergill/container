@@ -2,7 +2,7 @@ Bootstrap: docker
 From: stateoftheartio/qt6:6.10-gcc-aqt
 
 %files
-    Wolfram_14.1.0_LIN.sh /opt
+    Wolfram_15.0.1_LIN.sh /opt
 
 %environment
     export LC_ALL=C.UTF-8
@@ -28,13 +28,13 @@ From: stateoftheartio/qt6:6.10-gcc-aqt
         libjpeg8
 
     # Install Mathematica
-    bash /opt/Wolfram_14.1.0_LIN.sh \
+    bash /opt/Wolfram_15.0.1_LIN.sh \
         -- -auto \
         -createdir=y \
         -execdir=/usr/local/bin \
         -method=Full \
         -overwrite=y \
-        -targetdir=/usr/local/Wolfram/Mathematica/14.0 \
+        -targetdir=/usr/local/Wolfram/Mathematica/15.0 \
         -silent
 
     rm /opt/Wolfram_14.1.0_LIN.sh
