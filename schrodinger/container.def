@@ -48,6 +48,7 @@ from: rockylinux:8.9.20231119
     mkdir schrodinger
     tar -xf schrodinger_suites.tar
     rm -rf /opt/schrodinger_suites.tar
+    mkdir /bsuhome
 
 %labels
     author Jenny Fothergill <jennyfothergill@boisestate.edu>
