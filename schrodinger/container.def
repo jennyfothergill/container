@@ -56,6 +56,7 @@ from: rockylinux:8.9.20231119
 #        --preferences-location installation \
 #        /opt/Schrodinger_Suites_2026-3_Linux-x86_64
     rm -rf /opt/schrodinger_suites.tar #/opt/Schrodinger_Suites_2026-3_Linux-x86_64
+    mkdir -p /cm/shared /bsuscratch /bsuhome /bsushare
 
 %labels
     author Jenny Fothergill <jennyfothergill@boisestate.edu>
