@@ -1,0 +1,253 @@
+s_jennyfothergill@borah-login2:schrodinger$ apptainer shell --writable /tmp/sandbox
+Apptainer> cd /opt/Schrodinger_Suites_2026-3_Linux-x86_64/
+Apptainer> sh ./INSTALL 
+./INSTALL: line 198: clear: command not found
+
+                       Schrodinger Software Installer
+
+   Please respond to each question by entering the appropriate response
+   or pressing ENTER to accept the default (shown in parentheses).
+
+   You will be given a chance to review all of your installation choices
+   before any files are actually installed.
+
+   You can quit the installation at any time by pressing CTRL+C.
+
+   For more information, see the Installation Guide, which is available on the
+   Schrodinger web site, https://www.schrodinger.com.
+
+   Proceed to Schrodinger Suite2026-3 installation...
+ 
+[Press ENTER to continue]
+
+./INSTALL: line 291: clear: command not found
+1) SCHRODINGER directory
+
+   Select the directory where you want to install this software.
+
+   This directory will hold a script to launch each installed product,
+   a subdirectory for each release of each product, and documentation.
+   To run the software, you must set the SCHRODINGER variable to this
+   directory.
+
+   It is necessary to install the software for each major release in
+   a separate SCHRODINGER directory. If you are installing additional
+   products for a release, or upgrading a product to a new version with
+   the same major version number, you can install into the same
+   SCHRODINGER as the existing software from that release, but software
+   from different major releases should never be mixed.
+
+ 
+Current SCHRODINGER directory:  /opt/schrodinger
+ 
+SCHRODINGER directory:  (/opt/schrodinger) 
+ 
+    Your SCHRODINGER directory will be /opt/schrodinger.
+ 
+OK? [y/n]  (y) y
+./INSTALL: line 317: clear: command not found
+2) Hardware/software platform
+[ Compiling product installation data... ]
+./INSTALL: line 662: clear: command not found
+3) SCHRODINGER_THIRDPARTY directory
+
+   You have selected third-party programs or databases for installation.
+
+   By default, these are installed in a 'thirdparty' subdirectory of
+   your SCHRODINGER directory, but you can select a different location.
+
+   You can also install individual third-party programs and databases in
+   separate locations. For more information, see the Schrodinger Product
+   Installation Guide.
+ 
+Do you want to install third-party items in the default location? [y/n]  (y) y
+./INSTALL: line 805: clear: command not found
+*) Scratch directory
+
+For optimal performance, Schrodinger jobs use a dedicated scratch directory.
+This directory should ideally be on a fast, local disk (like a /scratch partition)
+with at least 10GB of free space. The scratch directory is only used during job
+execution and can be specified later if needed.
+
+Scratch directory?  (/usr/tmp) /tmp
+
+Would you prefer to set the tmpdir (scratch directory) preference machine-wide
+or per-installation.
+
+1) Machine-level: Good for setting one tmpdir for everyone using that machine.
+
+2) Installation-level: Useful for shared installations accessed from multiple machines.
+
+Use /opt/schrodinger/run tmpdir_value.py post-installation to set the tmpdir value at the appropriate level.
+
+Select [machine/installation]  (installation) 
+./INSTALL: line 425: clear: command not found
+*) Installation summary
+
+Your installation choices were:
+ 
+    SCHRODINGER directory:            /opt/schrodinger
+    SCHRODINGER_THIRDPARTY directory: /opt/schrodinger/thirdparty
+    Scratch directory:                /tmp
+    Preference setting:               Installation-level (/opt/schrodinger/config/suitepref.xml)
+ 
+    product        version   platform        status      compatible  action
+    -------------  --------  --------------  ----------  ----------  -------
+    bioluminate    6.4       Linux-x86_64    NEW            yes      INSTALL   
+    glide         11.2       Linux-x86_64    NEW            yes      INSTALL   
+    homology                 <databases>     NEW            yes      INSTALL   
+    docs_data      7.5       <docs>          NEW            yes      INSTALL   
+    canvas         6.9       Linux-x86_64    NEW            yes      INSTALL   
+    desmond        8.7       Linux-x86_64    NEW            yes      INSTALL   
+    watermap       6.8       Linux-x86_64    NEW            yes      INSTALL   
+    psp            8.5       Linux-x86_64    NEW            yes      INSTALL   
+    impact        11.2       Linux-x86_64    NEW            yes      INSTALL   
+    jaguar        13.3       Linux-x86_64    NEW            yes      INSTALL   
+    macromodel    15.3       Linux-x86_64    NEW            yes      INSTALL   
+    bunsen         7.5       Linux-x86_64    NEW            yes      INSTALL   
+    maestro       14.9       Linux-x86_64    NEW            yes      INSTALL   
+    qikprop        8.9       Linux-x86_64    NEW            yes      INSTALL   
+    combiglide     8.2       Linux-x86_64    NEW            yes      INSTALL   
+    epik           7.7       Linux-x86_64    NEW            yes      INSTALL   
+    knime          7.5       Linux-x86_64    NEW            yes      INSTALL   
+    mmshare        7.5       Linux-x86_64    NEW            yes      INSTALL   
+ 
+Note: The mmshare module provides common resources for all products.
+      It is installed automatically when necessary.
+ 
+Are these choices correct? [y/n]  () y
+ 
+[ Verifying the integrity of the selected installer files... ]
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+grep: CHECKSUM.md5: Permission denied
+./INSTALL: line 474: clear: command not found
+*) Installation
+
+   The SCHRODINGER and product directories will now be created (if necessary)
+   and the selected installer files unpacked. This may take a few minutes.
+
+ 
+Installing from bioluminate-v6.4-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/bioluminate-v6.4'
+ 
+Installing from glide-v11.2-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/glide-v11.2'
+ 
+Creating new directory: 'disabled_lib/Linux-x86_64'
+ 
+Installing from psp-homology-thirdparty-databases.tar.gz ...
+Creating new directory: '/opt/schrodinger/thirdparty'
+ 
+Installing from docs_data-v7.5-docs.tar.gz ...
+Creating new directory: '/opt/schrodinger/docs'
+ 
+Installing from canvas-v6.9-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/canvas-v6.9'
+ 
+Installing from desmond-v8.7-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/desmond-v8.7'
+ 
+Creating new directory: 'disabled_lib/Linux-x86_64'
+ 
+Installing from watermap-v6.8-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/watermap-v6.8'
+ 
+Installing from psp-v8.5-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/psp-v8.5'
+ 
+Creating new directory: 'disabled_lib/Linux-x86_64'
+ 
+Installing from impact-v11.2-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/impact-v11.2'
+ 
+Installing from jaguar-v13.3-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/jaguar-v13.3'
+ 
+Installing from macromodel-v15.3-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/macromodel-v15.3'
+ 
+Creating new directory: 'disabled_lib/Linux-x86_64'
+ 
+Installing from bunsen-v7.5-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/bunsen-v7.5'
+ 
+Installing from maestro-v14.9-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/maestro-v14.9'
+ 
+Creating new directory: 'disabled_lib/Linux-x86_64'
+ 
+Installing from qikprop-v8.9-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/qikprop-v8.9'
+ 
+Installing from combiglide-v8.2-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/combiglide-v8.2'
+ 
+Creating new directory: 'disabled_lib/Linux-x86_64'
+ 
+Installing from epik-v7.7-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/epik-v7.7'
+ 
+Creating new directory: 'disabled_lib/Linux-x86_64'
+ 
+Installing from knime-v7.5-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/knime-v7.5'
+ 
+Installing from mmshare-v7.5-Linux-x86_64.tar.gz ...
+Creating new directory: '/opt/schrodinger/mmshare-v7.5'
+ 
+Creating new directory: 'disabled_lib/Linux-x86_64'
+ 
+Installing support files for common batch queues
+Installing support files for LSF batch queues
+Installing support files for PBS10.4 batch queues
+Installing support files for SGE batch queues
+Installing support files for SLURM2.1 batch queues
+Installing support files for Torque batch queues
+ 
+Installing new schrodinger.hosts file
+ 
+Adding an entry for "localhost" to /opt/schrodinger/schrodinger.hosts
+ 
+** All product installations are done **
+ 
+Create an application launcher for Maestro? [y/n] (n) n
+Create an application launcher for BioLuminate? [y/n] (n) n
+Create an application launcher for Materials Science? [y/n] (n) 
+./INSTALL: line 504: clear: command not found
+*) Configuring your installation
+
+
+   If you need to request or install licenses, run the the Schrodinger software
+   configuration tool on a machine with a display.
+
+   The tool can be launched directly via $SCHRODINGER/utilities/configure.
+   If the current machine has a display, you can also launch it from this screen.
+
+Launch the configuration GUI now? [y/n]  () n
+Success: All required Linux packages are present.
+Customized configuration file featureflags.json not found in /opt/Schrodinger_Suites_2026-3_Linux-x86_64. Using default settings for installation.
+Customized configuration file server.json not found in /opt/Schrodinger_Suites_2026-3_Linux-x86_64. Using default settings for installation.
+Customized configuration file suitepref.xml not found in /opt/Schrodinger_Suites_2026-3_Linux-x86_64. Using default settings for installation.
+
+
+           ***** Schrodinger software installation is complete. *****
+
+Apptainer> rm -rf /opt/Schrodinger_Suites_2026-3_Linux-x86_64/
+Apptainer> exit
+s_jennyfothergill@borah-login2:schrodinger$ sudo apptainer build container.sif /tmp/sandbox
