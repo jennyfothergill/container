@@ -46,15 +46,15 @@ from: rockylinux:8.9.20231119
     cd /opt
     mkdir schrodinger
     tar -xf schrodinger_suites.tar
-#    cd Schrodinger_Suites_2026-3_Linux-x86_64
-#    sh ./INSTALL \
-#        -d /opt/Schrodinger_Suites_2026-3_Linux-x86_64 \
-#        -b \
-#        -s /opt/schrodinger \
-#        -k /tmp \
-#        --preferences-location installation \
-#        /opt/Schrodinger_Suites_2026-3_Linux-x86_64
-#    rm -rf /opt/schrodinger_suites.tar /opt/Schrodinger_Suites_2026-3_Linux-x86_64
+    cd Schrodinger_Suites_2026-3_Linux-x86_64
+    sh ./INSTALL \
+        -d /opt/Schrodinger_Suites_2026-3_Linux-x86_64 \
+        -b \
+        -s /opt/schrodinger \
+        -k /tmp \
+        --preferences-location installation \
+        /opt/Schrodinger_Suites_2026-3_Linux-x86_64
+    rm -rf /opt/schrodinger_suites.tar /opt/Schrodinger_Suites_2026-3_Linux-x86_64
 
 %labels
     author Jenny Fothergill <jennyfothergill@boisestate.edu>
