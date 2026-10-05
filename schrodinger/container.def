@@ -1,0 +1,61 @@
+bootstrap: docker
+from: rockylinux:8.9.20231119
+
+%environment
+    export LC_ALL=C
+    export SCHRODINGER=/opt/schrodinger
+    export SCHRODINGER_PYTHONPATH=""
+    export PATH=/opt/schrodinger/bin:$PATH
+
+%files
+    schrodinger_suites.tar /opt/schrodinger_suites.tar
+
+%post
+    yum update -y
+    yum install -y \
+        tar \
+        cups-libs \
+        expat \
+        fontconfig \
+        glx-utils \
+        libICE \
+        libSM \
+        libX11 \
+        libX11-xcb \
+        libXScrnSaver \
+        libXau \
+        libXext \
+        libXft \
+        libXi \
+        libXrender \
+        libXt \
+        libdrm \
+        libuuid \
+        libxcrypt \
+        libxcb \
+        libxkbcommon \
+        libxkbcommon-x11 \
+        mesa-libGLU \
+        nfs-utils \
+        xcb-util \
+        xcb-util-cursor \
+        xcb-util-image \
+        xcb-util-keysyms \
+        xcb-util-renderutil \
+        xcb-util-wm
+    cd /opt
+    mkdir schrodinger
+    tar -xf schrodinger_suites.tar
+#    cd Schrodinger_Suites_2026-3_Linux-x86_64
+#    sh ./INSTALL \
+#        -d /opt/Schrodinger_Suites_2026-3_Linux-x86_64 \
+#        -b \
+#        -s /opt/schrodinger \
+#        -k /tmp \
+#        --preferences-location installation \
+#        /opt/Schrodinger_Suites_2026-3_Linux-x86_64
+#    rm -rf /opt/schrodinger_suites.tar /opt/Schrodinger_Suites_2026-3_Linux-x86_64
+
+%labels
+    author Jenny Fothergill <jennyfothergill@boisestate.edu>
+    github.com/bsurc/container git rev={{GIT_REV}}
