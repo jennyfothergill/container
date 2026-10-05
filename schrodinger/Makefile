@@ -1,6 +1,6 @@
 GIT_REV = $(shell git rev-parse --short=16 HEAD)
-container.sif: container.def
-	apptainer build -F --build-arg GIT_REV=$(GIT_REV) container.sif container.def
+sandbox: container.def
+	apptainer build -F --sandbox --build-arg GIT_REV=$(GIT_REV) sanbox container.def
 
 .PHONY: clean
 clean:
