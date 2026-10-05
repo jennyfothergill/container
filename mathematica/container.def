@@ -6,6 +6,7 @@ From: stateoftheartio/qt6:6.10-gcc-aqt
 
 %environment
     export LC_ALL=C.UTF-8
+    export TZ=America/Boise
 
 %post
     apt update -y
@@ -37,7 +38,7 @@ From: stateoftheartio/qt6:6.10-gcc-aqt
         -targetdir=/usr/local/Wolfram/Mathematica/15.0 \
         -silent
 
-    rm /opt/Wolfram_14.1.0_LIN.sh
+    rm /opt/Wolfram_15.0.1_LIN.sh
 
 
 %labels
