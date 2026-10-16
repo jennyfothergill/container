@@ -1,18 +1,31 @@
 bootstrap: docker
-from: rockylinux:8.9.20231119
+from: python:3.12-slim
 
 %environment
     export LC_ALL=C
 
+%files
+    pyproject.toml /opt/
+
 %post
-    yum update -y
-    yum install -y \
-        curl
-    export PIXI_HOME=/opt/.pixi
-    export PIXI_NO_PATH_UPDATE=true
-    curl -fsSL https://pixi.sh/install.sh | sh
-    export PATH=/opt/.pixi/bin:$PATH
-    pixi --version
+    apt update
+    apt upgrade --no-install-recommends -y
+    apt install --no-install-recommends -y \
+        build-essential \
+        cmake \
+        libglib2.0-0 \
+        libxext6 \
+        libsm6 \
+        libxrender1 \
+        git \
+        wget \
+        curl \
+        ca-certificates
+        apt-get clean
+    rm -rf /var/lib/apt/lists/*
+    python3 -m pip install --no-cache-dir --upgrade pip wheel setuptools
+    cd /opt
+    python3 -m pip install --no-cache-dir .
 
 %labels
     author Jenny Fothergill <jennyfothergill@boisestate.edu>
