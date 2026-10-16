@@ -25,7 +25,7 @@ from: python:3.12-slim
     rm -rf /var/lib/apt/lists/*
     python3 -m pip install --no-cache-dir --upgrade pip wheel setuptools
     cd /opt
-    python3 -m pip install --no-cache-dir .
+    python3 -m pip install --only-deps --no-cache-dir .
 
 %labels
     author Jenny Fothergill <jennyfothergill@boisestate.edu>
