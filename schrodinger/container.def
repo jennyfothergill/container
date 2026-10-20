@@ -1,5 +1,5 @@
 bootstrap: docker
-from: rockylinux:8.9.20231119
+from: rockylinux:9.3.20231119
 
 %environment
     export LC_ALL=C
@@ -38,6 +38,7 @@ from: rockylinux:8.9.20231119
         libxkbcommon-x11 \
         mesa-libGLU \
         nfs-utils \
+        qt6-qtbase \
         xcb-util \
         xcb-util-cursor \
         xcb-util-image \
@@ -48,7 +49,6 @@ from: rockylinux:8.9.20231119
     mkdir schrodinger
     tar -xf schrodinger_suites.tar
     rm -rf /opt/schrodinger_suites.tar
-    mkdir /bsuhome
 
 %labels
     author Jenny Fothergill <jennyfothergill@boisestate.edu>
