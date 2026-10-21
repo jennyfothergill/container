@@ -6,6 +6,7 @@ from: rockylinux:9.3.20231119
     export SCHRODINGER=/opt/schrodinger
     export SCHRODINGER_PYTHONPATH=""
     export PATH=/opt/schrodinger:$PATH
+    export LD_LIBRARY_PATH=/lib64:$LD_LIBRARY_PATH
 
 %files
     schrodinger_suites.tar /opt/schrodinger_suites.tar
@@ -48,8 +49,9 @@ from: rockylinux:9.3.20231119
     cd /opt
     mkdir schrodinger
     tar -xf schrodinger_suites.tar
-    rm -rf /opt/schrodinger_suites.tar
-    mkdir /bsuhome
+    cd /opt/Schrodinger_Suites_2026-3_Linux-x86_64/
+    sh ./INSTALL -k /tmp -s /opt/schrodinger -b -d /opt/Schrodinger_Suites_2026-3_Linux-x86_64 -t /opt/schrodinger/thirdparty --preferences-location installation *
+    rm -rf /opt/schrodinger_suites.tar /opt/Schrodinger_Suites_2026-3_Linux-x86_64/
 
 %labels
     author Jenny Fothergill <jennyfothergill@boisestate.edu>
