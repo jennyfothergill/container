@@ -51,7 +51,8 @@ from: ubuntu:jammy-20260930
         libxrender1 \
         libxss1 \
         libxt6 \
-        mesa-utils
+        mesa-utils \
+        libglib2.0-dev
     cd /opt
     mkdir schrodinger
     tar -xf schrodinger_suites.tar
