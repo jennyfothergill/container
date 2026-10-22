@@ -1,5 +1,5 @@
 bootstrap: docker
-from: rockylinux:9.3.20231119
+from: ubuntu:jammy-20260930
 
 %environment
     export LC_ALL=C
@@ -12,40 +12,46 @@ from: rockylinux:9.3.20231119
     schrodinger_suites.tar /opt/schrodinger_suites.tar
 
 %post
-    yum update -y
-    yum install -y epel-release
-    yum install -y \
+    apt update -y
+    apt install -y \
         tar \
-        cups-libs \
-        expat \
-        fontconfig \
-        glx-utils \
-        libICE \
-        libSM \
-        libX11 \
-        libX11-xcb \
-        libXScrnSaver \
-        libXau \
-        libXext \
-        libXft \
-        libXi \
-        libXrender \
-        libXt \
-        libdrm \
-        libuuid \
-        libxcrypt \
-        libxcb \
-        libxkbcommon \
-        libxkbcommon-x11 \
-        mesa-libGLU \
-        nfs-utils \
-        qt6-qtbase \
-        xcb-util \
-        xcb-util-cursor \
-        xcb-util-image \
-        xcb-util-keysyms \
-        xcb-util-renderutil \
-        xcb-util-wm
+        libcups2 \
+        libcrypt1 \
+        libdrm2 \
+        libfontconfig1 \
+        libglu1-mesa \
+        libice6 \
+        qt6-base-dev \
+        libsm6 \
+        libtirpc3 \
+        libx11-6 \
+        libx11-xcb1 \
+        libxau6 \
+        libxcb-cursor0 \
+        libxcb-glx0 \
+        libxcb-icccm4 \
+        libxcb-image0 \
+        libxcb-keysyms1 \
+        libxcb-randr0 \
+        libxcb-render-util0 \
+        libxcb-render0 \
+        libxcb-shape0 \
+        libxcb-shm0 \
+        libxcb-sync1 \
+        libxcb-util1 \
+        libxcb-xfixes0 \
+        libxcb-xkb1 \
+        libxcb1 \
+        libxdmcp6 \
+        libxext6 \
+        libxft2 \
+        libxi6 \
+        libxkbcommon-x11-0 \
+        libxkbcommon0 \
+        libxrender1 \
+        libxss1 \
+        libxt6 \
+        mesa-utils
     cd /opt
     mkdir schrodinger
     tar -xf schrodinger_suites.tar
